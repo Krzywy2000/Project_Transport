@@ -25,6 +25,7 @@
                                 <td>Godzina rozpoczęcia</td>
                                 <td>Godzina zakończenia</td>
                                 <td>Uwagi</td>
+                                <td>Ustawienia</td>
                             </tr>";
                             $users = $result->num_rows;
                             if($users>0)
@@ -36,6 +37,7 @@
                                         <td>".$row['godz_roz']."</td>
                                         <td>".$row['godz_kon']."</td>
                                         <td>".$row['uwagi']."</td>
+                                        <td><button>Edytuj</button><br/><button>Usuń</button><br/><button>Szczegóły</button></td>
                                     </tr>";
                                 }
                             }
