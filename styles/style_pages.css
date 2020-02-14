@@ -1,0 +1,112 @@
+header, footer {
+    background: #272727;
+}
+
+.text {
+    color: rgba(255,255,255,.5)!important;
+}
+
+footer {
+    height: 20%;
+    color: silver;
+}
+
+.footer__left {
+    width: 50%;
+    height: auto;
+    float: left;
+    padding-top: 3%;
+    text-align: center;
+}
+
+footer .col-sm-12 {
+    height: 25%;
+}
+
+.footer__left a {
+    text-decoration: none;
+    color: silver;
+}
+
+.footer__left a:hover {
+    color:  rgb(136, 136, 136);
+}
+
+.footer__right {
+    width: 50%;
+    height: auto;
+    float: right;
+    text-align: center;
+    padding-top: 2%;
+    font-size: 30px;
+    text-decoration: none;
+}
+
+.footer__right a {
+    color: silver !important;
+}
+
+.footer__right a:hover {
+    color: rgb(136, 136, 136) !important;
+}
+
+table, tr, td {
+    text-align: center;
+    width: inherit;
+    height: 40%;
+}
+
+table .main {
+    color: white !important;
+    background: #272727 !important;
+}
+
+input {
+    border-radius: 20px;
+}
+
+.button {
+    border-radius: 20px;
+}
+
+.button:hover {
+    background: grey;
+}
+
+.messages__bar {
+    text-align: right;
+}
+
+.messages__bar__left {
+    float: left;
+}
+
+.result {
+    width: 100%;
+}
+
+.mess_users {
+    border: 1px solid gray;
+    border-radius: 20px;
+    padding-left: 2%;
+    padding-bottom: 2%;
+    width: 100%;
+    height: 300px;
+    overflow-y: scroll;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+   
+::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+}
+   
+::-webkit-scrollbar-thumb {
+    background: #888; 
+}
+  
+::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+}
