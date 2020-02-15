@@ -3,6 +3,7 @@
     $connect = new mysqli($host, $db_user, $db_password, $db_name);
     if($_SESSION['access'] == 2)
                 {
+                    echo "<div class='mess_users'>";
                     if ($result = @$connect->query("SELECT `timetables_bus_gw`.`nr_zadania`,`timetables_bus_gw`.`godz_roz`,`timetables_bus_gw`.`godz_kon`,`buses_gw`.`numer_tab`,`timetables_bus_gw`.`uwagi` from `timetables_bus_gw`
                     inner join `buses_gw` on `timetables_bus_gw`.`id_przydzial`=`buses_gw`.`id`"))
                         {
@@ -60,6 +61,7 @@
                                 }
     
                                 echo "</table><br/>";
-                            }                        
+                            }      
+                        echo "</div>";                  
                 }
 ?>

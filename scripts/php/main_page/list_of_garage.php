@@ -3,6 +3,7 @@
     $connect = new mysqli($host, $db_user, $db_password, $db_name);
     if($_SESSION['access'] == 2)
                 {
+                    echo "<div class='mess_users'>";
                     if ($result = @$connect->query("SELECT * from `buses_gw` 
                     left join `workshop_bus_gw` on `buses_gw`.`id`=`workshop_bus_gw`.`id_pojazdu`
                     left join `timetables_bus_gw` on `buses_gw`.`id`=`timetables_bus_gw`.`id_przydzial`
@@ -61,5 +62,6 @@
 
                             echo "</table><br/>";
                         }
+                    echo "</div>";
                 }
 ?>

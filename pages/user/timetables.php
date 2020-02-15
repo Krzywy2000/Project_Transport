@@ -17,9 +17,42 @@
             <?php
                 if($_SESSION['access'] == 2)
                 {
-                    if ($result = @$connect->query("SELECT * FROM `timetables_gw` ORDER BY `nr_zadania`"))
+                    if ($result = @$connect->query("SELECT * FROM `timetables_bus_gw` ORDER BY `nr_zadania`"))
                         {
                             echo "<table>
+                            <tr class='main'>
+                                <td colspan='5'>Autobusy</td>
+                            </tr>
+                            <tr class='main'>
+                                <td>Numer brygady</td>
+                                <td>Godzina rozpoczęcia</td>
+                                <td>Godzina zakończenia</td>
+                                <td>Uwagi</td>
+                                <td>Ustawienia</td>
+                            </tr>";
+                            $users = $result->num_rows;
+                            if($users>0)
+                            {
+                                while($row = $result->fetch_array())
+                                {
+                                    echo "<tr>
+                                        <td>".$row['nr_zadania']."</td>
+                                        <td>".$row['godz_roz']."</td>
+                                        <td>".$row['godz_kon']."</td>
+                                        <td>".$row['uwagi']."</td>
+                                        <td><button>Edytuj</button><br/><button>Usuń</button><br/><button>Szczegóły</button></td>
+                                    </tr>";
+                                }
+                            }
+
+                            echo "</table><br/>";
+                        }
+                    if ($result = @$connect->query("SELECT * FROM `timetables_tram_gw` ORDER BY `nr_zadania`"))
+                        {
+                            echo "<table>
+                            <tr class='main'>
+                                <td colspan='5'>Tramwaje</td>
+                            </tr>
                             <tr class='main'>
                                 <td>Numer brygady</td>
                                 <td>Godzina rozpoczęcia</td>
