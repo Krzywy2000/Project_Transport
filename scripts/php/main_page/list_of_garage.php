@@ -3,7 +3,10 @@
     $connect = new mysqli($host, $db_user, $db_password, $db_name);
     if($_SESSION['access'] == 2)
                 {
-                    if ($result = @$connect->query("SELECT * from `buses_gw` left join `stock_gw` on `buses_gw`.`id`=`stock_gw`.`id_bus` where `stock_gw`.`id_bus` is null"))
+                    if ($result = @$connect->query("SELECT * from `buses_gw` 
+                    left join `workshop_bus_gw` on `buses_gw`.`id`=`workshop_bus_gw`.`id_pojazdu`
+                    left join `timetables_bus_gw` on `buses_gw`.`id`=`timetables_bus_gw`.`id_przydzial`
+                    where `workshop_bus_gw`.`id_pojazdu` is null and `timetables_bus_gw`.`id_przydzial` is null"))
                         {
                             echo "<table>
                             <tr class='main'>
@@ -29,7 +32,10 @@
 
                             echo "</table><br/>";
                         }
-                        if ($result = @$connect->query("SELECT * from `trams_gw` left join `stock_gw` on `trams_gw`.`id`=`stock_gw`.`id_tram` where `stock_gw`.`id_tram` is null"))
+                        if ($result = @$connect->query("SELECT * from `trams_gw` 
+                        left join `workshop_tram_gw` on `trams_gw`.`id`=`workshop_tram_gw`.`id_pojazdu`
+                        left join `timetables_tram_gw` on `trams_gw`.`id`=`timetables_tram_gw`.`id_przydzial`
+                        where `workshop_tram_gw`.`id_pojazdu` is null and `timetables_tram_gw`.`id_przydzial` is null"))
                         {
                             echo "<table>
                             <tr class='main'>

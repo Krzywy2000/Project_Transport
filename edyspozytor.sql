@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 14 Lut 2020, 01:31
+-- Czas generowania: 15 Lut 2020, 14:33
 -- Wersja serwera: 10.1.38-MariaDB
 -- Wersja PHP: 7.3.2
 
@@ -144,43 +144,39 @@ INSERT INTO `buses_gw` (`id`, `marka`, `model`, `rocznik`, `rok_wprowadzenia`, `
 -- --------------------------------------------------------
 
 --
--- Struktura tabeli dla tabeli `stock_gw`
+-- Struktura tabeli dla tabeli `timetables_bus_gw`
 --
 
-CREATE TABLE `stock_gw` (
-  `id` int(11) NOT NULL,
-  `id_bus` int(11) DEFAULT NULL,
-  `id_tram` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
-
---
--- Zrzut danych tabeli `stock_gw`
---
-
-INSERT INTO `stock_gw` (`id`, `id_bus`, `id_tram`) VALUES
-(1, 1, NULL);
-
--- --------------------------------------------------------
-
---
--- Struktura tabeli dla tabeli `timetables_gw`
---
-
-CREATE TABLE `timetables_gw` (
+CREATE TABLE `timetables_bus_gw` (
   `id` int(11) NOT NULL,
   `nr_zadania` mediumtext COLLATE utf8_polish_ci NOT NULL,
   `godz_roz` mediumtext COLLATE utf8_polish_ci NOT NULL,
   `godz_kon` mediumtext COLLATE utf8_polish_ci NOT NULL,
-  `id_przydzial` int(11) NOT NULL,
+  `id_przydzial` int(11) DEFAULT NULL,
   `uwagi` mediumtext COLLATE utf8_polish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
 --
--- Zrzut danych tabeli `timetables_gw`
+-- Zrzut danych tabeli `timetables_bus_gw`
 --
 
-INSERT INTO `timetables_gw` (`id`, `nr_zadania`, `godz_roz`, `godz_kon`, `id_przydzial`, `uwagi`) VALUES
-(1, '1/01/R', '4:42', '21:23', 0, '');
+INSERT INTO `timetables_bus_gw` (`id`, `nr_zadania`, `godz_roz`, `godz_kon`, `id_przydzial`, `uwagi`) VALUES
+(2, '1/01/R A', '4:52', '22:32', 7, '');
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `timetables_tram_gw`
+--
+
+CREATE TABLE `timetables_tram_gw` (
+  `id` int(11) NOT NULL,
+  `nr_zadania` text COLLATE utf8_polish_ci NOT NULL,
+  `godz_roz` text COLLATE utf8_polish_ci NOT NULL,
+  `godz_kon` text COLLATE utf8_polish_ci NOT NULL,
+  `id_przydzial` int(11) DEFAULT NULL,
+  `uwagi` text COLLATE utf8_polish_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
 -- --------------------------------------------------------
 
@@ -236,15 +232,36 @@ INSERT INTO `users` (`id`, `name`, `surname`, `login`, `password`, `e-mail`, `ac
 -- --------------------------------------------------------
 
 --
--- Struktura tabeli dla tabeli `workshop_gw`
+-- Struktura tabeli dla tabeli `workshop_bus_gw`
 --
 
-CREATE TABLE `workshop_gw` (
+CREATE TABLE `workshop_bus_gw` (
   `id` int(11) NOT NULL,
   `id_pojazdu` int(11) NOT NULL,
   `pocz_post` date NOT NULL,
   `koniec_post` date NOT NULL,
   `powod` mediumtext COLLATE utf8_polish_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
+
+--
+-- Zrzut danych tabeli `workshop_bus_gw`
+--
+
+INSERT INTO `workshop_bus_gw` (`id`, `id_pojazdu`, `pocz_post`, `koniec_post`, `powod`) VALUES
+(2, 2, '2020-02-18', '2020-02-20', 'Wymiana napędu II drzwi');
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `workshop_tram_gw`
+--
+
+CREATE TABLE `workshop_tram_gw` (
+  `id` int(11) NOT NULL,
+  `id_pojazdu` int(11) NOT NULL,
+  `pocz_post` date NOT NULL,
+  `koniec_post` date NOT NULL,
+  `powod` text COLLATE utf8_polish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
 --
@@ -259,18 +276,18 @@ ALTER TABLE `buses_gw`
   ADD KEY `id_brygady` (`id_brygady`);
 
 --
--- Indeksy dla tabeli `stock_gw`
+-- Indeksy dla tabeli `timetables_bus_gw`
 --
-ALTER TABLE `stock_gw`
+ALTER TABLE `timetables_bus_gw`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `id_bus` (`id_bus`,`id_tram`),
-  ADD KEY `id_tram` (`id_tram`);
+  ADD KEY `id_przydzial` (`id_przydzial`);
 
 --
--- Indeksy dla tabeli `timetables_gw`
+-- Indeksy dla tabeli `timetables_tram_gw`
 --
-ALTER TABLE `timetables_gw`
-  ADD PRIMARY KEY (`id`);
+ALTER TABLE `timetables_tram_gw`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_przydzial` (`id_przydzial`);
 
 --
 -- Indeksy dla tabeli `trams_gw`
@@ -286,9 +303,16 @@ ALTER TABLE `users`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeksy dla tabeli `workshop_gw`
+-- Indeksy dla tabeli `workshop_bus_gw`
 --
-ALTER TABLE `workshop_gw`
+ALTER TABLE `workshop_bus_gw`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_pojazdu` (`id_pojazdu`);
+
+--
+-- Indeksy dla tabeli `workshop_tram_gw`
+--
+ALTER TABLE `workshop_tram_gw`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id_pojazdu` (`id_pojazdu`);
 
@@ -300,19 +324,19 @@ ALTER TABLE `workshop_gw`
 -- AUTO_INCREMENT dla tabeli `buses_gw`
 --
 ALTER TABLE `buses_gw`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=97;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=94;
 
 --
--- AUTO_INCREMENT dla tabeli `stock_gw`
+-- AUTO_INCREMENT dla tabeli `timetables_bus_gw`
 --
-ALTER TABLE `stock_gw`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+ALTER TABLE `timetables_bus_gw`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT dla tabeli `timetables_gw`
+-- AUTO_INCREMENT dla tabeli `timetables_tram_gw`
 --
-ALTER TABLE `timetables_gw`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+ALTER TABLE `timetables_tram_gw`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT dla tabeli `trams_gw`
@@ -327,27 +351,26 @@ ALTER TABLE `users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT dla tabeli `workshop_gw`
+-- AUTO_INCREMENT dla tabeli `workshop_bus_gw`
 --
-ALTER TABLE `workshop_gw`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+ALTER TABLE `workshop_bus_gw`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT dla tabeli `workshop_tram_gw`
+--
+ALTER TABLE `workshop_tram_gw`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Ograniczenia dla zrzutów tabel
 --
 
 --
--- Ograniczenia dla tabeli `stock_gw`
+-- Ograniczenia dla tabeli `workshop_bus_gw`
 --
-ALTER TABLE `stock_gw`
-  ADD CONSTRAINT `stock_gw_ibfk_1` FOREIGN KEY (`id_tram`) REFERENCES `trams_gw` (`id`),
-  ADD CONSTRAINT `stock_gw_ibfk_2` FOREIGN KEY (`id_bus`) REFERENCES `buses_gw` (`id`);
-
---
--- Ograniczenia dla tabeli `workshop_gw`
---
-ALTER TABLE `workshop_gw`
-  ADD CONSTRAINT `workshop_gw_ibfk_1` FOREIGN KEY (`id_pojazdu`) REFERENCES `stock_gw` (`id`);
+ALTER TABLE `workshop_bus_gw`
+  ADD CONSTRAINT `workshop_bus_gw_ibfk_1` FOREIGN KEY (`id_pojazdu`) REFERENCES `stock_gw` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

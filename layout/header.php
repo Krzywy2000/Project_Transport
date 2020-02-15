@@ -41,7 +41,7 @@
                     <?php
                             $year = date("Y");
                             $day = date("d");
-                            $mounth = date("j");
+                            $mounth = date("n");
                             echo $day."/".$mounth."/".$year;
                     ?>
                     </span>
