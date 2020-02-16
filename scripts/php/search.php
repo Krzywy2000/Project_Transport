@@ -5,7 +5,7 @@
     $search = $_GET["search"];
     
     if($search == "") {
-            if ($result = @$connect->query("SELECT * FROM `buses_GW` ORDER BY `Numer_tab`"))
+            if ($result = @$connect->query("SELECT * FROM `vehicles` where type='bus' ORDER BY `Numer_tab`"))
                 {
                     echo "<table>
                     <tr class='main'>
@@ -45,7 +45,7 @@
 
                     echo "</table><br/>";                    
                 }
-            if($result2 = @$connect->query("SELECT *FROM `trams_GW` ORDER BY `numer_tab`"))
+            if($result2 = @$connect->query("SELECT *FROM `vehicles` where type='tram' ORDER BY `numer_tab`"))
             {
                 echo "<table>
                 <tr class='main'>
@@ -69,7 +69,7 @@
                     <td>".$row2['numer_tab']."</td>
                     <td>".$row2['marka']."</td>
                     <td>".$row2['model']."</td>
-                    <td>".$row2['rok_produkcji']."</td>
+                    <td>".$row2['rocznik']."</td>
                     <td>".$row2['rok_wprowadzenia']."</td>
                     <td>".$row2['uklad_drzwi']."</td>
                     <td>".$row2['klimatyzacja']."</td>
@@ -81,7 +81,7 @@
             echo "</table>";
             }  
     } else {
-        if ($result = @$connect->query("SELECT * FROM `buses_GW` WHERE `Numer_tab` LIKE '".$search."%' ORDER BY `Numer_tab`"))
+        if ($result = @$connect->query("SELECT * FROM `vehicles` WHERE `Numer_tab` LIKE '".$search."%' and type='bus' ORDER BY `Numer_tab`"))
         {
             echo "<table>
             <tr class='main'>
@@ -121,7 +121,7 @@
 
             echo "</table><br/>";
         }
-    if($result2 = @$connect->query("SELECT * FROM `trams_GW` WHERE `numer_tab` LIKE '".$search."%' ORDER BY `numer_tab`"))
+    if($result2 = @$connect->query("SELECT * FROM `vehicles` WHERE `numer_tab` LIKE '".$search."%' and type='tram' ORDER BY `numer_tab`"))
     {
         echo "<table>
         <tr class='main'>
@@ -145,7 +145,7 @@
             <td>".$row2['numer_tab']."</td>
             <td>".$row2['marka']."</td>
             <td>".$row2['model']."</td>
-            <td>".$row2['rok_produkcji']."</td>
+            <td>".$row2['rocznik']."</td>
             <td>".$row2['rok_wprowadzenia']."</td>
             <td>".$row2['uklad_drzwi']."</td>
             <td>".$row2['klimatyzacja']."</td>

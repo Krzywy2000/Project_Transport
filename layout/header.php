@@ -16,9 +16,10 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
         <script src="https://kit.fontawesome.com/6a2e60bfe6.js"></script>
         <script src="./scripts/bootstrap/bootstrap.bundle.min.js"></script>
+		<script src=".\Project_Transport-master\scripts\js/js/time-js.js"></script>
 
         <!--Meta_tags!-->
-        <meta author="Wiktor Wiese">
+      
         <meta charset="UTF-8">
 
     </head>
@@ -38,16 +39,8 @@
                         }
                     ?>">eDyspozytor</a>
                     <span class="navbar text">
-                    <?php
-                            $year = date("Y");
-                            $day = date("d");
-                            $mounth = date("n");
-                            echo $day."/".$mounth."/".$year;
-                    ?>
+					    <label id="label-time"></label>
                     </span>
-                    <div class="navbar text" id="zegar">
-
-                    </div>
                     <div class="collapse navbar-collapse">
                         <ul class="navbar-nav mr-auto">
                             </li>
@@ -68,3 +61,5 @@
                 </nav>
             </div>          
         </header>
+		
+		
