@@ -38,9 +38,6 @@
                             echo "index_user.php";
                         }
                     ?>">eDyspozytor</a>
-                    <span class="navbar text">
-					    <label id="label-time"></label>
-                    </span>
                     <div class="collapse navbar-collapse">
                         <ul class="navbar-nav mr-auto">
                             </li>
@@ -58,6 +55,9 @@
                             </li>
                         </ul>
                     </div>
+                    <span class="navbar text">
+					    <label id="label-time"></label>
+                    </span>
                 </nav>
             </div>          
         </header>

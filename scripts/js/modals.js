@@ -37,3 +37,11 @@ $('#modal-add-vehicle').on('show.bs.modal', function (event) {
   var modal = $(this)
 
 })
+$('#modal-add-timetable').on('show.bs.modal', function (event) {
+	
+  var button = $(event.relatedTarget) 
+  var id = button.data('idvehicle') 
+
+  var modal = $(this)
+
+})

@@ -1,7 +1,10 @@
 function updateClock() {
     var now = new Date(), // current date
+        hour = now.getHours(),
+        min = now.getMinutes(),
+        sec = now.getSeconds(),
         months = ['Styczeń' , 'Luty' ,  'Marzec' , 'Kwiecień' , 'Maj' , 'Czerwiec' , 'Lipiec' , 'Sierpień' , 'Wrzesień' , 'Październik' , 'Listopad' , 'Grudzień']; // you get the idea
-        time = now.getHours() + ':' + now.getMinutes()+" : "+now.getSeconds(), // again, you get the idea
+        time = hour + " : " + ((min<10)?"0":"") + min + " : " + ((sec<10)?"0":"") + sec, // again, you get the idea
 
         // a cleaner way than string concatenation
         date = [now.getDate(), 

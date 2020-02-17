@@ -13,7 +13,7 @@
         <div class="messages__bar">
                 <button data-toggle="modal" data-target="#modal-add-vehicle">Dodaj pojazd/pojazdy</button>
         </div>
-        <div id="result" class="result">
+        <div id="result" class="result table-responsive">
             <?php
                 if($_SESSION['access'] == 2)
                 {
@@ -53,6 +53,7 @@
                                     <td><button data-toggle='modal' data-target='#modal-edycja' data-idvehicle='".$row['id']."'>Edytuj</button><br />
                                     <button data-toggle='modal' data-target='#modal-szczegoly' data-idvehicle='".$row['id']."'>szczegóły</button><br />
                                     <button data-toggle='modal' data-target='#modal-workshop' data-idvehicle='".$row['id']."'>Dodaj do warsztatu</button>
+                                    <button data-toggle='modal' data-target='#modal-workshop' data-idvehicle='".$row['id']."'>Usuń pojazd</button>
                                     </td>
                                   </tr>";
 									
@@ -92,19 +93,18 @@
                                 <td>".$row2['biletomat']."</td>
                                 <td>".$row2['uwagi']."</td>
                                 <td><button data-toggle='modal' data-target='#modal-edycja' data-idvehicle='".$row['id']."'>Edytuj</button><br />
-								<button data-toggle='modal' data-target='#modal-szczegoly' data-idvehicle='".$row['id']."'>szczegóły</button><br />
-								<button data-toggle='modal' data-target='#modal-workshop' data-idvehicle='".$row['id']."'>Dodaj do warsztatu</button>
-								
-								</td>
+                              <button data-toggle='modal' data-target='#modal-szczegoly' data-idvehicle='".$row['id']."'>szczegóły</button><br />
+                              <button data-toggle='modal' data-target='#modal-workshop' data-idvehicle='".$row['id']."'>Dodaj do warsztatu</button>
+                              
+                              </td>
 								
                             </tr>";
-							echo "<hr>";
                         }
-                      
+                      echo "</table>";
                     }
                 }
                 ?>    
-        </div>        
+        </div> 
     <br/><br/></div>
 	
 	<!--workshop ------------------------------------------------------------------->
@@ -202,21 +202,21 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
-	 <form action="scripts/php/add_to_stock.php" method="POST" id="form-add-to-stock">
-			<input type="hidden" id="id-edycja-vehicles" name="id_vehicles" value="">
-								typ				:<input type="text" name="add_vehicle_type"><br /><br/>
-                                Numer Taborowy	:<input type="number" name="add_vehicle_numer"><br /><br/>
-                                Marka			:<input type="text" name="add_vehicle_marka"><br /><br/>
-                                Model			:<input type="text" name="add_vehicle_model"><br /><br/>
-                                Rocznik			:<input type="year" name="add_vehicle_rocznik"><br /><br/>
-                                Rok wprowadzenia:<input type="year" name="add_vehicle_rok"><br /><br/>
-                                Układ drzwi		:<input type="text" name="add_vehicle_drzwi"><br /><br/>
-                                Klimatyzacja	:<input type="text" name="add_vehicle_klimatyzacja"><br /><br/>
-                                Biletomat/Kasa	:<input type="text" name="add_vehicle_biletomat"><br /><br/>
-                                Uwagi			:<input type="text" name="add_vehicle_uwagi"><br /><br/>
-	</form>
-      </div>
+    <div class="modal-body">
+      <form action="scripts/php/add_to_stock.php" method="POST" id="form-add-to-stock">
+          <input type="hidden" id="id-edycja-vehicles" name="id_vehicles" value=""/>
+                    typ				:<input type="text" name="add_vehicle_type"/><br /><br/>
+                                    Numer Taborowy	:<input type="number" name="add_vehicle_numer"><br /><br/>
+                                    Marka			:<input type="text" name="add_vehicle_marka"><br /><br/>
+                                    Model			:<input type="text" name="add_vehicle_model"><br /><br/>
+                                    Rocznik			:<input type="year" name="add_vehicle_rocznik"><br /><br/>
+                                    Rok wprowadzenia:<input type="year" name="add_vehicle_rok"><br /><br/>
+                                    Układ drzwi		:<input type="text" name="add_vehicle_drzwi"><br /><br/>
+                                    Klimatyzacja	:<input type="text" name="add_vehicle_klimatyzacja"><br /><br/>
+                                    Biletomat/Kasa	:<input type="text" name="add_vehicle_biletomat"><br /><br/>
+                                    Uwagi			:<input type="text" name="add_vehicle_uwagi"><br /><br/>
+      </form>
+    </div>
       <div class="modal-footer">
 
 <br />
@@ -227,9 +227,9 @@
   </div>
 </div>
 	
-    <script src="scripts/js/time-js.js"></script>
-    <script src="scripts/js/search.js"></script>
-    <script src="scripts/js/pop_up.js"></script>
+  <script src="scripts/js/time-js.js"></script>
+  <script src="scripts/js/search.js"></script>
+  <script src="scripts/js/pop_up.js"></script>
 	<script src="scripts/js/modals.js"></script>
 	
 </main>

@@ -11,7 +11,7 @@
             </form>
         </div>
         <div class="messages__bar">
-            <button class="button" onClick="new_stock.php">Dodaj zadanie</button>
+            <button class="button" data-toggle="modal" data-target="#modal-add-timetable">Dodaj zadanie</button>
         </div>
         <div id="result" class="result">
             <?php
@@ -21,7 +21,7 @@
                         {
                             echo "<table>
                             <tr class='main'>
-                                <td>Numer brygady</td>
+                                <td>Nazwa zadania</td>
                                 <td>Godzina rozpoczęcia</td>
                                 <td>Godzina zakończenia</td>
                                 <td>Uwagi</td>
@@ -48,6 +48,33 @@
                 ?>    
         </div>        
     <br/><br/></div>
+
+    <!--Add timetable-->
+        <div class="modal fade bd-example-modal-lg" id="modal-add-timetable" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Dodaj rozkład</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+                <div class="modal-body">
+                    <form action="scripts/php/timetables/add.php" method="POST" id="form-timetables">
+                        <?php
+                            include("scripts/php/timetables/add_timetable.php");
+                        ?>
+                    </form>
+                </div>
+                <div class="modal-footer">
+
+                </div>
+            </div>
+        </div>
+        </div>
+
+
+
 	    <script src="scripts/js/time-js.js"></script>
     <script src="scripts/js/search.js"></script>
     <script src="scripts/js/pop_up.js"></script>

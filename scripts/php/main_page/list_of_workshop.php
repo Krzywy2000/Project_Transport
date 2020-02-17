@@ -1,9 +1,11 @@
 <?php
     require_once("scripts/php/db_connect.php");
     $connect = new mysqli($host, $db_user, $db_password, $db_name);
+
+    $date = Date("Y-m-d");
     if($_SESSION['access'] == 2)
                 {
-                    if ($result = @$connect->query("SELECT * from `workshop_gw` INNER JOIN `vehicles` on `vehicles`.`id` = `workshop_gw`.`id_pojazdu`"))
+                    if ($result = @$connect->query("SELECT * from `workshop_gw` INNER JOIN `vehicles` on `vehicles`.`id` = `workshop_gw`.`id_pojazdu` WHERE `koniec_post`>=$date or `pocz_post`<=$date"))
                         {
                             echo "<div class='mess_users'>
                             <table>
@@ -26,7 +28,6 @@
                                     </tr>";
                                 }
                             }
-
                             echo "</table><br/></div>";
                         }
                 }

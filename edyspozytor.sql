@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.4
+-- version 4.8.5
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 15 Lut 2020, 21:20
--- Wersja serwera: 10.1.37-MariaDB
--- Wersja PHP: 7.3.1
+-- Czas generowania: 17 Lut 2020, 01:45
+-- Wersja serwera: 10.1.38-MariaDB
+-- Wersja PHP: 7.3.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -21,6 +21,28 @@ SET time_zone = "+00:00";
 --
 -- Baza danych: `edyspozytor`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `destination`
+--
+
+CREATE TABLE `destination` (
+  `id` int(11) NOT NULL,
+  `name` text COLLATE utf8_polish_ci NOT NULL,
+  `number_of_line` int(11) NOT NULL,
+  `city` text COLLATE utf8_polish_ci NOT NULL,
+  `time_of_drive` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
+
+--
+-- Zrzut danych tabeli `destination`
+--
+
+INSERT INTO `destination` (`id`, `name`, `number_of_line`, `city`, `time_of_drive`) VALUES
+(1, 'Zajezdnia - Dworzec Główny (wyjazd)', 0, 'Gorzów Wiktorowski', 14),
+(2, 'Dworzec Główny - Zajezdnia', 0, 'Gorzów Wiktorowski', 14);
 
 -- --------------------------------------------------------
 
@@ -105,7 +127,7 @@ INSERT INTO `vehicles` (`id`, `type`, `marka`, `model`, `rocznik`, `rok_wprowadz
 (8, 'bus', 'Solaris', 'Urbino 8,9 III LE', 2019, 2020, '1 - 2 - 0', '+', '+', 110, 0, 'Z dotacji UE', 0),
 (9, 'bus', 'Solaris', 'Urbino 8,9 III LE', 2019, 2020, '1 - 2 - 0', '+', '+', 111, 0, 'Z dotacji UE', 0),
 (10, 'bus', 'Jelcz', '120M', 1994, 1994, '2  - 2 - 2', '-', '+', 201, 0, '', 0),
-(11, 'bus', 'Jelcz', '120MM/2', 2000, 2000, '2  - 2 - 2', '-', '+', 202, 0, '', 0),
+(11, 'bus', 'Jelcz', '120MM/2', 2000, 2000, '2  - 2 - 2', '-', '+', 202, 0, '', 1),
 (12, 'bus', 'Jelcz', '120MM/2', 2001, 2001, '2  - 2 - 2', '-', '+', 203, 0, '', 0),
 (13, 'bus', 'Jelcz', '120MM/2', 2001, 2001, '2  - 2 - 2', '-', '+', 204, 0, '', 0),
 (14, 'bus', 'Jelcz', '120MM/2', 2002, 2002, '2  - 2 - 2', '-', '+', 205, 0, '', 0),
@@ -212,11 +234,18 @@ INSERT INTO `workshop_gw` (`id`, `id_pojazdu`, `pocz_post`, `koniec_post`, `powo
 (2, 1, '2021-02-01', '2022-01-01', 'aaaa'),
 (3, 2, '2020-01-01', '2022-02-02', 'aaa'),
 (8, 3, '2020-01-01', '2023-02-02', 'aaa'),
-(9, 3, '2020-01-01', '2023-02-02', 'aaa');
+(10, 11, '2020-02-02', '2020-02-20', 'Awaria silnika'),
+(24, 1, '2020-02-13', '2020-02-22', 'test');
 
 --
 -- Indeksy dla zrzutów tabel
 --
+
+--
+-- Indeksy dla tabeli `destination`
+--
+ALTER TABLE `destination`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indeksy dla tabeli `timetables_gw`
@@ -248,6 +277,12 @@ ALTER TABLE `workshop_gw`
 --
 
 --
+-- AUTO_INCREMENT dla tabeli `destination`
+--
+ALTER TABLE `destination`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT dla tabeli `timetables_gw`
 --
 ALTER TABLE `timetables_gw`
@@ -269,7 +304,7 @@ ALTER TABLE `vehicles`
 -- AUTO_INCREMENT dla tabeli `workshop_gw`
 --
 ALTER TABLE `workshop_gw`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- Ograniczenia dla zrzutów tabel
