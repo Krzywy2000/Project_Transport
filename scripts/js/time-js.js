@@ -15,6 +15,7 @@ function updateClock() {
     document.getElementById('label-time').innerHTML = [date, time].join(' / ');
 
     // call this function again in 1000ms
-    setTimeout(updateClock, 1000);
+    //setTimeout(updateClock, 1000);
 }
-updateClock(); // initial call
+//updateClock(); // initial call
+setInterval('updateClock',1000);

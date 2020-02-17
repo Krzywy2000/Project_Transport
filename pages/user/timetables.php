@@ -7,7 +7,7 @@
         <H2 class="headline">Lista brygad</H2>
         <div class="messages__bar__left">
             <form id="form">
-                <input type="text" id="search" name="search" placeholder="Znajdź pojazd po nr tab."/>
+                <input type="text" id="search" name="search" placeholder="Znajdź rozkład po nr zad."/>
             </form>
         </div>
         <div class="messages__bar">
@@ -61,9 +61,30 @@
             </div>
                 <div class="modal-body">
                     <form action="scripts/php/timetables/add.php" method="POST" id="form-timetables">
-                        <?php
-                            include("scripts/php/timetables/add_timetable.php");
-                        ?>
+                        <div class='container-fluid'>
+                            <div class='row'>
+                                <div class='col-md-4'><a>Nazwa zadania: </a><input type='text'></div><br/>
+                                <div class='col-md-4'><a>Godzina rozpoczęcia: </a><input type='text'/></div><br/>
+                                <div class='col-md-4'> <a>Godzina zakończenia: </a><input type='text'/></div><br/>
+                                <div class='col-md-12'>
+                                    <a>Kurs:</a><br/>
+                                    <select>
+                                        <?php
+                                            include("scripts/php/timetables/add_timetable.php");
+                                        ?>
+                                    </select><br/>
+                                </div><br/>
+                            <div class='col-md-4'>
+                                <a>Godzina odjazdu:</a>
+                                <input type='text'/>
+                            </div><br/>
+                            <div class='col-md-4'>
+                                <a>Godzina przyjazdu:</a>
+                            </div><br/>
+                            <div class='col-md-4'>
+                                <button class='button' data-toggle='modal' data-target='#modal-add-timetable'>Dodaj kurs</button>
+                            </div><br/>
+                        </div>
                     </form>
                 </div>
                 <div class="modal-footer">

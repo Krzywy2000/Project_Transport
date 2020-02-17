@@ -7,15 +7,4 @@
            
         </div>
     </div>
-    <script type="text/javascript">
-                            function zegar(){
-                                var date = new Date();
-                                var hour = date.getHours();
-                                var min = date.getMinutes();
-                                var sec = date.getSeconds();
-                                var terazjest = ""+hour+((min<10)?":0":":")+min+((sec<10)?":0":":")+sek;
-                                document.getElementById("zegar").innerHTML = terazjest;
-                                setTimeout("zegar()",1000);
-                            }
-                        </script>  
 </footer>
