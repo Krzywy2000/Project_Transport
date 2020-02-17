@@ -66,24 +66,12 @@
                                 <div class='col-md-4'><a>Nazwa zadania: </a><input type='text'></div><br/>
                                 <div class='col-md-4'><a>Godzina rozpoczęcia: </a><input type='text'/></div><br/>
                                 <div class='col-md-4'> <a>Godzina zakończenia: </a><input type='text'/></div><br/>
-                                <div class='col-md-12'>
-                                    <a>Kurs:</a><br/>
-                                    <select>
-                                        <?php
-                                            include("scripts/php/timetables/add_timetable.php");
-                                        ?>
-                                    </select><br/>
-                                </div><br/>
-                            <div class='col-md-4'>
-                                <a>Godzina odjazdu:</a>
-                                <input type='text'/>
-                            </div><br/>
-                            <div class='col-md-4'>
-                                <a>Godzina przyjazdu:</a>
-                            </div><br/>
-                            <div class='col-md-4'>
-                                <button class='button' data-toggle='modal' data-target='#modal-add-timetable'>Dodaj kurs</button>
-                            </div><br/>
+                                <div class='col-md-12'><a>Ilość kursów: </a><br/><input type='text' id='drive'/>
+                                </div>
+                                <span id="forms" class="col-sm-12">
+                                    
+                                </span>
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -96,7 +84,8 @@
 
 
 
-	    <script src="scripts/js/time-js.js"></script>
-    <script src="scripts/js/search.js"></script>
-    <script src="scripts/js/pop_up.js"></script>
+	<script src="scripts/js/time-js.js"></script>
+    <script src="scripts/js/search_timetables.js"></script>
+    <script src="scripts/js/add_forms.js"></script>
+    <script src="scripts/js/timetable/add_arrival.js"></script>
 </main>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 17 Lut 2020, 01:45
+-- Czas generowania: 18 Lut 2020, 00:51
 -- Wersja serwera: 10.1.38-MariaDB
 -- Wersja PHP: 7.3.2
 
@@ -43,6 +43,25 @@ CREATE TABLE `destination` (
 INSERT INTO `destination` (`id`, `name`, `number_of_line`, `city`, `time_of_drive`) VALUES
 (1, 'Zajezdnia - Dworzec Główny (wyjazd)', 0, 'Gorzów Wiktorowski', 14),
 (2, 'Dworzec Główny - Zajezdnia', 0, 'Gorzów Wiktorowski', 14);
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `timetables_all`
+--
+
+CREATE TABLE `timetables_all` (
+  `id` int(11) NOT NULL,
+  `city` text COLLATE utf8_polish_ci NOT NULL,
+  `id_timetables` int(11) NOT NULL,
+  `name` text COLLATE utf8_polish_ci NOT NULL,
+  `start` int(11) NOT NULL,
+  `end` int(11) NOT NULL,
+  `number_of_line` int(11) NOT NULL,
+  `departure` text COLLATE utf8_polish_ci,
+  `arrival` text COLLATE utf8_polish_ci,
+  `id_destination` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
 -- --------------------------------------------------------
 
@@ -248,6 +267,14 @@ ALTER TABLE `destination`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indeksy dla tabeli `timetables_all`
+--
+ALTER TABLE `timetables_all`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_timetables` (`id_timetables`),
+  ADD KEY `id_destination` (`id_destination`);
+
+--
 -- Indeksy dla tabeli `timetables_gw`
 --
 ALTER TABLE `timetables_gw`
@@ -280,7 +307,13 @@ ALTER TABLE `workshop_gw`
 -- AUTO_INCREMENT dla tabeli `destination`
 --
 ALTER TABLE `destination`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT dla tabeli `timetables_all`
+--
+ALTER TABLE `timetables_all`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT dla tabeli `timetables_gw`

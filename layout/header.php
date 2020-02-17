@@ -16,7 +16,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
         <script src="https://kit.fontawesome.com/6a2e60bfe6.js"></script>
         <script src="./scripts/bootstrap/bootstrap.bundle.min.js"></script>
-		<script src="./scripts/js/time-js.js"></script>
+		<script src="./scripts/js/time-js.js" async></script>
 
         <!--Meta_tags!-->
       
