@@ -1,3 +1,4 @@
+
 document.getElementById("departure").addEventListener("keyup", departure);
 document.getElementById("destination").addEventListener("change", destination);
  

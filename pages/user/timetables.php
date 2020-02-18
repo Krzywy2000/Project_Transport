@@ -63,10 +63,10 @@
                     <form action="scripts/php/timetables/add.php" method="POST" id="form-timetables">
                         <div class='container-fluid'>
                             <div class='row'>
-                                <div class='col-md-4'><a>Nazwa zadania: </a><input type='text'></div><br/>
-                                <div class='col-md-4'><a>Godzina rozpoczęcia: </a><input type='text'/></div><br/>
-                                <div class='col-md-4'> <a>Godzina zakończenia: </a><input type='text'/></div><br/>
-                                <div class='col-md-12'><a>Ilość kursów: </a><br/><input type='text' id='drive'/>
+                                <div class='col-md-4'><a>Nazwa zadania: </a><input type='text' name='name'></div><br/>
+                                <div class='col-md-4'><a>Godzina rozpoczęcia: </a><input type='text' name='start'/></div><br/>
+                                <div class='col-md-4'> <a>Godzina zakończenia: </a><input type='text' name='end'/></div><br/>
+                                <div class='col-md-12'><a>Ilość kursów: </a><br/><input type='text' name='count_of_course' id='drive'/>
                                 </div>
                                 <span id="forms" class="col-sm-12">
                                     
@@ -76,7 +76,8 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-
+                    <button form="form-timetables" type="submit" class="btn btn-primary">Potwierdz</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
                 </div>
             </div>
         </div>
@@ -87,5 +88,5 @@
 	<script src="scripts/js/time-js.js"></script>
     <script src="scripts/js/search_timetables.js"></script>
     <script src="scripts/js/add_forms.js"></script>
-    <script src="scripts/js/timetable/add_arrival.js"></script>
+    <script src="scripts/js/add_arrival.js"></script>
 </main>

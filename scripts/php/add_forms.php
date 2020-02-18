@@ -31,7 +31,7 @@
             </div>
             <div class='col-md-4'>
                 <a>Godzina odjazdu:</a>
-                <input name='departure[$i]' id='departure' type='text'/>
+                <input name='departure[$i]' id='departure[$i]' type='text'/>
             </div><br/>
             <div class='col-md-4'>
                 <a>Godzina przyjazdu:</a>

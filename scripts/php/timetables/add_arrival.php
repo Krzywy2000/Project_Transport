@@ -7,7 +7,7 @@
     echo $add_arrival;
     echo $add_destination;
     
-    if ($result = @$connect->query("SELECT * FROM `destination` WHERE 'id' LIKE '".$add_destination))
+    if ($result = @$connect->query("SELECT * FROM `destination` WHERE 'id' LIKE '.$add_destination.'"))
         {
             $users = $result->num_rows;
             if($users>0)
