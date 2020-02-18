@@ -27,11 +27,11 @@
             </div><br/>
             <div class='col-md-4'>
                 <a>Numer linii:</a>
-                <input name='number[$i]' type='text'/>
+                <input name='number_".$i."' type='text'/>
             </div>
             <div class='col-md-4'>
                 <a>Godzina odjazdu:</a>
-                <input name='departure[$i]' id='departure[$i]' type='text'/>
+                <input name='departure_".$i."' id='departure[$i]' type='text'/>
             </div><br/>
             <div class='col-md-4'>
                 <a>Godzina przyjazdu:</a>
