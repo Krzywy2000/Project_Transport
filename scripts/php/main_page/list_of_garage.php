@@ -3,7 +3,7 @@
     $connect = new mysqli($host, $db_user, $db_password, $db_name);
     if($_SESSION['access'] == 2)
                 {
-                    if ($result = @$connect->query("SELECT * from `vehicles` where type='bus' and in_workshop='0' order by `numer_tab`"))
+                    if ($result = @$connect->query("SELECT * from `vehicles` where typ_pojazdu='BUS' and id_workshop='0' order by `numer_tab`"))
                         {
                             echo "<div class='mess_users'>
                             <table>
@@ -30,7 +30,7 @@
 
                             echo "</table></div><br/>";
                         }
-                        if ($result = @$connect->query("SELECT * from `vehicles` where type='tram' and in_workshop='0' order by `numer_tab`"))
+                        if ($result = @$connect->query("SELECT * from `vehicles` where typ_pojazdu='TRAM' and id_workshop='0' order by `numer_tab`"))
                         {
                             echo "<div class='mess_users'>
                             <table>

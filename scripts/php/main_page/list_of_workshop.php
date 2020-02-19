@@ -5,7 +5,7 @@
     $date = Date("Y-m-d");
     if($_SESSION['access'] == 2)
                 {
-                    if ($result = @$connect->query("SELECT * from `workshop_gw` INNER JOIN `vehicles` on `vehicles`.`id` = `workshop_gw`.`id_pojazdu` WHERE `koniec_post`>=$date or `pocz_post`<=$date"))
+                    if ($result = @$connect->query("SELECT * from `workshop` INNER JOIN `vehicles` on `vehicles`.`id` = `workshop`.`id_pojazdu` WHERE `data_roz`>=$date or `data_zak`<=$date"))
                         {
                             echo "<div class='mess_users'>
                             <table>
@@ -21,8 +21,8 @@
                                 while($row = $result->fetch_array())
                                 {
                                     echo "<tr>
-                                        <td>".$row['pocz_post']."</td>
-                                        <td>".$row['koniec_post']."</td>
+                                        <td>".$row['data_roz']."</td>
+                                        <td>".$row['data_zak']."</td>
                                         <td>".$row['numer_tab']."</td>
                                         <td>".$row['powod']."</td>
                                     </tr>";

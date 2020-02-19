@@ -3,7 +3,7 @@
     $connect = new mysqli($host, $db_user, $db_password, $db_name);
     if($_SESSION['access'] == 2)
                 {
-                    if ($result = @$connect->query("SELECT * FROM `timetables_gw` ORDER BY `nr_zadania`"))
+                    if ($result = @$connect->query("SELECT * FROM `timetable` ORDER BY `nazwa_zm`"))
                         {
                             echo "<div class='mess_users'>
                             <table>

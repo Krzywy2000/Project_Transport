@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 18 Lut 2020, 00:51
+-- Czas generowania: 20 Lut 2020, 00:49
 -- Wersja serwera: 10.1.38-MariaDB
 -- Wersja PHP: 7.3.2
 
@@ -30,60 +30,63 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `destination` (
   `id` int(11) NOT NULL,
-  `name` text COLLATE utf8_polish_ci NOT NULL,
-  `number_of_line` int(11) NOT NULL,
-  `city` text COLLATE utf8_polish_ci NOT NULL,
-  `time_of_drive` int(11) NOT NULL
+  `relacja` text COLLATE utf8_polish_ci,
+  `numer_linii` int(11) DEFAULT NULL,
+  `miasto` text COLLATE utf8_polish_ci,
+  `czas_przejazdu` int(11) DEFAULT NULL,
+  `uwagi` text COLLATE utf8_polish_ci
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
 --
 -- Zrzut danych tabeli `destination`
 --
 
-INSERT INTO `destination` (`id`, `name`, `number_of_line`, `city`, `time_of_drive`) VALUES
-(1, 'Zajezdnia - Dworzec Główny (wyjazd)', 0, 'Gorzów Wiktorowski', 14),
-(2, 'Dworzec Główny - Zajezdnia', 0, 'Gorzów Wiktorowski', 14);
+INSERT INTO `destination` (`id`, `relacja`, `numer_linii`, `miasto`, `czas_przejazdu`, `uwagi`) VALUES
+(1, 'Zajezdnia - Dworzec Główny PKP', NULL, 'Gorzow Wiktorowski', 14, 'Wyjazd z zajezdni'),
+(2, 'Dworzec Główny PKP', NULL, 'Gorzow Wiktorowski', 14, 'Zjazd do zajezdni');
 
 -- --------------------------------------------------------
 
 --
--- Struktura tabeli dla tabeli `timetables_all`
+-- Struktura tabeli dla tabeli `plan`
 --
 
-CREATE TABLE `timetables_all` (
+CREATE TABLE `plan` (
   `id` int(11) NOT NULL,
-  `city` text COLLATE utf8_polish_ci NOT NULL,
-  `id_timetables` int(11) NOT NULL,
-  `name` text COLLATE utf8_polish_ci NOT NULL,
-  `start` int(11) NOT NULL,
-  `end` int(11) NOT NULL,
-  `number_of_line` int(11) NOT NULL,
-  `departure` text COLLATE utf8_polish_ci,
-  `arrival` text COLLATE utf8_polish_ci,
-  `id_destination` int(11) DEFAULT NULL
+  `data` date DEFAULT NULL,
+  `id_timetable` int(11) DEFAULT NULL,
+  `numer_pojazdu` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
 -- --------------------------------------------------------
 
 --
--- Struktura tabeli dla tabeli `timetables_gw`
+-- Struktura tabeli dla tabeli `timetable`
 --
 
-CREATE TABLE `timetables_gw` (
+CREATE TABLE `timetable` (
   `id` int(11) NOT NULL,
-  `nr_zadania` mediumtext COLLATE utf8_polish_ci NOT NULL,
-  `godz_roz` mediumtext COLLATE utf8_polish_ci NOT NULL,
-  `godz_kon` mediumtext COLLATE utf8_polish_ci NOT NULL,
-  `id_przydzial` int(11) NOT NULL,
-  `uwagi` mediumtext COLLATE utf8_polish_ci NOT NULL
+  `nazwa_zm` text COLLATE utf8_polish_ci,
+  `godz_roz` text COLLATE utf8_polish_ci,
+  `godz_zak` text COLLATE utf8_polish_ci,
+  `rodzaj` text COLLATE utf8_polish_ci,
+  `uwagi` longtext COLLATE utf8_polish_ci
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
+-- --------------------------------------------------------
+
 --
--- Zrzut danych tabeli `timetables_gw`
+-- Struktura tabeli dla tabeli `timetable_course`
 --
 
-INSERT INTO `timetables_gw` (`id`, `nr_zadania`, `godz_roz`, `godz_kon`, `id_przydzial`, `uwagi`) VALUES
-(1, '1/01/R', '4:42', '21:23', 0, '');
+CREATE TABLE `timetable_course` (
+  `id` int(11) NOT NULL,
+  `id_timetable` int(11) DEFAULT NULL,
+  `nr_kursu` int(11) DEFAULT NULL,
+  `id_destination` int(11) DEFAULT NULL,
+  `godz_roz` text COLLATE utf8_polish_ci,
+  `godz_zak` text COLLATE utf8_polish_ci
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
 -- --------------------------------------------------------
 
@@ -107,7 +110,10 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `name`, `surname`, `login`, `password`, `e-mail`, `access`) VALUES
 (1, 'Administrator', '', 'admin', 'admin', '', 1),
-(2, 'Wiktor', 'Wiese', 'wwiese', 'Krzywy2000', 'wiktorwiese2000@gmail.com', 2);
+(2, 'Wiktor', 'Wiese', 'wwiese', 'Krzywy2000', 'wiktorwiese2000@gmail.com', 2),
+(3, 'Tymon', 'Myga', 'tmyga', 'Pesa123!', 'swing122nab@gmail.com', 3),
+(4, 'Kamil', 'Pikuła', 'kpikula', '', '', 4),
+(5, 'Piotr', 'Mański', 'pmanski', '', '', 5);
 
 -- --------------------------------------------------------
 
@@ -117,144 +123,140 @@ INSERT INTO `users` (`id`, `name`, `surname`, `login`, `password`, `e-mail`, `ac
 
 CREATE TABLE `vehicles` (
   `id` int(11) NOT NULL,
-  `type` enum('tram','bus') COLLATE utf8_polish_ci DEFAULT 'bus',
-  `marka` mediumtext COLLATE utf8_polish_ci NOT NULL,
-  `model` mediumtext COLLATE utf8_polish_ci NOT NULL,
-  `rocznik` year(4) NOT NULL,
-  `rok_wprowadzenia` year(4) NOT NULL,
-  `uklad_drzwi` mediumtext COLLATE utf8_polish_ci NOT NULL,
-  `klimatyzacja` mediumtext COLLATE utf8_polish_ci NOT NULL,
-  `biletomat` mediumtext COLLATE utf8_polish_ci NOT NULL,
-  `numer_tab` int(11) NOT NULL,
-  `id_brygady` int(11) DEFAULT NULL,
-  `uwagi` mediumtext COLLATE utf8_polish_ci NOT NULL,
-  `in_workshop` tinyint(1) NOT NULL DEFAULT '0'
+  `typ_pojazdu` text COLLATE utf8_polish_ci,
+  `miasto` text COLLATE utf8_polish_ci NOT NULL,
+  `marka` text COLLATE utf8_polish_ci,
+  `model` text COLLATE utf8_polish_ci,
+  `uklad_drzwi` text COLLATE utf8_polish_ci,
+  `rocznik` text COLLATE utf8_polish_ci,
+  `rok_wprowadzenia` text COLLATE utf8_polish_ci,
+  `klimatyzacja` text COLLATE utf8_polish_ci,
+  `biletomat` text COLLATE utf8_polish_ci,
+  `numer_tab` int(11) DEFAULT NULL,
+  `uwagi` longtext COLLATE utf8_polish_ci,
+  `id_workshop` int(11) DEFAULT NULL,
+  `id_timetable` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
 --
 -- Zrzut danych tabeli `vehicles`
 --
 
-INSERT INTO `vehicles` (`id`, `type`, `marka`, `model`, `rocznik`, `rok_wprowadzenia`, `uklad_drzwi`, `klimatyzacja`, `biletomat`, `numer_tab`, `id_brygady`, `uwagi`, `in_workshop`) VALUES
-(1, 'bus', 'Autosan', 'H7-20.01', 2000, 2000, '2 - 2', '-', '+', 102, 0, '', 1),
-(2, 'bus', 'MAN', 'NM223', 1999, 2014, '1 - 2 - 0', '-', '+', 104, 0, '', 1),
-(3, 'bus', 'Jelcz', 'M11', 1987, 1987, '2  - 2 - 2', '-', '+', 105, 0, '', 1),
-(4, 'bus', 'Jelcz', 'M11', 1987, 1987, '2  - 2 - 2', '-', '+', 106, 0, '', 0),
-(5, 'bus', 'Jelcz', 'M11', 1987, 1987, '2  - 2 - 2', '-', '+', 107, 0, '', 0),
-(6, 'bus', 'Solaris', 'Urbino 10 III', 2017, 2018, '1 - 2 - 2', '+', '+', 108, 0, 'Z dotacji UE', 0),
-(7, 'bus', 'Solaris', 'Urbino 10 III', 2017, 2018, '1 - 2 - 2', '+', '+', 109, 0, 'Z dotacji UE', 0),
-(8, 'bus', 'Solaris', 'Urbino 8,9 III LE', 2019, 2020, '1 - 2 - 0', '+', '+', 110, 0, 'Z dotacji UE', 0),
-(9, 'bus', 'Solaris', 'Urbino 8,9 III LE', 2019, 2020, '1 - 2 - 0', '+', '+', 111, 0, 'Z dotacji UE', 0),
-(10, 'bus', 'Jelcz', '120M', 1994, 1994, '2  - 2 - 2', '-', '+', 201, 0, '', 0),
-(11, 'bus', 'Jelcz', '120MM/2', 2000, 2000, '2  - 2 - 2', '-', '+', 202, 0, '', 1),
-(12, 'bus', 'Jelcz', '120MM/2', 2001, 2001, '2  - 2 - 2', '-', '+', 203, 0, '', 0),
-(13, 'bus', 'Jelcz', '120MM/2', 2001, 2001, '2  - 2 - 2', '-', '+', 204, 0, '', 0),
-(14, 'bus', 'Jelcz', '120MM/2', 2002, 2002, '2  - 2 - 2', '-', '+', 205, 0, '', 0),
-(15, 'bus', 'Jelcz', '120MM/2', 2002, 2003, '2  - 2 - 2', '-', '+', 206, 0, '', 0),
-(16, 'bus', 'Jelcz', 'M121M', 1996, 1996, '2  - 2 - 2', '-', '+', 207, 0, '', 0),
-(17, 'bus', 'Jelcz', 'M121M', 1999, 1999, '2  - 2 - 2', '-', '+', 208, 0, '', 0),
-(18, 'bus', 'Jelcz', 'M121M', 1999, 1999, '2  - 2 - 2', '-', '+', 209, 0, '', 0),
-(19, 'bus', 'Jelcz', 'M121M', 1999, 1999, '2  - 2 - 2', '-', '+', 210, 0, '', 0),
-(20, 'bus', 'Jelcz', '120M', 1992, 1992, '2  - 2 - 2', '-', '+', 212, 0, '', 0),
-(21, 'bus', 'Jelcz', '120M', 1992, 1992, '2  - 2 - 2', '-', '+', 213, 0, '', 0),
-(22, 'bus', 'Ikarus', '260.04', 1988, 1988, '2  - 2 - 2', '-', '+', 214, 0, '', 0),
-(23, 'bus', 'Ikarus', '260.30A', 1996, 1996, '2  - 2 - 2', '-', '+', 215, 0, '', 0),
-(24, 'bus', 'Ikarus', '260.30A', 1996, 1996, '2  - 2 - 2', '-', '+', 216, 0, '', 0),
-(25, 'bus', 'Mercedes-Benz', 'O405N2', 1997, 2008, '2 - 2 - 0', '-', '+', 217, 0, '', 0),
-(26, 'bus', 'Mercedes-Benz', 'O405N2', 1999, 2012, '2  - 2 - 2', '-', '+', 218, 0, '', 0),
-(27, 'bus', 'MAN', 'NL222', 2000, 2000, '2  - 2 - 2', '-', '+', 219, 0, '', 0),
-(28, 'bus', 'MAN', 'NL222', 2000, 2000, '2  - 2 - 2', '-', '+', 220, 0, '', 0),
-(29, 'bus', 'MAN', 'NL223', 2002, 2002, '2  - 2 - 2', '-', '+', 221, 0, '', 0),
-(30, 'bus', 'MAN', 'NL223', 2002, 2002, '2  - 2 - 2', '-', '+', 222, 0, '', 0),
-(31, 'bus', 'MAN', 'NL223', 2002, 2002, '2  - 2 - 2', '-', '+', 223, 0, '', 0),
-(32, 'bus', 'MAN', 'NL223', 2002, 2003, '2  - 2 - 2', '-', '+', 224, 0, '', 0),
-(33, 'bus', 'MAN', 'NL263', 2004, 2013, '2  - 2 - 2', '+', '+', 225, 0, 'ex. Oslo', 0),
-(34, 'bus', 'MAN', 'NL263', 2004, 2013, '2  - 2 - 2', '+', '+', 226, 0, 'ex. Oslo', 0),
-(35, 'bus', 'MAN', 'NL262', 1997, 2010, '2 - 2 - 0', '-', '+', 228, 0, 'ex. Oslo', 0),
-(36, 'bus', 'MAN', 'NL263', 1999, 2016, '2 - 2 - 0', '-', '+', 229, 0, 'ex. Niemcy', 0),
-(37, 'bus', 'Volvo/Vest', 'B7RLE/Center', 2009, 2019, '2  - 2 - 2', '+', '-', 230, 0, 'ex. Unibuss Oslo', 0),
-(38, 'bus', 'Volvo/Vest', 'B7RLE/Center', 2009, 2019, '2  - 2 - 2', '+', '-', 231, 0, 'ex. Unibuss Oslo', 0),
-(39, 'bus', 'Solaris', 'Urbino 12 II', 2004, 2019, '2  - 2 - 2', '+', '+', 234, 0, 'ex. Winterthur', 0),
-(40, 'bus', 'Volvo', 'B10BLE', 1997, 1997, '2  - 2 - 2', '', '+', 235, 0, '', 0),
-(41, 'bus', 'Volvo', 'B10BLE', 1997, 1997, '2  - 2 - 2', '-', '+', 236, 0, '', 0),
-(42, 'bus', 'Volvo', 'B10BLE', 1997, 1997, '2  - 2 - 2', '-', '+', 237, 0, '', 0),
-(43, 'bus', 'Solaris', 'Urbino 12 III', 2007, 2007, '2  - 2 - 2', '-', '+', 238, 0, '', 0),
-(44, 'bus', 'Solaris', 'Urbino 12 III', 2007, 2007, '2  - 2 - 2', '-', '+', 239, 0, '', 0),
-(45, 'bus', 'Solaris', 'Urbino 12 III', 2007, 2007, '2  - 2 - 2', '-', '+', 240, 0, '', 0),
-(46, 'bus', 'Solaris', 'Urbino 12 III', 2007, 2007, '2  - 2 - 2', '-', '+', 241, 0, '', 0),
-(47, 'bus', 'Solaris', 'Urbino 12 III', 2017, 2017, '2  - 2 - 2', '+', '+', 242, 0, 'Z dotacji UE', 0),
-(48, 'bus', 'Solaris', 'Urbino 12 III', 2017, 2017, '2  - 2 - 2', '+', '+', 243, 0, 'Z dotacji UE', 0),
-(49, 'bus', 'Solaris', 'Urbino 12 III', 2017, 2017, '2  - 2 - 2', '+', '+', 244, 0, 'Z dotacji UE', 0),
-(50, 'bus', 'Solaris', 'Urbino 12 III', 2006, 2019, '2 - 2 - 0', '-', '+', 245, 0, '', 0),
-(51, 'bus', 'Solaris', 'Urbino 12 III', 2006, 2019, '2 - 2 - 0', '-', '+', 246, 0, '', 0),
-(52, 'bus', 'Solaris', 'Urbino 12 III', 2006, 2019, '2 - 2 - 0', '-', '+', 247, 0, '', 0),
-(53, 'bus', 'Jelcz', 'PR110M', 1988, 1988, '2  - 2 - 2', '-', '+', 251, 0, '', 0),
-(54, 'bus', 'Jelcz', 'PR110M', 1988, 1988, '2  - 2 - 2', '-', '+', 252, 0, '', 0),
-(55, 'bus', 'Jelcz', 'PR110M', 1987, 1988, '2  - 2 - 2', '-', '+', 253, 0, '', 0),
-(56, 'bus', 'Jelcz', 'PR110M', 1988, 1988, '2  - 2 - 2', '-', '+', 254, 0, '', 0),
-(57, 'bus', 'Jelcz', 'PR110M', 1987, 1987, '2  - 2 - 2', '-', '+', 255, 0, '', 0),
-(58, 'bus', 'Jelcz', 'PR110M', 1988, 1988, '2  - 2 - 2', '-', '+', 256, 0, '', 0),
-(59, 'bus', 'Jelcz', 'PR110M', 1988, 1988, '2  - 2 - 2', '-', '+', 257, 0, '', 0),
-(60, 'bus', 'Mercedes-Benz', 'O530', 2003, 2019, '2 - 2 - 0', '+', '+', 261, 0, 'Do przewoz?w szkolnych', 0),
-(61, 'bus', 'Solaris', 'Urbino 18 III', 2007, 2007, '2 - 2 - 2 - 2', '-', '+', 301, 0, '', 0),
-(62, 'bus', 'Solaris', 'Urbino 18 III', 2007, 2007, '2 - 2 - 2 - 2', '-', '+', 302, 0, '', 0),
-(63, 'bus', 'Solaris', 'Urbino 18 III', 2007, 2007, '2 - 2 - 2 - 2', '-', '+', 303, 0, '', 0),
-(64, 'bus', 'Solaris', 'Urbino 18 III', 2012, 2012, '2 - 2 - 2 - 2', '+', '+', 304, 0, '', 0),
-(65, 'bus', 'Solaris', 'Urbino 18 III', 2012, 2012, '2 - 2 - 2 - 2', '+', '+', 305, 0, '', 0),
-(66, 'bus', 'Solaris', 'Urbino 18 III', 2017, 2017, '2 - 2 - 2 - 2', '+', '+', 306, 0, 'Z dotacji UE', 0),
-(67, 'bus', 'Solaris', 'Urbino 18 III', 2008, 2018, '2 - 2 - 2 - 0', '+', '+', 307, 0, 'ex. BVG Berlin', 0),
-(68, 'bus', 'Solaris', 'Urbino 18 IV', 2019, 2019, '2 - 2 - 2 - 2', '+', '+', 308, 0, 'Z dotacji UE', 0),
-(69, 'bus', 'Solaris', 'Urbino 18 II', 2004, 2020, '2 - 2 - 2 - 2', '+', '+', 309, 0, 'ex. Winterthur', 0),
-(70, 'bus', 'Solaris', 'Urbino 15 III', 2017, 2018, '2  - 2 - 2', '+', '+', 311, 0, 'Z dotacji UE', 0),
-(71, 'bus', 'Solaris', 'Urbino 15 III', 2017, 2018, '2  - 2 - 2', '+', '+', 312, 0, 'Z dotacji UE', 0),
-(72, 'bus', 'Jelcz', 'M181M', 1995, 1996, '2 - 2 - 2 - 2', '-', '+', 316, 0, '', 0),
-(73, 'bus', 'Jelcz', 'M181M', 1997, 1997, '2 - 2 - 2 - 2', '-', '+', 317, 0, '', 0),
-(74, 'bus', 'Jelcz', 'M181M', 1997, 1997, '2 - 2 - 2 - 2', '-', '+', 318, 0, '', 0),
-(75, 'bus', 'MAN', 'NG313', 2001, 2017, '2 - 2 - 2 - 0', '-', '+', 319, 0, 'ex. WSW Wuppertal', 0),
-(76, 'bus', 'MAN', 'NG313', 2001, 2017, '2 - 2 - 2 - 0', '-', '+', 320, 0, 'ex. WSW Wuppertal', 0),
-(77, 'bus', 'Ikarus', '280.26', 1985, 1985, '2 - 2 - 2 - 2', '-', '+', 321, 0, '', 0),
-(78, 'bus', 'Ikarus', '280.26', 1987, 1987, '2 - 2 - 2 - 2', '-', '+', 322, 0, '', 0),
-(79, 'bus', 'Ikarus', '280.26', 1990, 1990, '2 - 2 - 2 - 2', '-', '+', 323, 0, '', 0),
-(80, 'bus', 'Ikarus', '280.26', 1990, 1990, '2 - 2 - 2 - 2', '-', '+', 324, 0, '', 0),
-(81, 'bus', 'Ikarus', '435.05C', 1994, 1995, '2 - 2 - 2 - 2', '-', '+', 325, 0, '', 0),
-(82, 'bus', 'Neoplan', 'N4020', 1998, 1998, '2  - 2 - 2', '-', '+', 327, 0, '', 0),
-(83, 'bus', 'Neoplan', 'N4020', 1998, 1998, '2  - 2 - 2', '-', '+', 328, 0, '', 0),
-(84, 'bus', 'Neoplan', 'N4020', 1998, 1998, '2  - 2 - 2', '-', '+', 329, 0, '', 0),
-(85, 'bus', 'MAN', 'NL313-15', 2004, 2008, '2  - 2 - 2', '+', '+', 331, 0, 'ex. Oslo', 0),
-(86, 'bus', 'MAN', 'NL313-15', 2004, 2008, '2  - 2 - 2', '+', '+', 332, 0, 'ex. Oslo', 0),
-(87, 'bus', 'MAN', 'NL313-15', 2004, 2008, '2  - 2 - 2', '+', '+', 333, 0, 'ex. Oslo', 0),
-(88, 'bus', 'MAN', 'NG312', 1999, 1999, '2 - 2 - 2 - 2', '+', '+', 334, 0, 'Klimatyzacja kierowcy', 0),
-(89, 'bus', 'MAN', 'NG312', 1999, 2000, '2 - 2 - 2 - 2', '+', '+', 335, 0, 'Klimatyzacja kierowcy', 0),
-(90, 'bus', 'Neoplan', 'N4021NF', 1994, 2002, '2 - 2 - 2 - 0', '-', '+', 337, 0, 'ex. Niemcy', 0),
-(91, 'bus', 'MAN', 'NG312', 1995, 2005, '2 - 2 - 2 - 0', '-', '+', 338, 0, 'ex. KEVAG Koblez', 0),
-(92, 'bus', 'MAN', 'NG312', 1995, 2005, '2 - 2 - 2 - 0', '-', '+', 339, 0, 'ex. KEVAG Koblez', 0),
-(93, 'bus', 'Volvo', 'B10MA', 1996, 1996, '2 - 2 - 2 - 2', '-', '+', 341, 0, 'Sta?y przydzia? na linie nocne', 0),
-(94, 'tram', 'Duewag', 'GT6', 1962, 2006, '2 - 2|2 - 2', 'NIE', 'NIE', 35, NULL, 'ex. Gotha #396', 0);
+INSERT INTO `vehicles` (`id`, `typ_pojazdu`, `miasto`, `marka`, `model`, `uklad_drzwi`, `rocznik`, `rok_wprowadzenia`, `klimatyzacja`, `biletomat`, `numer_tab`, `uwagi`, `id_workshop`, `id_timetable`) VALUES
+(1, 'Bus', 'Gorzow Wiktorowski', 'Autosan', 'H7-20.01', '2  - 0', '2000', '2000', 'NIE', 'TAK', 102, '', 0, 0),
+(2, 'Bus', 'Gorzow Wiktorowski', 'MAN', 'NM223', '1 - 2 - 0', '1999', '2014', 'NIE', 'TAK', 104, '', 0, 0),
+(3, 'Bus', 'Gorzow Wiktorowski', 'Jelcz', 'M11', '2 - 2 - 2 ', '1987', '1987', 'NIE', 'TAK', 105, '', 0, 0),
+(4, 'Bus', 'Gorzow Wiktorowski', 'Jelcz', 'M11', '2 - 2 - 2 ', '1987', '1987', 'NIE', 'TAK', 106, '', 0, 0),
+(5, 'Bus', 'Gorzow Wiktorowski', 'Jelcz', 'M11', '2 - 2 - 2 ', '1987', '1987', 'NIE', 'TAK', 107, '', 0, 0),
+(6, 'Bus', 'Gorzow Wiktorowski', 'Solaris', 'Urbino 10 III', '1 - 2 - 0', '2017', '2018', 'TAK', 'TAK', 108, 'Z dotacji UE', 0, 0),
+(7, 'Bus', 'Gorzow Wiktorowski', 'Solaris', 'Urbino 10 III', '1 - 2 - 0', '2017', '2018', 'TAK', 'TAK', 109, 'Z dotacji UE', 0, 0),
+(8, 'Bus', 'Gorzow Wiktorowski', 'Solaris', 'Urbino 8,9 III LE', '1 - 2 - 0', '2019', '2020', 'TAK', 'TAK', 110, 'Z dotacji UE', 0, 0),
+(9, 'Bus', 'Gorzow Wiktorowski', 'Solaris', 'Urbino 8,9 III LE', '1 - 2 - 0', '2019', '2020', 'TAK', 'TAK', 111, 'Z dotacji UE', 0, 0),
+(10, 'Bus', 'Gorzow Wiktorowski', 'Jelcz', '120MM/2', '2 - 2 - 2 ', '1994', '1994', 'NIE', 'TAK', 201, '', 0, 0),
+(11, 'Bus', 'Gorzow Wiktorowski', 'Jelcz', '120MM/2', '2 - 2 - 2 ', '2000', '2000', 'NIE', 'TAK', 202, '', 0, 0),
+(12, 'Bus', 'Gorzow Wiktorowski', 'Jelcz', '120MM/2', '2 - 2 - 2 ', '2001', '2001', 'NIE', 'TAK', 203, '', 1, 0),
+(13, 'Bus', 'Gorzow Wiktorowski', 'Jelcz', '120MM/2', '2 - 2 - 2 ', '2001', '2001', 'NIE', 'TAK', 204, '', 0, 0),
+(14, 'Bus', 'Gorzow Wiktorowski', 'Jelcz', '120MM/2', '2 - 2 - 2 ', '2002', '2002', 'NIE', 'TAK', 205, '', 0, 0),
+(15, 'Bus', 'Gorzow Wiktorowski', 'Jelcz', '120MM/2', '2 - 2 - 2 ', '2002', '2003', 'NIE', 'TAK', 206, '', 0, 0),
+(16, 'Bus', 'Gorzow Wiktorowski', 'Jelcz', 'M121M', '2 - 2 - 2 ', '1996', '1996', 'NIE', 'TAK', 207, '', 0, 0),
+(17, 'Bus', 'Gorzow Wiktorowski', 'Jelcz', 'M121M', '2 - 2 - 2 ', '1999', '1999', 'NIE', 'TAK', 208, '', 0, 0),
+(18, 'Bus', 'Gorzow Wiktorowski', 'Jelcz', 'M121M', '2 - 2 - 2 ', '1999', '1999', 'NIE', 'TAK', 209, '', 0, 0),
+(19, 'Bus', 'Gorzow Wiktorowski', 'Jelcz', 'M121M', '2 - 2 - 2 ', '1999', '1999', 'NIE', 'TAK', 210, '', 0, 0),
+(20, 'Bus', 'Gorzow Wiktorowski', 'Jelcz', '120M', '2 - 2 - 2 ', '1992', '1992', 'NIE', 'TAK', 212, '', 0, 0),
+(21, 'Bus', 'Gorzow Wiktorowski', 'Jelcz', '120M', '2 - 2 - 2 ', '1992', '1992', 'NIE', 'TAK', 213, '', 0, 0),
+(22, 'Bus', 'Gorzow Wiktorowski', 'Ikarus', '260.04', '2 - 2 - 2 ', '1988', '1988', 'NIE', 'TAK', 214, '', 0, 0),
+(23, 'Bus', 'Gorzow Wiktorowski', 'Ikarus', '260.30A', '2 - 2 - 2 ', '1996', '1996', 'NIE', 'TAK', 215, '', 0, 0),
+(24, 'Bus', 'Gorzow Wiktorowski', 'Ikarus', '260.30A', '2 - 2 - 2 ', '1996', '1996', 'NIE', 'TAK', 216, '', 0, 0),
+(25, 'Bus', 'Gorzow Wiktorowski', 'Mercedes-Benz', 'O405N2', '2 - 2 - 0', '1997', '2008', 'NIE', 'TAK', 217, '', 0, 0),
+(26, 'Bus', 'Gorzow Wiktorowski', 'Mercedes-Benz', 'O405N2', '2 - 2 - 2 ', '1999', '2012', 'NIE', 'TAK', 218, '', 0, 0),
+(27, 'Bus', 'Gorzow Wiktorowski', 'MAN', 'NL222', '2 - 2 - 2 ', '2000', '2000', 'NIE', 'TAK', 219, '', 0, 0),
+(28, 'Bus', 'Gorzow Wiktorowski', 'MAN', 'NL222', '2 - 2 - 2 ', '2000', '2000', 'NIE', 'TAK', 220, '', 0, 0),
+(29, 'Bus', 'Gorzow Wiktorowski', 'MAN', 'NL223', '2 - 2 - 2 ', '2002', '2002', 'NIE', 'TAK', 221, '', 0, 0),
+(30, 'Bus', 'Gorzow Wiktorowski', 'MAN', 'NL223', '2 - 2 - 2 ', '2002', '2002', 'NIE', 'TAK', 222, '', 0, 0),
+(31, 'Bus', 'Gorzow Wiktorowski', 'MAN', 'NL223', '2 - 2 - 2 ', '2002', '2002', 'NIE', 'TAK', 223, '', 0, 0),
+(32, 'Bus', 'Gorzow Wiktorowski', 'MAN', 'NL223', '2 - 2 - 2 ', '2002', '2003', 'NIE', 'TAK', 224, '', 0, 0),
+(33, 'Bus', 'Gorzow Wiktorowski', 'MAN', 'NL263', '2 - 2 - 2 ', '2004', '2013', 'TAK', 'TAK', 225, 'ex. Oslo', 0, 0),
+(34, 'Bus', 'Gorzow Wiktorowski', 'MAN', 'NL263', '2 - 2 - 2 ', '2004', '2013', 'TAK', 'TAK', 226, 'ex. Oslo', 0, 0),
+(35, 'Bus', 'Gorzow Wiktorowski', 'MAN', 'NL262', '2 - 2 - 0', '1997', '2010', 'NIE', 'TAK', 228, 'ex. Oslo', 0, 0),
+(36, 'Bus', 'Gorzow Wiktorowski', 'MAN', 'NL263', '2 - 2 - 0', '1999', '2016', 'NIE', 'TAK', 229, 'ex. Niemcy', 0, 0),
+(37, 'Bus', 'Gorzow Wiktorowski', 'Volvo/Vest', 'B7RLE/Center', '2 - 2 - 2 ', '2009', '2019', 'TAK', '-', 230, 'ex. Unibuss Oslo', 0, 0),
+(38, 'Bus', 'Gorzow Wiktorowski', 'Volvo/Vest', 'B7RLE/Center', '2 - 2 - 2 ', '2009', '2019', 'TAK', '-', 231, 'ex. Unibuss Oslo', 0, 0),
+(39, 'Bus', 'Gorzow Wiktorowski', 'Solaris', 'Urbino 12 II', '2 - 2 - 2 ', '2004', '2019', 'TAK', 'TAK', 234, 'ex. Winterthur', 0, 0),
+(40, 'Bus', 'Gorzow Wiktorowski', 'Volvo', 'B10BLE', '2 - 2 - 2 ', '1997', '1997', '', 'TAK', 235, '', 0, 0),
+(41, 'Bus', 'Gorzow Wiktorowski', 'Volvo', 'B10BLE', '2 - 2 - 2 ', '1997', '1997', 'NIE', 'TAK', 236, '', 0, 0),
+(42, 'Bus', 'Gorzow Wiktorowski', 'Volvo', 'B10BLE', '2 - 2 - 2 ', '1997', '1997', 'NIE', 'TAK', 237, '', 0, 0),
+(43, 'Bus', 'Gorzow Wiktorowski', 'Solaris', 'Urbino 12 III', '2 - 2 - 2 ', '2007', '2007', 'NIE', 'TAK', 238, '', 0, 0),
+(44, 'Bus', 'Gorzow Wiktorowski', 'Solaris', 'Urbino 12 III', '2 - 2 - 2 ', '2007', '2007', 'NIE', 'TAK', 239, '', 0, 0),
+(45, 'Bus', 'Gorzow Wiktorowski', 'Solaris', 'Urbino 12 III', '2 - 2 - 2 ', '2007', '2007', 'NIE', 'TAK', 240, '', 0, 0),
+(46, 'Bus', 'Gorzow Wiktorowski', 'Solaris', 'Urbino 12 III', '2 - 2 - 2 ', '2007', '2007', 'NIE', 'TAK', 241, '', 0, 0),
+(47, 'Bus', 'Gorzow Wiktorowski', 'Solaris', 'Urbino 12 III', '2 - 2 - 2 ', '2017', '2017', 'TAK', 'TAK', 242, 'Z dotacji UE', 0, 0),
+(48, 'Bus', 'Gorzow Wiktorowski', 'Solaris', 'Urbino 12 III', '2 - 2 - 2 ', '2017', '2017', 'TAK', 'TAK', 243, 'Z dotacji UE', 0, 0),
+(49, 'Bus', 'Gorzow Wiktorowski', 'Solaris', 'Urbino 12 III', '2 - 2 - 2 ', '2017', '2017', 'TAK', 'TAK', 244, 'Z dotacji UE', 0, 0),
+(50, 'Bus', 'Gorzow Wiktorowski', 'Solaris', 'Urbino 12 III', '2 - 2 - 0', '2006', '2019', 'NIE', 'TAK', 245, '', 0, 0),
+(51, 'Bus', 'Gorzow Wiktorowski', 'Solaris', 'Urbino 12 III', '2 - 2 - 0', '2006', '2019', 'NIE', 'TAK', 246, '', 0, 0),
+(52, 'Bus', 'Gorzow Wiktorowski', 'Solaris', 'Urbino 12 III', '2 - 2 - 0', '2006', '2019', 'NIE', 'TAK', 247, '', 0, 0),
+(53, 'Bus', 'Gorzow Wiktorowski', 'Jelcz', 'PR110M', '2 - 2 - 2 ', '1988', '1988', 'NIE', 'TAK', 251, '', 0, 0),
+(54, 'Bus', 'Gorzow Wiktorowski', 'Jelcz', 'PR110M', '2 - 2 - 2 ', '1988', '1988', 'NIE', 'TAK', 252, '', 0, 0),
+(55, 'Bus', 'Gorzow Wiktorowski', 'Jelcz', 'PR110M', '2 - 2 - 2 ', '1987', '1988', 'NIE', 'TAK', 253, '', 0, 0),
+(56, 'Bus', 'Gorzow Wiktorowski', 'Jelcz', 'PR110M', '2 - 2 - 2 ', '1988', '1988', 'NIE', 'TAK', 254, '', 0, 0),
+(57, 'Bus', 'Gorzow Wiktorowski', 'Jelcz', 'PR110M', '2 - 2 - 2 ', '1987', '1987', 'NIE', 'TAK', 255, '', 0, 0),
+(58, 'Bus', 'Gorzow Wiktorowski', 'Jelcz', 'PR110M', '2 - 2 - 2 ', '1988', '1988', 'NIE', 'TAK', 256, '', 0, 0),
+(59, 'Bus', 'Gorzow Wiktorowski', 'Jelcz', 'PR110M', '2 - 2 - 2 ', '1988', '1988', 'NIE', 'TAK', 257, '', 0, 0),
+(60, 'Bus', 'Gorzow Wiktorowski', 'Mercedes-Benz', 'O530', '2 - 2 - 0', '2003', '2019', 'TAK', 'TAK', 261, 'Do przewoz?w szkolnych', 0, 0),
+(61, 'Bus', 'Gorzow Wiktorowski', 'Solaris', 'Urbino 18 III', '2 - 2 - 2 - 2', '2007', '2007', 'NIE', 'TAK', 301, '', 0, 0),
+(62, 'Bus', 'Gorzow Wiktorowski', 'Solaris', 'Urbino 18 III', '2 - 2 - 2 - 2', '2007', '2007', 'NIE', 'TAK', 302, '', 0, 0),
+(63, 'Bus', 'Gorzow Wiktorowski', 'Solaris', 'Urbino 18 III', '2 - 2 - 2 - 2', '2007', '2007', 'NIE', 'TAK', 303, '', 0, 0),
+(64, 'Bus', 'Gorzow Wiktorowski', 'Solaris', 'Urbino 18 III', '2 - 2 - 2 - 2', '2012', '2012', 'TAK', 'TAK', 304, '', 0, 0),
+(65, 'Bus', 'Gorzow Wiktorowski', 'Solaris', 'Urbino 18 III', '2 - 2 - 2 - 2', '2012', '2012', 'TAK', 'TAK', 305, '', 0, 0),
+(66, 'Bus', 'Gorzow Wiktorowski', 'Solaris', 'Urbino 18 III', '2 - 2 - 2 - 2', '2017', '2017', 'TAK', 'TAK', 306, 'Z dotacji UE', 0, 0),
+(67, 'Bus', 'Gorzow Wiktorowski', 'Solaris', 'Urbino 18 III', '2 - 2 - 2 - 0', '2008', '2018', 'TAK', 'TAK', 307, 'ex. BVG Berlin', 0, 0),
+(68, 'Bus', 'Gorzow Wiktorowski', 'Solaris', 'Urbino 18 IV', '2 - 2 - 2 - 2', '2019', '2019', 'TAK', 'TAK', 308, 'Z dotacji UE', 0, 0),
+(69, 'Bus', 'Gorzow Wiktorowski', 'Solaris', 'Urbino 18 II', '2 - 2 - 2 - 2', '2004', '2020', 'TAK', 'TAK', 309, 'ex. Winterthur', 0, 0),
+(70, 'Bus', 'Gorzow Wiktorowski', 'Solaris', 'Urbino 15 III', '2 - 2 - 2 ', '2017', '2018', 'TAK', 'TAK', 311, 'Z dotacji UE', 0, 0),
+(71, 'Bus', 'Gorzow Wiktorowski', 'Solaris', 'Urbino 15 III', '2 - 2 - 2 ', '2017', '2018', 'TAK', 'TAK', 312, 'Z dotacji UE', 0, 0),
+(72, 'Bus', 'Gorzow Wiktorowski', 'Jelcz', 'M181M', '2 - 2 - 2 - 2', '1995', '1996', 'NIE', 'TAK', 316, '', 0, 0),
+(73, 'Bus', 'Gorzow Wiktorowski', 'Jelcz', 'M181M', '2 - 2 - 2 - 2', '1997', '1997', 'NIE', 'TAK', 317, '', 0, 0),
+(74, 'Bus', 'Gorzow Wiktorowski', 'Jelcz', 'M181M', '2 - 2 - 2 - 2', '1997', '1997', 'NIE', 'TAK', 318, '', 0, 0),
+(75, 'Bus', 'Gorzow Wiktorowski', 'MAN', 'NG313', '2 - 2 - 2 - 0', '2001', '2017', 'NIE', 'TAK', 319, 'ex. WSW Wuppertal', 0, 0),
+(76, 'Bus', 'Gorzow Wiktorowski', 'MAN', 'NG313', '2 - 2 - 2 - 0', '2001', '2017', 'NIE', 'TAK', 320, 'ex. WSW Wuppertal', 0, 0),
+(77, 'Bus', 'Gorzow Wiktorowski', 'Ikarus', '280.26', '2 - 2 - 2 - 2', '1985', '1985', 'NIE', 'TAK', 321, '', 0, 0),
+(78, 'Bus', 'Gorzow Wiktorowski', 'Ikarus', '280.26', '2 - 2 - 2 - 2', '1987', '1987', 'NIE', 'TAK', 322, '', 0, 0),
+(79, 'Bus', 'Gorzow Wiktorowski', 'Ikarus', '280.26', '2 - 2 - 2 - 2', '1990', '1990', 'NIE', 'TAK', 323, '', 0, 0),
+(80, 'Bus', 'Gorzow Wiktorowski', 'Ikarus', '280.26', '2 - 2 - 2 - 2', '1990', '1990', 'NIE', 'TAK', 324, '', 0, 0),
+(81, 'Bus', 'Gorzow Wiktorowski', 'Ikarus', '435.05C', '2 - 2 - 2 - 2', '1994', '1995', 'NIE', 'TAK', 325, '', 0, 0),
+(82, 'Bus', 'Gorzow Wiktorowski', 'Neoplan', 'N4020', '2  - 2 - 2 ', '1998', '1998', 'NIE', 'TAK', 327, '', 0, 0),
+(83, 'Bus', 'Gorzow Wiktorowski', 'Neoplan', 'N4020', '2  - 2 - 2 ', '1998', '1998', 'NIE', 'TAK', 328, '', 0, 0),
+(84, 'Bus', 'Gorzow Wiktorowski', 'Neoplan', 'N4020', '2  - 2 - 2 ', '1998', '1998', 'NIE', 'TAK', 329, '', 0, 0),
+(85, 'Bus', 'Gorzow Wiktorowski', 'MAN', 'NL313-15', '2  - 2 - 2 ', '2004', '2008', 'TAK', 'TAK', 331, 'ex. Oslo', 0, 0),
+(86, 'Bus', 'Gorzow Wiktorowski', 'MAN', 'NL313-15', '2  - 2 - 2 ', '2004', '2008', 'TAK', 'TAK', 332, 'ex. Oslo', 0, 0),
+(87, 'Bus', 'Gorzow Wiktorowski', 'MAN', 'NL313-15', '2  - 2 - 2 ', '2004', '2008', 'TAK', 'TAK', 333, 'ex. Oslo', 0, 0),
+(88, 'Bus', 'Gorzow Wiktorowski', 'MAN', 'NG312', '2 - 2 - 2 - 2', '1999', '1999', 'TAK', 'TAK', 334, 'Klimatyzacja kierowcy', 0, 0),
+(89, 'Bus', 'Gorzow Wiktorowski', 'MAN', 'NG312', '2 - 2 - 2 - 2', '1999', '2000', 'TAK', 'TAK', 335, 'Klimatyzacja kierowcy', 0, 0),
+(90, 'Bus', 'Gorzow Wiktorowski', 'Neoplan', 'N4021NF', '2 - 2 - 2 - 0', '1994', '2002', 'NIE', 'TAK', 337, 'ex. Niemcy', 0, 0),
+(91, 'Bus', 'Gorzow Wiktorowski', 'MAN', 'NG312', '2 - 2 - 2 - 0', '1995', '2005', 'NIE', 'TAK', 338, 'ex. KEVAG Koblez', 0, 0),
+(92, 'Bus', 'Gorzow Wiktorowski', 'MAN', 'NG312', '2 - 2 - 2 - 0', '1995', '2005', 'NIE', 'TAK', 339, 'ex. KEVAG Koblez', 0, 0),
+(93, 'Bus', 'Gorzow Wiktorowski', 'Volvo', 'B10MA', '2 - 2 - 2 - 2', '1996', '1996', 'NIE', 'TAK', 341, 'Sta?y przydzia? na linie nocne', 0, 0);
 
 -- --------------------------------------------------------
 
 --
--- Struktura tabeli dla tabeli `workshop_gw`
+-- Struktura tabeli dla tabeli `workshop`
 --
 
-CREATE TABLE `workshop_gw` (
+CREATE TABLE `workshop` (
   `id` int(11) NOT NULL,
   `id_pojazdu` int(11) NOT NULL,
-  `pocz_post` date NOT NULL,
-  `koniec_post` date NOT NULL,
-  `powod` mediumtext COLLATE utf8_polish_ci NOT NULL
+  `powod` longtext COLLATE utf8_polish_ci,
+  `data_roz` datetime DEFAULT NULL,
+  `data_zak` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
 --
--- Zrzut danych tabeli `workshop_gw`
+-- Zrzut danych tabeli `workshop`
 --
 
-INSERT INTO `workshop_gw` (`id`, `id_pojazdu`, `pocz_post`, `koniec_post`, `powod`) VALUES
-(2, 1, '2021-02-01', '2022-01-01', 'aaaa'),
-(3, 2, '2020-01-01', '2022-02-02', 'aaa'),
-(8, 3, '2020-01-01', '2023-02-02', 'aaa'),
-(10, 11, '2020-02-02', '2020-02-20', 'Awaria silnika'),
-(24, 1, '2020-02-13', '2020-02-22', 'test');
+INSERT INTO `workshop` (`id`, `id_pojazdu`, `powod`, `data_roz`, `data_zak`) VALUES
+(1, 12, 'Wymiana skrzyni', '2020-02-19 00:00:00', '2020-02-27 00:00:00');
 
 --
 -- Indeksy dla zrzutów tabel
@@ -267,18 +269,25 @@ ALTER TABLE `destination`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeksy dla tabeli `timetables_all`
+-- Indeksy dla tabeli `plan`
 --
-ALTER TABLE `timetables_all`
+ALTER TABLE `plan`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `id_timetables` (`id_timetables`),
-  ADD KEY `id_destination` (`id_destination`);
+  ADD KEY `id_timetable` (`id_timetable`);
 
 --
--- Indeksy dla tabeli `timetables_gw`
+-- Indeksy dla tabeli `timetable`
 --
-ALTER TABLE `timetables_gw`
+ALTER TABLE `timetable`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indeksy dla tabeli `timetable_course`
+--
+ALTER TABLE `timetable_course`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_timetable` (`id_timetable`,`id_destination`),
+  ADD KEY `id_destination` (`id_destination`);
 
 --
 -- Indeksy dla tabeli `users`
@@ -290,12 +299,13 @@ ALTER TABLE `users`
 -- Indeksy dla tabeli `vehicles`
 --
 ALTER TABLE `vehicles`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_workshop` (`id_workshop`,`id_timetable`);
 
 --
--- Indeksy dla tabeli `workshop_gw`
+-- Indeksy dla tabeli `workshop`
 --
-ALTER TABLE `workshop_gw`
+ALTER TABLE `workshop`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id_pojazdu` (`id_pojazdu`);
 
@@ -310,44 +320,57 @@ ALTER TABLE `destination`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT dla tabeli `timetables_all`
+-- AUTO_INCREMENT dla tabeli `plan`
 --
-ALTER TABLE `timetables_all`
+ALTER TABLE `plan`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT dla tabeli `timetables_gw`
+-- AUTO_INCREMENT dla tabeli `timetable`
 --
-ALTER TABLE `timetables_gw`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+ALTER TABLE `timetable`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT dla tabeli `timetable_course`
+--
+ALTER TABLE `timetable_course`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT dla tabeli `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT dla tabeli `vehicles`
 --
 ALTER TABLE `vehicles`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=95;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=94;
 
 --
--- AUTO_INCREMENT dla tabeli `workshop_gw`
+-- AUTO_INCREMENT dla tabeli `workshop`
 --
-ALTER TABLE `workshop_gw`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+ALTER TABLE `workshop`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Ograniczenia dla zrzutów tabel
 --
 
 --
--- Ograniczenia dla tabeli `workshop_gw`
+-- Ograniczenia dla tabeli `plan`
 --
-ALTER TABLE `workshop_gw`
-  ADD CONSTRAINT `workshop_gw_ibfk_1` FOREIGN KEY (`id_pojazdu`) REFERENCES `vehicles` (`id`);
+ALTER TABLE `plan`
+  ADD CONSTRAINT `plan_ibfk_1` FOREIGN KEY (`id_timetable`) REFERENCES `timetable` (`id`);
+
+--
+-- Ograniczenia dla tabeli `timetable_course`
+--
+ALTER TABLE `timetable_course`
+  ADD CONSTRAINT `timetable_course_ibfk_1` FOREIGN KEY (`id_destination`) REFERENCES `destination` (`id`),
+  ADD CONSTRAINT `timetable_course_ibfk_2` FOREIGN KEY (`id_timetable`) REFERENCES `timetable` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

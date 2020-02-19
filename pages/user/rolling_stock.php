@@ -17,7 +17,7 @@
             <?php
                 if($_SESSION['access'] == 2)
                 {
-                    if ($result = @$connect->query("SELECT * FROM `vehicles` where type='bus' ORDER BY `Numer_tab`"))
+                    if ($result = @$connect->query("SELECT * FROM `vehicles` where `typ_pojazdu`='BUS' and `miasto`='Gorzow Wiktorowski' ORDER BY `numer_tab`"))
                         {
                             echo "<table>
                             <tr class='main'>
@@ -52,7 +52,7 @@
                                     <td>".$row['uwagi']."</td>
                                     <td><button data-toggle='modal' data-target='#modal-edycja' data-idvehicle='".$row['id']."'>Edytuj</button><br />
                                     <button data-toggle='modal' data-target='#modal-szczegoly' data-idvehicle='".$row['id']."'>szczegóły</button><br />
-                                    <button data-toggle='modal' data-target='#modal-workshop' data-idvehicle='".$row['id']."'>Dodaj do warsztatu</button>
+                                    <button data-toggle='modal' data-target='#modal-workshop' data-idvehicle='".$row['id']."'>Dodaj do warsztatu</button><br/>
                                     <button data-toggle='modal' data-target='#modal-workshop' data-idvehicle='".$row['id']."'>Usuń pojazd</button>
                                     </td>
                                   </tr>";
@@ -62,7 +62,7 @@
 
                             echo "</table><br/>";
                         }
-                    if($result2 = @$connect->query("SELECT * FROM `vehicles` where type='tram' ORDER BY `numer_tab`"))
+                    if($result2 = @$connect->query("SELECT * FROM `vehicles` where typ_pojazdu='TRAM' and miasto='Gorzów Wiktorowski' ORDER BY `numer_tab`"))
                     {
                         echo "<table>
                             <tr class='main'>
@@ -94,7 +94,7 @@
                                 <td>".$row2['uwagi']."</td>
                                 <td><button data-toggle='modal' data-target='#modal-edycja' data-idvehicle='".$row['id']."'>Edytuj</button><br />
                               <button data-toggle='modal' data-target='#modal-szczegoly' data-idvehicle='".$row['id']."'>szczegóły</button><br />
-                              <button data-toggle='modal' data-target='#modal-workshop' data-idvehicle='".$row['id']."'>Dodaj do warsztatu</button>
+                              <button data-toggle='modal' data-target='#modal-workshop' data-idvehicle='".$row['id']."'>Dodaj do warsztatu</button><br/>
                               
                               </td>
 								
@@ -229,7 +229,6 @@
 	
   <script src="scripts/js/time-js.js"></script>
   <script src="scripts/js/search.js"></script>
-  <script src="scripts/js/pop_up.js"></script>
 	<script src="scripts/js/modals.js"></script>
 	
 </main>

@@ -11,33 +11,28 @@
             <a>Kurs:</a><br/>
             <select>";
 
-            if ($result = @$connect->query("SELECT * FROM `destination` ORDER BY `city`"))
+            if ($result = @$connect->query("SELECT * FROM `destination` ORDER BY `miasto`"))
             {
                 $destination = $result->num_rows;
                 if($destination>0)
                 {
                     while($row = $result->fetch_array())
                     {
-                        echo "<option name='$row[id]' value='$row[id]'>".$row['name']."</option>";
+                        echo "<option name='$row[id]' value='$row[id]'>".$row['relacja']." Czas przejazdu:".$row['czas_przejazdu']." min</option>";
                     }
                 }
             }
 
         echo "</select><br/>
             </div><br/>
-            <div class='col-md-4'>
-                <a>Numer linii:</a>
-                <input name='number_".$i."' type='text'/>
-            </div>
-            <div class='col-md-4'>
-                <a>Godzina odjazdu:</a>
-                <input name='departure_".$i."' id='departure[$i]' type='text'/>
-            </div><br/>
-            <div class='col-md-4'>
-                <a>Godzina przyjazdu:</a>
-                <span id='arrival'>
-                
-                </span>
+                <div class='col-md-4'>
+                    <a>Numer linii:</a>
+                    <input name='number_".$i."' type='text'/>
+                </div>
+                <div class='col-md-4'>
+                    <a>Godzina odjazdu:</a>
+                    <input name='departure_".$i."' id='departure[$i]' type='text'/>
+                </div><br/>
             </div><br/>";
     }
                

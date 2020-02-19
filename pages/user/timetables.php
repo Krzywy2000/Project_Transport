@@ -17,7 +17,7 @@
             <?php
                 if($_SESSION['access'] == 2)
                 {
-                    if ($result = @$connect->query("SELECT * FROM `timetables_gw` ORDER BY `nr_zadania`"))
+                    if ($result = @$connect->query("SELECT * FROM `timetable` ORDER BY `nazwa_zm`"))
                         {
                             echo "<table>
                             <tr class='main'>
@@ -33,9 +33,9 @@
                                 while($row = $result->fetch_array())
                                 {
                                     echo "<tr>
-                                        <td>".$row['nr_zadania']."</td>
+                                        <td>".$row['nazwa_zm']."</td>
                                         <td>".$row['godz_roz']."</td>
-                                        <td>".$row['godz_kon']."</td>
+                                        <td>".$row['godz_zak']."</td>
                                         <td>".$row['uwagi']."</td>
                                         <td><button>Edytuj</button><br/><button>Usuń</button><br/><button>Szczegóły</button></td>
                                     </tr>";
