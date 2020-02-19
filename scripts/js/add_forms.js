@@ -3,7 +3,7 @@ document.getElementById("drive").addEventListener("keyup", drive);
 function drive() {
     
     var drive = document.getElementById("drive").value;
-     
+
         var ajax = new XMLHttpRequest();
          
         ajax.onreadystatechange = function() {
@@ -15,5 +15,4 @@ function drive() {
         ajax.open("GET", "./scripts/php/add_forms.php?add_forms="+drive, true);
  
         ajax.send();
-    
 }

@@ -12,20 +12,20 @@
     echo $end."<br/>";
     echo $count_of_course."<br/>";
 
-    if ($result = @$connect->query("SELECT count(*) FROM `information_schema`.`columns` WHERE table_schema='edyspozytor' AND table_name='timetable_all'"))
+    if ($result = @$connect->query("SELECT count(*) FROM `information_schema`.`columns` WHERE table_schema='edyspozytor' AND table_name='timetables_all''"))
     {
         $count = $result->num_rows;
         if($count>1)
         {
             while($row = $result->fetch_array())
             {
-                $how_much_rows = $row('count(*)');
-                $how_much_rows_all = $how_much_rows - 4;
+                echo $row('count(*)');
             }
         }
     }
 
-    echo $how_much_rows_all;
+    //$how_much_rows_all = $how_much_rows - 4;
+    //echo $how_much_rows_all;
 
     while($i<$count_of_course){
         $i++;
