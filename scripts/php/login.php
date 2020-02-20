@@ -58,6 +58,11 @@
 				{
 					header('Location: ../../index_user.php');
 				}
+
+				if($_SESSION['access'] == '3')
+				{
+					header('Location: ../../index_user.php');
+				}
 				
 			} 
 			else 
