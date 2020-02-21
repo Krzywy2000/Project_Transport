@@ -9,7 +9,7 @@
         $i++;
         echo "<div class='col-md-12'>
             <a>Kurs:</a><br/>
-            <select>";
+            <select name='option_destination'>";
 
             if ($result = @$connect->query("SELECT * FROM `destination` ORDER BY `miasto`"))
             {
@@ -18,7 +18,7 @@
                 {
                     while($row = $result->fetch_array())
                     {
-                        echo "<option name='$row[id]' value='$row[id]'>".$row['relacja']." Czas przejazdu:".$row['czas_przejazdu']." min</option>";
+                        echo "<option name='destination_".$row['id']."' value='$row[id]'>".$row['relacja']." Czas przejazdu:".$row['czas_przejazdu']." min</option>";
                     }
                 }
             }
