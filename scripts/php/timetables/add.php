@@ -5,37 +5,30 @@
     $name = $_POST['name'];
     $start = $_POST['start'];
     $end = $_POST['end'];
+    $type = $_POST['type'];
+    $comment = $_POST['comment'];
     $count_of_course = $_POST['count_of_course'];
     $i=0;
-    echo $name."<br/>";
-    echo $start."<br/>";
-    echo $end."<br/>";
-    echo $count_of_course."<br/>";
-
-    if ($result = @$connect->query("SELECT count(*) FROM `information_schema`.`columns` WHERE table_schema='edyspozytor' AND table_name='timetables_all''"))
-    {
-        $count = $result->num_rows;
-        if($count>1)
-        {
-            while($row = $result->fetch_array())
-            {
-                echo $row('count(*)');
-            }
-        }
-    }
-
-    //$how_much_rows_all = $how_much_rows - 4;
-    //echo $how_much_rows_all;
 
     while($i<$count_of_course){
         $i++;
         $number = array($_POST['number_'.$i]);
         $departure = array($_POST['departure_'.$i]);
+        $destination = array($_POST['option_destination']);
+
+        $send = "INSERT INTO `timetable`(`nazwa_zm`, `godz_roz`, `godz_zak`, `rodzaj`, `uwagi`) VALUES ($name,$start,$end,$type,$comment)";
+        // SELECT MAX(id) FROM timetable
+        $connect->query($send);
+            
+        $check_id = "SELECT MAX(id) FROM timetable";
+
+        $id = mysqli_fetch_assoc($check_id);
+
+        $send_1 = "INSERT INTO `timetable_course`(`id_timetable`, `nr_kursu`, `id_destination`, `godz_roz`) VALUES ($id,$number,$destination,$departure)";
         
-        for($a=0;$a<$i;$a++){
-            echo $number[$a]."<br/>";
-            echo $departure[$a]."<br/>";
-        }
+        $connect->query($send_1);
+            
+        //header("Location: ../../../index_user.php?page=timetables");
 
     }
 ?>

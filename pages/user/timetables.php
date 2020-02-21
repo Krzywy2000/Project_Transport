@@ -66,6 +66,8 @@
                                 <div class='col-md-4'><a>Nazwa zadania: </a><input type='text' name='name'></div><br/>
                                 <div class='col-md-4'><a>Godzina rozpoczęcia: </a><input type='text' name='start'/></div><br/>
                                 <div class='col-md-4'> <a>Godzina zakończenia: </a><input type='text' name='end'/></div><br/>
+                                <div class='col-md-4'><a>Rodzaj: <input type='text' name='type' placeholder='TRAM/BUS'/></a></div>
+                                <div class='col-md-4'><a>Uwagi: <input type='text' name='comment'/></a></div>
                                 <div class='col-md-12'><a>Ilość kursów: </a><br/><input type='text' name='count_of_course' id='drive'/>
                                 </div>
                                 <span id="forms" class="col-sm-12">
