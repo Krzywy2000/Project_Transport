@@ -19,10 +19,9 @@
                                 while($row = $result->fetch_array())
                                 {
                                     echo "<tr>
-                                        <td>".$row['nr_zadania']."</td>
+                                        <td>".$row['nazwa_zm']."</td>
                                         <td>".$row['godz_roz']."</td>
-                                        <td>".$row['godz_kon']."</td>
-                                        <td>".$row['id_przydzial']."</td>
+                                        <td>".$row['godz_zak']."</td>
                                     </tr>";
                                 }
                             }

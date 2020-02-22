@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 20 Lut 2020, 00:49
+-- Czas generowania: 22 Lut 2020, 02:27
 -- Wersja serwera: 10.1.38-MariaDB
 -- Wersja PHP: 7.3.2
 
@@ -32,8 +32,8 @@ CREATE TABLE `destination` (
   `id` int(11) NOT NULL,
   `relacja` text COLLATE utf8_polish_ci,
   `numer_linii` int(11) DEFAULT NULL,
-  `miasto` text COLLATE utf8_polish_ci,
-  `czas_przejazdu` int(11) DEFAULT NULL,
+  `miasto` int(11) DEFAULT NULL,
+  `czas_przejazdu` time DEFAULT NULL,
   `uwagi` text COLLATE utf8_polish_ci
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
@@ -42,8 +42,8 @@ CREATE TABLE `destination` (
 --
 
 INSERT INTO `destination` (`id`, `relacja`, `numer_linii`, `miasto`, `czas_przejazdu`, `uwagi`) VALUES
-(1, 'Zajezdnia - Dworzec Główny PKP', NULL, 'Gorzow Wiktorowski', 14, 'Wyjazd z zajezdni'),
-(2, 'Dworzec Główny PKP', NULL, 'Gorzow Wiktorowski', 14, 'Zjazd do zajezdni');
+(1, 'Zajezdnia - Dworzec Główny PKP', NULL, 2, '00:14:00', 'Wyjazd z zajezdni'),
+(2, 'Dworzec Główny PKP', NULL, 2, '00:14:00', 'Zjazd do zajezdni');
 
 -- --------------------------------------------------------
 
@@ -66,9 +66,10 @@ CREATE TABLE `plan` (
 
 CREATE TABLE `timetable` (
   `id` int(11) NOT NULL,
+  `miasto` int(11) NOT NULL,
   `nazwa_zm` text COLLATE utf8_polish_ci,
-  `godz_roz` text COLLATE utf8_polish_ci,
-  `godz_zak` text COLLATE utf8_polish_ci,
+  `godz_roz` time DEFAULT NULL,
+  `godz_zak` time DEFAULT NULL,
   `rodzaj` text COLLATE utf8_polish_ci,
   `uwagi` longtext COLLATE utf8_polish_ci
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
@@ -83,9 +84,10 @@ CREATE TABLE `timetable_course` (
   `id` int(11) NOT NULL,
   `id_timetable` int(11) DEFAULT NULL,
   `nr_kursu` int(11) DEFAULT NULL,
+  `nr_linii` int(11) NOT NULL,
   `id_destination` int(11) DEFAULT NULL,
-  `godz_roz` text COLLATE utf8_polish_ci,
-  `godz_zak` text COLLATE utf8_polish_ci
+  `godz_roz` time DEFAULT NULL,
+  `godz_zak` time DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
 -- --------------------------------------------------------
@@ -272,8 +274,7 @@ ALTER TABLE `destination`
 -- Indeksy dla tabeli `plan`
 --
 ALTER TABLE `plan`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `id_timetable` (`id_timetable`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indeksy dla tabeli `timetable`
@@ -285,9 +286,7 @@ ALTER TABLE `timetable`
 -- Indeksy dla tabeli `timetable_course`
 --
 ALTER TABLE `timetable_course`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `id_timetable` (`id_timetable`,`id_destination`),
-  ADD KEY `id_destination` (`id_destination`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indeksy dla tabeli `users`
@@ -299,31 +298,17 @@ ALTER TABLE `users`
 -- Indeksy dla tabeli `vehicles`
 --
 ALTER TABLE `vehicles`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `id_workshop` (`id_workshop`,`id_timetable`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indeksy dla tabeli `workshop`
 --
 ALTER TABLE `workshop`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `id_pojazdu` (`id_pojazdu`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
-
---
--- AUTO_INCREMENT dla tabeli `destination`
---
-ALTER TABLE `destination`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT dla tabeli `plan`
---
-ALTER TABLE `plan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT dla tabeli `timetable`
@@ -336,41 +321,6 @@ ALTER TABLE `timetable`
 --
 ALTER TABLE `timetable_course`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT dla tabeli `users`
---
-ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-
---
--- AUTO_INCREMENT dla tabeli `vehicles`
---
-ALTER TABLE `vehicles`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=94;
-
---
--- AUTO_INCREMENT dla tabeli `workshop`
---
-ALTER TABLE `workshop`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- Ograniczenia dla zrzutów tabel
---
-
---
--- Ograniczenia dla tabeli `plan`
---
-ALTER TABLE `plan`
-  ADD CONSTRAINT `plan_ibfk_1` FOREIGN KEY (`id_timetable`) REFERENCES `timetable` (`id`);
-
---
--- Ograniczenia dla tabeli `timetable_course`
---
-ALTER TABLE `timetable_course`
-  ADD CONSTRAINT `timetable_course_ibfk_1` FOREIGN KEY (`id_destination`) REFERENCES `destination` (`id`),
-  ADD CONSTRAINT `timetable_course_ibfk_2` FOREIGN KEY (`id_timetable`) REFERENCES `timetable` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

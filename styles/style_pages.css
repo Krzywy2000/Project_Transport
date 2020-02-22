@@ -3,7 +3,7 @@ header, footer {
 }
 
 main {
-    min-height: 69vh;
+    background: white;
 }
 
 .text {
