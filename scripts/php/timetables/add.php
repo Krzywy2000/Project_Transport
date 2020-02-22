@@ -47,12 +47,9 @@
                     }
                 }
             }
+        //echo $arrival."<br/>";
 
-        
-        
-        echo $arrival."<br/>";
-        $arrival_all = date('H:i:s',strtotime($arrival)) + date('H:i:s',strtotime($departure));
-
+        $arrival_all = strtotime($departure) + strtotime($arrival);
         echo $arrival_all."<br/>";
 
         $send_1 = "INSERT INTO `timetable_course`(`id_timetable`, `nr_kursu`, `nr_linii`, `id_destination`, `godz_roz`,`godz_zak`) VALUES ('$id','$i','$number','$destination','$departure','$arrival_all')";
