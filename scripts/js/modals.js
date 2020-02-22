@@ -13,12 +13,13 @@ $('#modal-workshop').on('show.bs.modal', function (event) {
 $('#modal-edycja').on('show.bs.modal', function (event) {
 	
   var button = $(event.relatedTarget) 
-  var id = button.data('idvehicle') 
-
+  var id = button.data('edycja-vehicle') 
+//edycja-vehicle
+//form-editor
   var modal = $(this)
-    console.log(modal.find('.modal-body #id-vehicles'))
-  modal.find('.modal-body #id-vehicles').attr("value",id)
-  console.log(modal.find('.modal-body #id-vehicles').attr("value"))
+    console.log(modal.find('.modal-body #id-edycja-vehicles'))
+  modal.find('.modal-body #id-edycja-vehicles').attr("value",id)
+  console.log(modal.find('.modal-body #id-edycja-vehicles').attr("value"))
 
 })
 $('#modal-szczegoly').on('show.bs.modal', function (event) {
@@ -32,7 +33,9 @@ $('#modal-szczegoly').on('show.bs.modal', function (event) {
 $('#modal-add-vehicle').on('show.bs.modal', function (event) {
 	
   var button = $(event.relatedTarget) 
-  var id = button.data('idvehicle') 
+ 
+   var add = button.data('form-add-to-stock')
+
 
   var modal = $(this)
 
@@ -43,5 +46,17 @@ $('#modal-add-timetable').on('show.bs.modal', function (event) {
   var id = button.data('idvehicle') 
 
   var modal = $(this)
+
+})
+$('#modal-delete-vehicles').on('show.bs.modal', function (event) {
+	
+  var button = $(event.relatedTarget) 
+  var id = button.data('delete-vehicle') 
+//delete-vehicle
+//form-editor
+  var modal = $(this)
+    console.log(modal.find('.modal-body #id-delete-vehicles'))
+  modal.find('.modal-body #id-delete-vehicles').attr("value",id)
+  console.log(modal.find('.modal-body #id-delete-vehicles').attr("value"))
 
 })

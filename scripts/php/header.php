@@ -15,5 +15,15 @@
     {
         echo "Gorzowska Góra";
     }
+
+    if($_SESSION['access'] == '4')
+    {
+        echo "Batorz";
+    }
+
+    if($_SESSION['access'] == '5')
+    {
+        echo "Doły Gorzowskie";
+    }
     
 ?>

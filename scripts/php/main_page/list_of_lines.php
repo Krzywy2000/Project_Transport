@@ -1,9 +1,7 @@
 <?php
     require_once("scripts/php/db_connect.php");
     $connect = new mysqli($host, $db_user, $db_password, $db_name);
-    if($_SESSION['access'] == 2)
-                {
-                    if ($result = @$connect->query("SELECT * FROM `timetable` ORDER BY `nazwa_zm`"))
+                    if ($result = @$connect->query("SELECT * FROM `timetable` WHERE `miasto` LIKE '$_SESSION[access]' ORDER BY `nazwa_zm`"))
                         {
                             echo "<div class='mess_users'>
                             <table>
@@ -28,5 +26,4 @@
 
                             echo "</table><br/></div>";
                         }
-                }
 ?>

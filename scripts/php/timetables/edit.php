@@ -3,6 +3,7 @@
     
     require_once("../db_connect.php");
     $connect = new mysqli($host, $db_user, $db_password, $db_name);
+    mysqli_query("SET CHARSET utf8");
 
     $name = $_POST['name'];
     $start = $_POST['start'];
@@ -13,7 +14,7 @@
     $city = $_SESSION['access'];
     $i=0;
 
-    $send = "INSERT INTO `timetable`(`miasto`,`nazwa_zm`, `godz_roz`, `godz_zak`, `rodzaj`, `uwagi`) VALUES ('$_SESSION[access]','$name','$start','$end','$type','$comment')";
+    $send = "UPDATE `timetable` SET `nazwa_zm`=$name,`godz_roz`=$start,`godz_zak`=$end,`rodzaj`=$type,`uwagi`=$comment WHERE 1";
     $connect->query($send);
 
     if ($check_id = @$connect->query("SELECT MAX(id) FROM `timetable`"))
