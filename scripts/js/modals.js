@@ -65,3 +65,15 @@ $('#modal-delete-vehicles').on('show.bs.modal', function (event) {
   console.log(modal.find('.modal-body #id-delete-vehicles').attr("value"))
 
 })
+$('#modal-delete-vehicles').on('show.bs.modal', function (event) {
+	
+  var button = $(event.relatedTarget) 
+  var id = button.data('delete-vehicle') 
+//delete-vehicle
+//form-editor
+  var modal = $(this)
+    console.log(modal.find('.modal-body #id-delete-vehicles'))
+  modal.find('.modal-body #id-delete-vehicles').attr("value",id)
+  console.log(modal.find('.modal-body #id-delete-vehicles').attr("value"))
+
+})
