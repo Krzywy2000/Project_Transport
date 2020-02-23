@@ -10,6 +10,8 @@
 	require_once "db_connect.php";
 
 	$connect = new mysqli($host, $db_user, $db_password, $db_name);
+	$connect -> query("SET NAMES 'utf8';");
+    $connect -> query("SET CHARACTER_SET 'utf8_general_ci';");
 	
 	if ($connect->connect_errno!=0)
 	{
@@ -63,7 +65,17 @@
 				{
 					header('Location: ../../index_user.php');
 				}
+
+				if($_SESSION['access'] == '4')
+				{
+					header('Location: ../../index_user.php');
+				}
 				
+
+				if($_SESSION['access'] == '5')
+				{
+					header('Location: ../../index_user.php');
+				}
 			} 
 			else 
 			{

@@ -42,6 +42,16 @@
                         {
                             echo "index_user.php";
                         }
+
+                        if($_SESSION['access'] == "4")
+                        {
+                            echo "index_user.php";
+                        }
+
+                        if($_SESSION['access'] == "5")
+                        {
+                            echo "index_user.php";
+                        }
                     ?>">eDyspozytor</a>
                     <div class="collapse navbar-collapse">
                         <ul class="navbar-nav mr-auto">

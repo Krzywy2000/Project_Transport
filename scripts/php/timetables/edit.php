@@ -3,7 +3,8 @@
     
     require_once("../db_connect.php");
     $connect = new mysqli($host, $db_user, $db_password, $db_name);
-
+    mysqli_query("SET CHARSET utf8");
+	  $idedit = $_POST['idedit'];
     $name = $_POST['name'];
     $start = $_POST['start'];
     $end = $_POST['end'];
@@ -12,8 +13,9 @@
     $count_of_course = $_POST['count_of_course'];
     $city = $_SESSION['access'];
     $i=0;
+	echo $idedit;
 
-    $send = "INSERT INTO `timetable`(`miasto`,`nazwa_zm`, `godz_roz`, `godz_zak`, `rodzaj`, `uwagi`) VALUES ('$_SESSION[access]','$name','$start','$end','$type','$comment')";
+    $send = "UPDATE `timetable` SET `nazwa_zm`=$name,`godz_roz`=$start,`godz_zak`=$end,`rodzaj`=$type,`uwagi`=$comment WHERE id='".$idedit."' ";
     $connect->query($send);
 
     if ($check_id = @$connect->query("SELECT MAX(id) FROM `timetable`"))
@@ -83,5 +85,5 @@
         
         $connect->query($send_1);
     }
-        header("Location: ../../../index_user.php?page=timetables");
+       // header("Location: ../../../index_user.php?page=timetables");
 ?>
