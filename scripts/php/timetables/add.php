@@ -11,9 +11,10 @@
     $comment = $_POST['comment'];
     $count_of_course = $_POST['count_of_course'];
     $city = $_SESSION['access'];
+    $type_of_rolling_stock = $_POST['type_of_rolling_stock'];
     $i=0;
 
-    $send = "INSERT INTO `timetable`(`miasto`,`nazwa_zm`, `godz_roz`, `godz_zak`, `rodzaj`, `uwagi`) VALUES ('$_SESSION[access]','$name','$start','$end','$type','$comment')";
+    $send = "INSERT INTO `timetable`(`miasto`,`nazwa_zm`, `godz_roz`, `godz_zak`, `rodzaj`, `obsluga`, `uwagi`) VALUES ('$_SESSION[access]','$name','$start','$end','$type', '$type_of_rolling_stock','$comment')";
     $connect->query($send);
 
     if ($check_id = @$connect->query("SELECT MAX(id) FROM `timetable`"))

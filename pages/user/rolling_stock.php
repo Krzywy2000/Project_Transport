@@ -16,7 +16,6 @@
         </div>
         <div id="result" class="result table-responsive">
             <?php
-<<<<<<< HEAD
 			if($_SESSION['access'] == 1)
 			{
 			$result_Bus="SELECT * FROM `vehicles` where `typ_pojazdu`='Bus' ORDER BY `numer_tab`";	
@@ -30,9 +29,6 @@
 			
 
                     if ($result = @$connect->query($result_Bus))
-=======
-                    if ($result = @$connect->query("SELECT * FROM `vehicles` where `typ_pojazdu`='BUS' and `miasto`='$_SESSION[access]' ORDER BY `numer_tab`"))
->>>>>>> 47e3133b7eecf23334661f05640b3bba61a182d4
                         {
                             echo "<table>
                             <tr class='main'>
@@ -69,15 +65,9 @@
                                     <td>".$row['biletomat']."</td>
                                     <td>".$row['uwagi']."</td>
                                     <td><button data-toggle='modal' data-target='#modal-edycja' data-edycja-vehicle='".$row['id']."'>Edytuj</button><br />
-<<<<<<< HEAD
-                                    <button data-toggle='modal' data-target='#modal-szczegoly' data-idvehicle='".$row['id']."'>Szczegóły</button><br />
-									<button data-toggle='modal' data-target='#modal-delete-vehicles' data-delete-vehicle='".$row['id']."'>Usuń pojazd</button>
-									<button data-toggle='modal' data-target='#modal-workshop' data-idvehicle='".$row['id']."' data-idmiasto='".$miasto."'>Dodaj do warsztatu</button><br/>
-=======
                                     <button data-toggle='modal' data-target='#modal-szczegoly' data-idvehicle='".$row['id']."'>szczegóły</button><br />
                                     <button data-toggle='modal' data-target='#modal-workshop' data-idvehicle='".$row['id']."'>Dodaj do warsztatu</button><br/>
                                     <button data-toggle='modal' data-target='#modal-delete-vehicles' data-delete-vehicle='".$row['id']."'>Usuń pojazd</button>
->>>>>>> 47e3133b7eecf23334661f05640b3bba61a182d4
                                     </td>
                                   </tr>";
 									
@@ -86,51 +76,6 @@
 
                             echo "</table><br/>";
                         }
-<<<<<<< HEAD
-                    if($result2 = @$connect->query($result_Tram))
-                    {
-                        echo "<table>
-                            <tr class='main'>
-                                <td colspan='11'><H2>Tramwaje</H2></td>
-                            </tr>
-                            <tr class='main'>
-                                <td>Numer Taborowy</td>
-								<td>typ taboru</td>
-                                <td>Marka</td>
-                                <td>Model</td>
-                                <td>Rocznik</td>
-                                <td>Rok wprowadzenia</td>
-                                <td>Układ drzwi</td>
-                                <td>Klimatyzacja</td>
-                                <td>Biletomat/Kasa</td>
-                                <td>Uwagi</td>
-                                <td>Ustawienia</td>
-                            </tr>";
-                        while($row2 = $result2->fetch_array())
-                        {
-                            echo "<tr style='border-bottom:1pt solid black'>
-                                <td>".$row2['numer_tab']."</td>
-								<td>".$row['typ_taboru']."</td>
-                                <td>".$row2['marka']."</td>
-                                <td>".$row2['model']."</td>
-                                <td>".$row2['rocznik']."</td>
-                                <td>".$row2['rok_wprowadzenia']."</td>
-                                <td>".$row2['uklad_drzwi']."</td>
-                                <td>".$row2['klimatyzacja']."</td>
-                                <td>".$row2['biletomat']."</td>
-                                <td>".$row2['uwagi']."</td>
-                                    <td><button data-toggle='modal' data-target='#modal-edycja' data-edycja-vehicle='".$row2['id']."'>Edytuj</button><br />
-                                    <button data-toggle='modal' data-target='#modal-szczegoly' data-idvehicle='".$row2['id']."'>Szczegóły</button><br />
-									<button data-toggle='modal' data-target='#modal-delete-vehicles' data-delete-vehicle='".$row2['id']."'>Usuń pojazd</button><br />
-									<button data-toggle='modal' data-target='#modal-workshop' data-idvehicle='".$row2['id']."' data-idmiasto='".$miasto."'>Dodaj do warsztatu</button><br/>
-                                    </td>
-								
-                            </tr>";
-                        }
-                      echo "</table>";
-                    }
-                
-=======
                     if($_SESSION['access'] == '4')
                     {
                       if($result2 = @$connect->query("SELECT * FROM `vehicles` where typ_pojazdu='TROL' and miasto='$_SESSION[access]' ORDER BY `numer_tab`"))
@@ -216,7 +161,6 @@
                       }
                     }
                     
->>>>>>> 47e3133b7eecf23334661f05640b3bba61a182d4
                 ?>    
         </div> 
     <br/><br/></div>
@@ -282,7 +226,6 @@
           </div>
           <div class="modal-body">
       <form action="scripts/php/editor.php" method="POST" id="form-editor">
-<<<<<<< HEAD
 <input type="hidden" id="id-edycja-vehicles" name="id_edycja_vehicles" value="">
 			
 typ_pojazdu			:<select name="edycja_vehicle_type"><option value='Bus'>Bus</option><option value='Tram'>Tram</option></select><br /><br/>
@@ -307,20 +250,6 @@ w warsztacie:		:<input type="text" name="edycja_vehicle_workshop"><br /><br/>
 id_timetable
 rozklad:			:<input type="text" name="edycja_vehicle_timetable"><br /><br/>
 -->
-=======
-        <input type="hidden" id="id-edycja-vehicles" name="id_edycja_vehicles" value="">
-            <!--id-->	
-        typ_pojazdu			:<input type="text" name="edycja_vehicle_type"/><br /><br/>
-        marka				:<input type="text" name="edycja_vehicle_marka"><br /><br/>
-        model				:<input type="text" name="edycja_vehicle_model"><br /><br/>
-        uklad_drzwi			:<input type="text" name="edycja_vehicle_drzwi"><br /><br/>
-        rocznik				:<input type="year" name="edycja_vehicle_rocznik"><br /><br/>
-        rok_wprowadzenia	:<input type="year" name="edycja_vehicle_rok"><br /><br/>
-        klimatyzacja		:<input type="text" name="edycja_vehicle_klimatyzacja"><br /><br/>
-        biletomat			:<input type="text" name="edycja_vehicle_biletomat"><br /><br/>
-        numer_taborowy		:<input type="number" name="edycja_vehicle_numer"><br /><br/>
-        uwagi				:<input type="text" name="edycja_vehicle_uwagi"><br /><br/>
->>>>>>> 47e3133b7eecf23334661f05640b3bba61a182d4
       </form>
 
     </div>
@@ -349,18 +278,13 @@ rozklad:			:<input type="text" name="edycja_vehicle_timetable"><br /><br/>
     <div class="modal-body">
       <form action="scripts/php/add_to_stock.php" method="POST" id="form-add-to-stock">
 		<!--id-->	
-<<<<<<< HEAD
 typ_pojazdu			:<select name="add_vehicle_type"><option value='Bus'>Bus</option><option value='Tram'>Tram</option></select><br /><br/>
-=======
-typ_pojazdu			:<input type="text" name="add_vehicle_type"/><br /><br/>
->>>>>>> 47e3133b7eecf23334661f05640b3bba61a182d4
 miasto				:<input type="text" name="add_vehicle_miasto"/><br /><br/>
 marka				:<input type="text" name="add_vehicle_marka"><br /><br/>
 model				:<input type="text" name="add_vehicle_model"><br /><br/>
 uklad_drzwi			:<input type="text" name="add_vehicle_drzwi"><br /><br/>
 rocznik				:<input type="year" name="add_vehicle_rocznik"><br /><br/>
 rok_wprowadzenia	:<input type="year" name="add_vehicle_rok"><br /><br/>
-<<<<<<< HEAD
 klimatyzacja		:<select name="add_vehicle_klimatyzacja"><option value='TAK'>TAK</option><option value='NIE'>NIE</option></select><br /><br/>
 biletomat			:<SELECT name="add_vehicle_biletomat"><option value='TAK'>TAK</option><option value='NIE'>NIE</option></select><br /><br/>
 numer_taborowy		:<input type="number" name="add_vehicle_numer"><br /><br/>
@@ -370,11 +294,6 @@ typ_taboru:			:<select name="add_vehicle_typ_taboru">
 					<option value='MEGA'>MEGA</option>	
 					<option value='Wagon'>Wagon</option>
 					<option value='Skład'>Skład</option></SELECT><br /><br/>
-=======
-klimatyzacja		:<input type="text" name="add_vehicle_klimatyzacja"><br /><br/>
-biletomat			:<input type="text" name="add_vehicle_biletomat"><br /><br/>
-numer_taborowy		:<input type="number" name="add_vehicle_numer"><br /><br/>
->>>>>>> 47e3133b7eecf23334661f05640b3bba61a182d4
 uwagi				:<input type="text" name="add_vehicle_uwagi"><br /><br/>
 <!--id_workshop-->
 <!--id_timetable-->
@@ -390,11 +309,7 @@ uwagi				:<input type="text" name="add_vehicle_uwagi"><br /><br/>
     </div>
   </div>
 </div>
-<<<<<<< HEAD
 	<!--delete---------------------------------------------------------------------------->
-=======
-	<!--delete-->
->>>>>>> 47e3133b7eecf23334661f05640b3bba61a182d4
 	<div class="modal" id="modal-delete-vehicles" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -419,12 +334,9 @@ uwagi				:<input type="text" name="add_vehicle_uwagi"><br /><br/>
     </div>
   </div>
 </div>	
-<<<<<<< HEAD
 
 	
 	
-=======
->>>>>>> 47e3133b7eecf23334661f05640b3bba61a182d4
   <script src="scripts/js/time-js.js"></script>
   <script src="scripts/js/search.js"></script>
 	<script src="scripts/js/modals.js"></script>

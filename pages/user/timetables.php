@@ -36,11 +36,7 @@
                                         <td>".$row['godz_roz']."</td>
                                         <td>".$row['godz_zak']."</td>
                                         <td>".$row['uwagi']."</td>
-<<<<<<< HEAD
                                         <td><button data-toggle='modal' data-target='#modal-edit-timetable' data-idedit='".$row['id']."'>Edytuj</button><br/><button>Usuń</button><br/><button>Szczegóły</button></td>
-=======
-                                        <td><button data-toggle='modal' data-target='#modal-edit-timetable'>Edytuj</button><br/><button>Usuń</button><br/><button>Szczegóły</button></td>
->>>>>>> 47e3133b7eecf23334661f05640b3bba61a182d4
                                     </tr>";
                                 }
                             }
@@ -68,8 +64,23 @@
                                 <div class='col-md-4'><a>Nazwa zadania: </a><input type='text' name='name'></div><br/>
                                 <div class='col-md-4'><a>Godzina rozpoczęcia: </a><input type='text' name='start'/></div><br/>
                                 <div class='col-md-4'> <a>Godzina zakończenia: </a><input type='text' name='end'/></div><br/>
-                                <div class='col-md-4'><a>Rodzaj: <input type='text' name='type' placeholder='TRAM/BUS'/></a></div>
+                                <div class='col-md-4'><a>Rodzaj: </a><br/>
+                                    <select name='type'>
+                                        <option value="TRAM">Tramwaj</option>
+                                        <option value="BUS">Autobus</option>
+                                        <option value="TROLLEY">Trolejbus</option>
+                                    </select>
+                                </div>
                                 <div class='col-md-4'><a>Uwagi: <input type='text' name='comment'/></a></div>
+                                <div class='col-md-4'><a>Obsługa: </a><br/>
+                                    <select name='type_of_rolling_stock'>
+                                        <option value="MIDI">MIDI</option>
+                                        <option value="MAXI">MAXI</option>
+                                        <option value="MEGA">MEGA</option>
+                                        <option value="Wagon">Wagon</option>
+                                        <option value="Skład">Skład</option>
+                                    </select>
+                                </div>
                                 <div class='col-md-12'><a>Ilość kursów: </a><br/><input type='number' name='count_of_course' id='drive'/>
                                 </div>
                                 <span id="forms" class="col-sm-12">
@@ -86,45 +97,6 @@
             </div>
         </div>
     </div>
-<<<<<<< HEAD
-=======
-
-    <!--Edit timetable-->
-    <div class="modal fade bd-example-modal-lg" id="modal-edit-timetable" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Edytuj rozkład</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-                <div class="modal-body">
-                    <form action="scripts/php/timetables/edit.php" method="POST" id="form-timetables">
-                        <div class='container-fluid'>
-                            <div class='row'>
-                                <div class='col-md-4'><a>Nazwa zadania: </a><input type='text' name='name'></div><br/>
-                                <div class='col-md-4'><a>Godzina rozpoczęcia: </a><input type='text' name='start'/></div><br/>
-                                <div class='col-md-4'> <a>Godzina zakończenia: </a><input type='text' name='end'/></div><br/>
-                                <div class='col-md-4'><a>Rodzaj: <input type='text' name='type' placeholder='TRAM/BUS'/></a></div>
-                                <div class='col-md-4'><a>Uwagi: <input type='text' name='comment'/></a></div>
-                                <div class='col-md-12'><a>Ilość kursów: </a><br/><input type='text' name='count_of_course' id='drive'/>
-                                </div>
-                                <span id="forms" class="col-sm-12">
-                                    
-                                </span>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button form="form-timetables" type="submit" class="btn btn-primary">Potwierdz</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
-                </div>
-            </div>
-        </div>
-    </div>
->>>>>>> 47e3133b7eecf23334661f05640b3bba61a182d4
 
     <!--Edit timetable-->
     <div class="modal fade bd-example-modal-lg" id="modal-edit-timetable" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">

@@ -13,55 +13,69 @@
             <div class='col-md-12'>
                 <a>Data: </a><input type='date'/>
             </div>
-            <div class='col-md-12'>
+            <div class='col-md-6'>
+                <form >
+                    <?php
+                        $query_plans = "SELECT * FROM plan WHERE `miasto` LIKE '$_SESSION[access]'";
+                        $query_timetable="SELECT * FROM `timetable` WHERE `miasto` = '$_SESSION[access]'";
+
+                        if($result = @$connect->query($query_plans))
+                        {
+                            $plans = $result->num_rows;
+                            if($plans>0)
+                            {
+                                echo "<table>
+                                    <tr class='main'>
+                                        <td>Data</td>
+                                        <td>Numer przydziału</td>
+                                        <td>Numer pojazdu</td>
+                                    </tr>";
+                                while($row = $result->fetch_array())
+                                {
+                                    echo "<tr>";
+                                    echo "<td>".$row['data']."</td>";
+                                    echo "<td>".$row['id_timetable']."</td>";
+                                    echo "<td>".$row['numer_pojazdu']."</td>";
+                                    echo "</tr>";
+                                }
+                                echo "</table>";
+                            }
+                        }
+                    ?>
+                </form>
+            </div>
+            <div class='col-md-6'>
                 <?php
-                    $query_plans = "SELECT * FROM plan WHERE `miasto` LIKE '$_SESSION[access]'";
-                    $query_timetable="SELECT * FROM `timetable` WHERE `miasto` LIKE '$_SESSION[access]'";
-
-                    if($result = @$connect->query($query_plans))
-                    {
-                        $plans = $result->num_rows;
-                        if($plans>0)
+                        
+                        if($result1 = @$connect->query($query_timetable))
                         {
-                            while($row = $result->fetch_array())
+                            $users = $result1->num_rows;
+                            if($users>0)
                             {
-                                echo $row['id'];
-                                echo $row['data'];
-                                echo $row['id_timetable'];
-                                echo $row['numer_pojazdu'] = $vehicle;
-                            }
-                        }
-                    }
-
-                    echo "<table>
-                        <tr class='main'>
-                            <td>Nazwa zmiany</td>
-                            <td>Godzina rozpoczęcia - Godzina zakończenia</td>
-                            <td>Rodzaj pojazdu</td>
-                            <td>Przydział</td>
-                        </tr>";
-                    if($result = @$connect->query($query_timetable))
-                    {
-                        $users = $result->num_rows;
-                        if($users>0)
-                        {
-                            while($row = $result->fetch_array())
-                            {
-                                echo "<tr>
-                                    <td>$row[nazwa_zm]</td>
-                                    <td>$row[godz_roz] - $row[godz_zak]</td>
-                                    <td> </td>
-                                    <td>";
-                                    echo $vehicle;
-                                    include('scripts/php/plans/list_vehicles.php');
-                                    echo "</td>
+                                echo "<table>
+                                <tr class='main'>
+                                <td>Nazwa zmiany</td>
+                                <td>Godzina rozpoczęcia - Godzina zakończenia</td>
+                                <td>Rodzaj pojazdu</td>
+                                <td>Przydział</td>
                                 </tr>";
+                                while($row = $result1->fetch_array())
+                                {
+                                    echo "<tr>
+                                        <td>$row[nazwa_zm]</td>
+                                        <td>$row[godz_roz] - $row[godz_zak]</td>
+                                        <td> </td>
+                                        <td>";
+                                        include('scripts/php/plans/list_vehicles.php');
+                                        echo "<button type='submit'>Dodaj</button></td>
+                                    </tr>";
+                                }
                             }
                         }
-                    }
 
-                    echo "</table>";
-                ?>
+                        echo "</table>";
+                    ?>
+                </form>
             </div>
         </div>
     </div>

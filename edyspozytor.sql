@@ -3,11 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
-<<<<<<< HEAD
--- Czas generowania: 20 Lut 2020, 00:49
-=======
--- Czas generowania: 22 Lut 2020, 19:44
->>>>>>> 47e3133b7eecf23334661f05640b3bba61a182d4
+-- Czas generowania: 26 Lut 2020, 12:19
 -- Wersja serwera: 10.1.38-MariaDB
 -- Wersja PHP: 7.3.2
 
@@ -36,8 +32,8 @@ CREATE TABLE `destination` (
   `id` int(11) NOT NULL,
   `relacja` text COLLATE utf8_polish_ci,
   `numer_linii` int(11) DEFAULT NULL,
-  `miasto` text COLLATE utf8_polish_ci,
-  `czas_przejazdu` int(11) DEFAULT NULL,
+  `miasto` int(11) DEFAULT NULL,
+  `czas_przejazdu` time DEFAULT NULL,
   `uwagi` text COLLATE utf8_polish_ci
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
@@ -46,10 +42,6 @@ CREATE TABLE `destination` (
 --
 
 INSERT INTO `destination` (`id`, `relacja`, `numer_linii`, `miasto`, `czas_przejazdu`, `uwagi`) VALUES
-<<<<<<< HEAD
-(1, 'Zajezdnia - Dworzec Główny PKP', NULL, 'Gorzow Wiktorowski', 14, 'Wyjazd z zajezdni'),
-(2, 'Dworzec Główny PKP', NULL, 'Gorzow Wiktorowski', 14, 'Zjazd do zajezdni');
-=======
 (1, 'Zajezdnia - Dworzec Główny PKP', NULL, 2, '00:14:00', 'Wyjazd z zajezdni'),
 (2, 'Dworzec Główny PKP', NULL, 2, '00:14:00', 'Zjazd do zajezdni'),
 (3, 'Zajezdnia MZKA - Dolna', 0, 3, '00:30:00', 'wyjazd'),
@@ -58,7 +50,6 @@ INSERT INTO `destination` (`id`, `relacja`, `numer_linii`, `miasto`, `czas_przej
 (6, 'Zajezdnia MZKA - Rzymowskiego', 0, 3, '00:17:00', 'wyjazd'),
 (7, 'Zajezdnia MZKA - Stomil', 0, 3, '00:31:00', 'wyjazd'),
 (8, 'Zajezdnia MZKA - Ko?o', 0, 3, '00:15:00', 'wyjazd');
->>>>>>> 47e3133b7eecf23334661f05640b3bba61a182d4
 
 -- --------------------------------------------------------
 
@@ -68,10 +59,18 @@ INSERT INTO `destination` (`id`, `relacja`, `numer_linii`, `miasto`, `czas_przej
 
 CREATE TABLE `plan` (
   `id` int(11) NOT NULL,
+  `miasto` int(11) NOT NULL,
   `data` date DEFAULT NULL,
   `id_timetable` int(11) DEFAULT NULL,
   `numer_pojazdu` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
+
+--
+-- Zrzut danych tabeli `plan`
+--
+
+INSERT INTO `plan` (`id`, `miasto`, `data`, `id_timetable`, `numer_pojazdu`) VALUES
+(1, 2, '2020-02-26', 1, 105);
 
 -- --------------------------------------------------------
 
@@ -81,10 +80,12 @@ CREATE TABLE `plan` (
 
 CREATE TABLE `timetable` (
   `id` int(11) NOT NULL,
+  `miasto` int(11) NOT NULL,
   `nazwa_zm` text COLLATE utf8_polish_ci,
-  `godz_roz` text COLLATE utf8_polish_ci,
-  `godz_zak` text COLLATE utf8_polish_ci,
+  `godz_roz` time DEFAULT NULL,
+  `godz_zak` time DEFAULT NULL,
   `rodzaj` text COLLATE utf8_polish_ci,
+  `obsluga` text COLLATE utf8_polish_ci NOT NULL,
   `uwagi` longtext COLLATE utf8_polish_ci
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
@@ -92,13 +93,21 @@ CREATE TABLE `timetable` (
 -- Zrzut danych tabeli `timetable`
 --
 
-INSERT INTO `timetable` (`id`, `miasto`, `nazwa_zm`, `godz_roz`, `godz_zak`, `rodzaj`, `uwagi`) VALUES
-(1, 2, '01/01/D', '04:52:00', '12:22:00', 'BUS', ''),
-(2, 2, '', '00:00:00', '00:00:00', '', ''),
-(3, 2, '', '00:00:00', '00:00:00', '', ''),
-(4, 2, '12', '00:00:00', '00:00:00', '', ''),
-(5, 2, '', '00:00:00', '00:00:00', '', ''),
-(6, 2, '', '00:00:00', '00:00:00', '', '');
+INSERT INTO `timetable` (`id`, `miasto`, `nazwa_zm`, `godz_roz`, `godz_zak`, `rodzaj`, `obsluga`, `uwagi`) VALUES
+(1, 2, '01/01/D', '04:52:00', '12:22:00', 'BUS', '', ''),
+(2, 2, '', '00:00:00', '00:00:00', '', '', ''),
+(3, 2, '', '00:00:00', '00:00:00', '', '', ''),
+(4, 2, '12', '00:00:00', '00:00:00', '', '', ''),
+(5, 2, '', '00:00:00', '00:00:00', '', '', ''),
+(6, 2, '', '00:00:00', '00:00:00', '', '', ''),
+(7, 2, '11', '04:52:00', '12:22:00', 'Tram', '', 'nie'),
+(8, 2, '', '00:00:00', '00:00:00', '', '', ''),
+(9, 2, '', '00:00:00', '00:00:00', '', '', ''),
+(10, 2, '', '00:00:00', '00:00:00', '', '', ''),
+(11, 2, '', '00:00:00', '00:00:00', '', '', ''),
+(12, 2, '', '00:00:00', '00:00:00', '', '', ''),
+(13, 2, '01/02/D', '04:23:00', '22:12:00', 'TRAM', 'MAXI', ''),
+(14, 2, '01/03/D', '12:15:00', '22:21:00', 'BUS', 'MEGA', '');
 
 -- --------------------------------------------------------
 
@@ -110,9 +119,10 @@ CREATE TABLE `timetable_course` (
   `id` int(11) NOT NULL,
   `id_timetable` int(11) DEFAULT NULL,
   `nr_kursu` int(11) DEFAULT NULL,
+  `nr_linii` int(11) NOT NULL,
   `id_destination` int(11) DEFAULT NULL,
-  `godz_roz` text COLLATE utf8_polish_ci,
-  `godz_zak` text COLLATE utf8_polish_ci
+  `godz_roz` time DEFAULT NULL,
+  `godz_zak` time DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
 --
@@ -137,7 +147,13 @@ INSERT INTO `timetable_course` (`id`, `id_timetable`, `nr_kursu`, `nr_linii`, `i
 (15, 5, 5, 0, 0, '00:00:00', '00:00:00'),
 (16, 6, 1, 0, 1, '00:00:00', '00:14:00'),
 (17, 6, 2, 0, 1, '00:00:00', '00:14:00'),
-(18, 6, 3, 0, 1, '00:00:00', '00:14:00');
+(18, 6, 3, 0, 1, '00:00:00', '00:14:00'),
+(19, 7, 1, 3, 1, '02:03:00', '02:17:00'),
+(20, 12, 1, 0, 0, '00:00:00', '00:00:00'),
+(21, 13, 1, 12, 2, '04:23:00', '04:37:00'),
+(22, 13, 2, 12, 2, '21:52:00', '22:06:00'),
+(23, 14, 1, 12, 1, '12:15:00', '12:29:00'),
+(24, 14, 2, 15, 2, '22:00:00', '22:14:00');
 
 -- --------------------------------------------------------
 
@@ -174,17 +190,17 @@ INSERT INTO `users` (`id`, `name`, `surname`, `login`, `password`, `e-mail`, `ac
 
 CREATE TABLE `vehicles` (
   `id` int(11) NOT NULL,
-  `typ_pojazdu` text COLLATE utf8_polish_ci,
+  `typ_pojazdu` enum('Tram','Bus') COLLATE utf8_polish_ci DEFAULT NULL,
   `miasto` text COLLATE utf8_polish_ci NOT NULL,
   `marka` text COLLATE utf8_polish_ci,
   `model` text COLLATE utf8_polish_ci,
   `uklad_drzwi` text COLLATE utf8_polish_ci,
   `rocznik` text COLLATE utf8_polish_ci,
   `rok_wprowadzenia` text COLLATE utf8_polish_ci,
-  `klimatyzacja` text COLLATE utf8_polish_ci,
-  `biletomat` text COLLATE utf8_polish_ci,
+  `klimatyzacja` enum('TAK','NIE') COLLATE utf8_polish_ci DEFAULT NULL,
+  `biletomat` enum('TAK','NIE') COLLATE utf8_polish_ci DEFAULT NULL,
   `numer_tab` int(11) DEFAULT NULL,
-  `typ_taboru` text COLLATE utf8_polish_ci,
+  `typ_taboru` enum('MINI','MAXI','MEGA','Wagon','Skład') COLLATE utf8_polish_ci DEFAULT NULL,
   `uwagi` longtext COLLATE utf8_polish_ci,
   `id_workshop` int(11) DEFAULT NULL,
   `id_timetable` int(11) DEFAULT NULL
@@ -195,15 +211,15 @@ CREATE TABLE `vehicles` (
 --
 
 INSERT INTO `vehicles` (`id`, `typ_pojazdu`, `miasto`, `marka`, `model`, `uklad_drzwi`, `rocznik`, `rok_wprowadzenia`, `klimatyzacja`, `biletomat`, `numer_tab`, `typ_taboru`, `uwagi`, `id_workshop`, `id_timetable`) VALUES
-(1, 'Bus', '2', 'Autosan', 'H7-20.01', '2  - 0', '2000', '2000', 'NIE', 'TAK', 102, 'MIDI', '', 0, 0),
-(2, 'Bus', '2', 'MAN', 'NM223', '1 - 2 - 0', '1999', '2014', 'NIE', 'TAK', 104, 'MIDI', '', 0, 0),
-(3, 'Bus', '2', 'Jelcz', 'M11', '2 - 2 - 2', '1987', '1987', 'NIE', 'TAK', 105, 'MIDI', '', 0, 0),
-(4, 'Bus', '2', 'Jelcz', 'M11', '2 - 2 - 2', '1987', '1987', 'NIE', 'TAK', 106, 'MIDI', '', 0, 0),
-(5, 'Bus', '2', 'Jelcz', 'M11', '2 - 2 - 2', '1987', '1987', 'NIE', 'TAK', 107, 'MIDI', '', 0, 0),
-(6, 'Bus', '2', 'Solaris', 'Urbino 10 III', '1 - 2 - 0', '2017', '2018', 'TAK', 'TAK', 108, 'MIDI', 'Z dotacji UE', 0, 0),
-(7, 'Bus', '2', 'Solaris', 'Urbino 10 III', '1 - 2 - 0', '2017', '2018', 'TAK', 'TAK', 109, 'MIDI', 'Z dotacji UE', 0, 0),
-(8, 'Bus', '2', 'Solaris', 'Urbino 8,9 III LE', '1 - 2 - 0', '2019', '2020', 'TAK', 'TAK', 110, 'MIDI', 'Z dotacji UE', 0, 0),
-(9, 'Bus', '2', 'Solaris', 'Urbino 8,9 III LE', '1 - 2 - 0', '2019', '2020', 'TAK', 'TAK', 111, 'MIDI', 'Z dotacji UE', 0, 0),
+(1, 'Bus', '', '', '', '', '', '', 'TAK', 'TAK', 0, 'MINI', '', 1, 0),
+(2, 'Bus', '2', 'MAN', 'NM223', '1 - 2 - 0', '1999', '2014', 'NIE', 'TAK', 104, '', '', 1, 0),
+(3, 'Bus', '2', 'Jelcz', 'M11', '2 - 2 - 2', '1987', '1987', 'NIE', 'TAK', 105, '', '', 1, 0),
+(4, 'Bus', '2', 'Jelcz', 'M11', '2 - 2 - 2', '1987', '1987', 'NIE', 'TAK', 106, '', '', 0, 0),
+(5, 'Bus', '2', 'Jelcz', 'M11', '2 - 2 - 2', '1987', '1987', 'NIE', 'TAK', 107, '', '', 0, 0),
+(6, 'Bus', '2', 'Solaris', 'Urbino 10 III', '1 - 2 - 0', '2017', '2018', 'TAK', 'TAK', 108, '', 'Z dotacji UE', 0, 0),
+(7, 'Bus', '2', 'Solaris', 'Urbino 10 III', '1 - 2 - 0', '2017', '2018', 'TAK', 'TAK', 109, '', 'Z dotacji UE', 0, 0),
+(8, 'Bus', '2', 'Solaris', 'Urbino 8,9 III LE', '1 - 2 - 0', '2019', '2020', 'TAK', 'TAK', 110, '', 'Z dotacji UE', 1, 0),
+(9, 'Bus', '2', 'Solaris', 'Urbino 8,9 III LE', '1 - 2 - 0', '2019', '2020', 'TAK', 'TAK', 111, '', 'Z dotacji UE', 0, 0),
 (10, 'Bus', '2', 'Jelcz', '120M', '2 - 2 - 2', '1994', '1994', 'NIE', 'TAK', 201, 'MAXI', '', 0, 0),
 (11, 'Bus', '2', 'Jelcz', '120MM/2', '2 - 2 - 2', '2000', '2000', 'NIE', 'TAK', 202, 'MAXI', '', 0, 0),
 (12, 'Bus', '2', 'Jelcz', '120MM/2', '2 - 2 - 2', '2001', '2001', 'NIE', 'TAK', 203, 'MAXI', '', 0, 0),
@@ -308,13 +324,13 @@ INSERT INTO `vehicles` (`id`, `typ_pojazdu`, `miasto`, `marka`, `model`, `uklad_
 (111, 'Bus', '3', 'WFA', 'SN218', '2 - 2 - 2', '1989', '1990', 'NIE', 'NIE', 586, 'MAXI', '', 0, 0),
 (112, 'Bus', '3', 'WFA', 'SN218', '2 - 2 - 2', '1989', '1990', 'NIE', 'NIE', 587, 'MAXI', '', 0, 0),
 (113, 'Bus', '3', 'WFA', 'SN218', '2 - 2 - 2', '1989', '1990', 'NIE', 'NIE', 588, 'MAXI', '', 0, 0),
-(114, 'Bus', '3', 'MAN', 'Lion\'s City M', '1 - 2 - 0', '2008', '2019', 'TAK', 'NIE', 612, 'MIDI', '', 0, 0),
-(115, 'Bus', '3', 'MAN', 'Lion\'s City M', '1 - 2 - 0', '2008', '2019', 'TAK', 'NIE', 613, 'MIDI', '', 0, 0),
-(116, 'Bus', '3', 'MAN', 'Lion\'s City M', '1 - 2 - 0', '2008', '2019', 'TAK', 'NIE', 614, 'MIDI', '', 0, 0),
-(117, 'Bus', '3', 'MAN', 'Lion\'s City M', '1 - 2 - 0', '2008', '2019', 'TAK', 'NIE', 615, 'MIDI', '', 0, 0),
-(118, 'Bus', '3', 'Jelcz', 'M083C \'Libero\'', '1 - 2 - 0', '2006', '2006', 'NIE', 'NIE', 626, 'MIDI', '', 0, 0),
-(119, 'Bus', '3', 'Jelcz', 'M083C \'Libero\'', '1 - 2 - 0', '2006', '2006', 'NIE', 'NIE', 627, 'MIDI', '', 0, 0),
-(120, 'Bus', '3', 'Jelcz', 'M083C \'Libero\'', '1 - 2 - 0', '2006', '2006', 'NIE', 'NIE', 628, 'MIDI', '', 0, 0),
+(114, 'Bus', '3', 'MAN', 'Lion\'s City M', '1 - 2 - 0', '2008', '2019', 'TAK', 'NIE', 612, '', '', 0, 0),
+(115, 'Bus', '3', 'MAN', 'Lion\'s City M', '1 - 2 - 0', '2008', '2019', 'TAK', 'NIE', 613, '', '', 0, 0),
+(116, 'Bus', '3', 'MAN', 'Lion\'s City M', '1 - 2 - 0', '2008', '2019', 'TAK', 'NIE', 614, '', '', 0, 0),
+(117, 'Bus', '3', 'MAN', 'Lion\'s City M', '1 - 2 - 0', '2008', '2019', 'TAK', 'NIE', 615, '', '', 0, 0),
+(118, 'Bus', '3', 'Jelcz', 'M083C \'Libero\'', '1 - 2 - 0', '2006', '2006', 'NIE', 'NIE', 626, '', '', 0, 0),
+(119, 'Bus', '3', 'Jelcz', 'M083C \'Libero\'', '1 - 2 - 0', '2006', '2006', 'NIE', 'NIE', 627, '', '', 0, 0),
+(120, 'Bus', '3', 'Jelcz', 'M083C \'Libero\'', '1 - 2 - 0', '2006', '2006', 'NIE', 'NIE', 628, '', '', 0, 0),
 (121, 'Bus', '3', 'Jelcz', 'M121MB', '2 - 2 - 2', '1995', '1996', 'NIE', 'NIE', 630, 'MAXI', '', 0, 0),
 (122, 'Bus', '3', 'Jelcz', 'M121MB', '2 - 2 - 2', '1995', '1996', 'NIE', 'NIE', 631, 'MAXI', '', 0, 0),
 (123, 'Bus', '3', 'Jelcz', 'M121MB', '2 - 2 - 2', '1995', '1996', 'NIE', 'NIE', 633, 'MAXI', '', 0, 0),
@@ -350,11 +366,11 @@ INSERT INTO `vehicles` (`id`, `typ_pojazdu`, `miasto`, `marka`, `model`, `uklad_
 (153, 'Bus', '3', 'Ikarus', '280.70E', '2 - 2 - 2 - 2', '1997', '1997', 'NIE', 'NIE', 852, 'MEGA', '', 0, 0),
 (154, 'Bus', '3', 'Ikarus', '280.70E', '2 - 2 - 2 - 2', '1997', '1997', 'NIE', 'NIE', 853, 'MEGA', '', 0, 0),
 (155, 'Bus', '3', 'Ikarus', '280.70E', '2 - 2 - 2 - 2', '1997', '1997', 'NIE', 'NIE', 854, 'MEGA', '', 0, 0),
-(156, 'Bus', '3', 'Jelcz', 'M081MB \'Vero\'', '2 - 2 - 2', '2001', '2001', 'NIE', 'NIE', 860, 'MIDI', '', 0, 0),
-(157, 'Bus', '3', 'Jelcz', 'M081MB \'Vero\'', '2 - 2 - 2', '2001', '2001', 'NIE', 'NIE', 861, 'MIDI', '', 0, 0),
-(158, 'Bus', '3', 'Jelcz', 'M081MB \'Vero\'', '2 - 2 - 2', '2001', '2001', 'NIE', 'NIE', 862, 'MIDI', '', 0, 0),
-(159, 'Bus', '3', 'Jelcz', 'M081MB \'Vero\'', '2 - 2 - 2', '2001', '2001', 'NIE', 'NIE', 863, 'MIDI', '', 0, 0),
-(160, 'Bus', '3', 'Jelcz', 'M081MB \'Vero\'', '2 - 2 - 2', '2001', '2001', 'NIE', 'NIE', 864, 'MIDI', '', 0, 0),
+(156, 'Bus', '3', 'Jelcz', 'M081MB \'Vero\'', '2 - 2 - 2', '2001', '2001', 'NIE', 'NIE', 860, '', '', 0, 0),
+(157, 'Bus', '3', 'Jelcz', 'M081MB \'Vero\'', '2 - 2 - 2', '2001', '2001', 'NIE', 'NIE', 861, '', '', 0, 0),
+(158, 'Bus', '3', 'Jelcz', 'M081MB \'Vero\'', '2 - 2 - 2', '2001', '2001', 'NIE', 'NIE', 862, '', '', 0, 0),
+(159, 'Bus', '3', 'Jelcz', 'M081MB \'Vero\'', '2 - 2 - 2', '2001', '2001', 'NIE', 'NIE', 863, '', '', 0, 0),
+(160, 'Bus', '3', 'Jelcz', 'M081MB \'Vero\'', '2 - 2 - 2', '2001', '2001', 'NIE', 'NIE', 864, '', '', 0, 0),
 (161, 'Bus', '3', 'WFA', 'SN218', '2 - 2 - 2', '1990', '1990', 'NIE', 'NIE', 865, 'MAXI', '', 0, 0),
 (162, 'Bus', '3', 'WFA', 'SN218', '2 - 2 - 2', '1990', '1990', 'NIE', 'NIE', 866, 'MAXI', '', 0, 0),
 (163, 'Bus', '3', 'WFA', 'SN218', '2 - 2 - 2', '1990', '1990', 'NIE', 'NIE', 867, 'MAXI', '', 0, 0),
@@ -379,10 +395,10 @@ INSERT INTO `vehicles` (`id`, `typ_pojazdu`, `miasto`, `marka`, `model`, `uklad_
 (182, 'Bus', '5', 'Jelcz', '120M', '2 - 2 - 2', '1994', '1994', 'NIE', 'NIE', 9, 'MAXI', '', 0, 0),
 (183, 'Bus', '5', 'Jelcz', '120M', '2 - 2 - 2', '1994', '1994', 'NIE', 'NIE', 10, 'MAXI', '', 0, 0),
 (184, 'Bus', '5', 'Jelcz', 'M121M', '2 - 2 - 2', '1996', '1996', 'NIE', 'NIE', 11, 'MAXI', 'Dofinansowany przez stowarzyszenie os?b niepe?nosprawnych', 0, 0),
-(185, 'Bus', '5', 'Jelcz', 'M081MB', '2 - 2', '2000', '2000', 'NIE', 'NIE', 12, 'MIDI', '', 0, 0),
-(186, 'Bus', '5', 'Jelcz', 'M081MB', '2 - 2 ', '2000', '2000', 'NIE', 'NIE', 13, 'MIDI', '', 0, 0),
-(187, 'Bus', '5', 'Jelcz', 'M081MB', '2 - 2 ', '2000', '2000', 'NIE', 'NIE', 15, 'MIDI', '', 0, 0),
-(188, 'Bus', '5', 'Autosan', 'H6-20.01', '0-2-0', '1999', '1999', 'NIE', 'NIE', 16, 'MIDI', '', 0, 0),
+(185, 'Bus', '5', 'Jelcz', 'M081MB', '2 - 2', '2000', '2000', 'NIE', 'NIE', 12, '', '', 0, 0),
+(186, 'Bus', '5', 'Jelcz', 'M081MB', '2 - 2 ', '2000', '2000', 'NIE', 'NIE', 13, '', '', 0, 0),
+(187, 'Bus', '5', 'Jelcz', 'M081MB', '2 - 2 ', '2000', '2000', 'NIE', 'NIE', 15, '', '', 0, 0),
+(188, 'Bus', '5', 'Autosan', 'H6-20.01', '0-2-0', '1999', '1999', 'NIE', 'NIE', 16, '', '', 0, 0),
 (189, 'Bus', '5', 'MAN', 'NG312', '2-2-2-2', '1998', '1998', 'NIE', 'NIE', 17, 'MEGA', '', 0, 0),
 (190, 'Bus', '5', 'MAN', 'NG312', '2-2-2-2', '1998', '1998', 'NIE', 'NIE', 18, 'MEGA', '', 0, 0),
 (191, 'Bus', '5', 'Solaris', 'Urbino 12 III', '2 - 2 - 2', '2014', '2014', 'TAK', 'TAK', 19, 'MAXI', 'Dofinansowanie z UE', 0, 0),
@@ -390,11 +406,14 @@ INSERT INTO `vehicles` (`id`, `typ_pojazdu`, `miasto`, `marka`, `model`, `uklad_
 (193, 'Bus', '5', 'MAN', 'NG312', '2-2-2-2', '1998', '1998', 'NIE', 'NIE', 21, 'MEGA', '', 0, 0),
 (194, 'Bus', '5', 'Volvo', '7700', '2 - 2 - 2', '2005', '2005', 'TAK', 'NIE', 22, 'MAXI', '', 0, 0),
 (195, 'Bus', '5', 'MAN', 'Lion\'s City NL283', '2 - 2 - 2', '2006', '2015', 'NIE', 'NIE', 23, 'MAXI', 'ex. MZK Toru? #542 po przer?bkach warsztatowych PK', 0, 0),
-(196, 'Bus', '5', 'Neoplan', 'N4007', '1-2-0', '1997', '2019', 'NIE', 'NIE', 24, 'MIDI', 'ex. Wawer', 0, 0),
-(197, 'Bus', '5', 'Jelcz', 'M083C Libero', '1-2-0', '2008', '2018', 'TAK', 'NIE', 25, 'MIDI', 'ex. Mobilis A190', 0, 0),
+(196, 'Bus', '5', 'Neoplan', 'N4007', '1-2-0', '1997', '2019', 'NIE', 'NIE', 24, '', 'ex. Wawer', 0, 0),
+(197, 'Bus', '5', 'Jelcz', 'M083C Libero', '1-2-0', '2008', '2018', 'TAK', 'NIE', 25, '', 'ex. Mobilis A190', 0, 0),
 (198, 'Bus', '5', 'Jelcz', 'M181MB', '2-2-2-2', '1996', '1996', 'NIE', 'NIE', 26, 'MEGA', 'Dofinansowany przez stowarzyszenie os?b niepe?nosprawnych', 0, 0),
-(199, 'Bus', '5', 'Autosan', 'H7-20.01', '2 - 2 ', '2000', '2000', 'NIE', 'NIE', 27, 'MIDI', 'ex. MZK Gorz?w Wiktorowski 101', 0, 0),
-(200, 'Bus', '5', 'Autosan', 'H7-20.01', '2 - 2 ', '2000', '2001', 'NIE', 'NIE', 28, 'MIDI', 'ex. MZK Gorz?w Wiktorowski 103', 0, 0);
+(199, 'Bus', '5', 'Autosan', 'H7-20.01', '2 - 2 ', '2000', '2000', 'NIE', 'NIE', 27, '', 'ex. MZK Gorz?w Wiktorowski 101', 0, 0),
+(200, 'Bus', '5', 'Autosan', 'H7-20.01', '2 - 2 ', '2000', '2001', 'NIE', 'NIE', 28, '', 'ex. MZK Gorz?w Wiktorowski 103', 0, 0),
+(201, 'Tram', '2', 'aaa', 'aaa', '2-2-2', '2000', '2000', 'TAK', 'TAK', 987, 'MAXI', 'test', 0, 0),
+(208, 'Tram', '2', 'aaa', 'aaa', '2-2-2', '2000', '2000', 'TAK', 'TAK', 888, 'MAXI', 'test', 1, NULL),
+(209, 'Tram', '2', 'Hunter', 'CFII328G ZR', '1 - 2|2|2 - 1', '2020', '2020', 'TAK', 'TAK', 62, 'Wagon', 'Kupiony z UE', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -416,7 +435,8 @@ CREATE TABLE `workshop` (
 --
 
 INSERT INTO `workshop` (`id`, `id_pojazdu`, `powod`, `data_roz`, `data_zak`, `miasto`) VALUES
-(1, 12, 'Wymiana skrzyni', '2020-02-19 00:00:00', '2020-02-27 00:00:00', 2);
+(1, 1, 'fsdagfgsdgsd', '2020-02-02 00:00:00', '2021-02-02 00:00:00', 2),
+(2, 8, '10', '2020-01-01 00:00:00', '2023-02-02 00:00:00', 2);
 
 --
 -- Indeksy dla zrzutów tabel
@@ -432,8 +452,7 @@ ALTER TABLE `destination`
 -- Indeksy dla tabeli `plan`
 --
 ALTER TABLE `plan`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `id_timetable` (`id_timetable`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indeksy dla tabeli `timetable`
@@ -445,9 +464,7 @@ ALTER TABLE `timetable`
 -- Indeksy dla tabeli `timetable_course`
 --
 ALTER TABLE `timetable_course`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `id_timetable` (`id_timetable`,`id_destination`),
-  ADD KEY `id_destination` (`id_destination`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indeksy dla tabeli `users`
@@ -459,86 +476,47 @@ ALTER TABLE `users`
 -- Indeksy dla tabeli `vehicles`
 --
 ALTER TABLE `vehicles`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `id_workshop` (`id_workshop`,`id_timetable`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indeksy dla tabeli `workshop`
 --
 ALTER TABLE `workshop`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `id_pojazdu` (`id_pojazdu`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT dla tabeli `destination`
---
-ALTER TABLE `destination`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
 -- AUTO_INCREMENT dla tabeli `plan`
 --
 ALTER TABLE `plan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT dla tabeli `timetable`
 --
 ALTER TABLE `timetable`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT dla tabeli `timetable_course`
 --
 ALTER TABLE `timetable_course`
-<<<<<<< HEAD
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT dla tabeli `users`
---
-ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-=======
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
->>>>>>> 47e3133b7eecf23334661f05640b3bba61a182d4
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT dla tabeli `vehicles`
 --
 ALTER TABLE `vehicles`
-<<<<<<< HEAD
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=94;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=210;
 
 --
 -- AUTO_INCREMENT dla tabeli `workshop`
 --
 ALTER TABLE `workshop`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- Ograniczenia dla zrzutów tabel
---
-
---
--- Ograniczenia dla tabeli `plan`
---
-ALTER TABLE `plan`
-  ADD CONSTRAINT `plan_ibfk_1` FOREIGN KEY (`id_timetable`) REFERENCES `timetable` (`id`);
-
---
--- Ograniczenia dla tabeli `timetable_course`
---
-ALTER TABLE `timetable_course`
-  ADD CONSTRAINT `timetable_course_ibfk_1` FOREIGN KEY (`id_destination`) REFERENCES `destination` (`id`),
-  ADD CONSTRAINT `timetable_course_ibfk_2` FOREIGN KEY (`id_timetable`) REFERENCES `timetable` (`id`);
-=======
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=201;
->>>>>>> 47e3133b7eecf23334661f05640b3bba61a182d4
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
