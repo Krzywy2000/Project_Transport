@@ -21,26 +21,4 @@
         echo '<a class="dropdown-item" href="./scripts/php/logoff.php">Wyloguj</a>';
     }
 
-    if($_SESSION['access'] == '4')
-    {
-        echo '<a>'.$_SESSION['name'].' '.$_SESSION['surname'].'</a>';
-        echo '<a class="dropdown-item" href="index_user.php?page=rolling_stock">Tabor</a>';
-        echo '<a class="dropdown-item" href="index_user.php?page=timetables">Rozkłady</a>';
-        echo '<a class="dropdown-item" href="index_user.php?page=workshop">Warsztat</a>';
-        echo '<a class="dropdown-item" href="index_user.php?page=plans">Przydział wozów</a>';
-        echo '<a class="dropdown-item" href="index_admin.php?page=options">Ustawienia</a>';
-        echo '<a class="dropdown-item" href="./scripts/php/logoff.php">Wyloguj</a>';
-    }
-
-    if($_SESSION['access'] == '5')
-    {
-        echo '<a>'.$_SESSION['name'].' '.$_SESSION['surname'].'</a>';
-        echo '<a class="dropdown-item" href="index_user.php?page=rolling_stock">Tabor</a>';
-        echo '<a class="dropdown-item" href="index_user.php?page=timetables">Rozkłady</a>';
-        echo '<a class="dropdown-item" href="index_user.php?page=workshop">Warsztat</a>';
-        echo '<a class="dropdown-item" href="index_user.php?page=plans">Przydział wozów</a>';
-        echo '<a class="dropdown-item" href="index_admin.php?page=options">Ustawienia</a>';
-        echo '<a class="dropdown-item" href="./scripts/php/logoff.php">Wyloguj</a>';
-    }
-
 ?>

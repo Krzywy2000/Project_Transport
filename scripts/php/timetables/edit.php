@@ -4,11 +4,7 @@
     require_once("../db_connect.php");
     $connect = new mysqli($host, $db_user, $db_password, $db_name);
     mysqli_query("SET CHARSET utf8");
-<<<<<<< HEAD
 	  $idedit = $_POST['idedit'];
-=======
-
->>>>>>> 47e3133b7eecf23334661f05640b3bba61a182d4
     $name = $_POST['name'];
     $start = $_POST['start'];
     $end = $_POST['end'];
@@ -17,14 +13,9 @@
     $count_of_course = $_POST['count_of_course'];
     $city = $_SESSION['access'];
     $i=0;
-<<<<<<< HEAD
 	echo $idedit;
 
     $send = "UPDATE `timetable` SET `nazwa_zm`=$name,`godz_roz`=$start,`godz_zak`=$end,`rodzaj`=$type,`uwagi`=$comment WHERE id='".$idedit."' ";
-=======
-
-    $send = "UPDATE `timetable` SET `nazwa_zm`=$name,`godz_roz`=$start,`godz_zak`=$end,`rodzaj`=$type,`uwagi`=$comment WHERE 1";
->>>>>>> 47e3133b7eecf23334661f05640b3bba61a182d4
     $connect->query($send);
 
     if ($check_id = @$connect->query("SELECT MAX(id) FROM `timetable`"))
