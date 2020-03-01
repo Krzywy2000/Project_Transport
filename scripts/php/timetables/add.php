@@ -35,7 +35,7 @@
         $seconds = 0;
         foreach ($times as $time)
         {
-            list($hour,$minute,$second) = explode(':', $time);
+            @list($hour,$minute,$second) = explode(':', $time);
             $seconds += $hour*3600;
             $seconds += $minute*60;
             $seconds += $second;
@@ -64,7 +64,6 @@
         $number = $_POST['number_'.$i];
         $departure = $_POST['departure_'.$i];
         $destination = $_POST['option_destination_'.$i];
-        echo $departure."<br/>";
         
         if ($check_arrival = @$connect->query("SELECT * FROM `destination` WHERE `miasto` LIKE '$_SESSION[access]' AND `id` LIKE '$destination' ORDER BY `miasto`"))
             {
@@ -80,9 +79,10 @@
 
         $arrival_all = sum_the_time($departure,$arrival);
 
-        $send_1 = "INSERT INTO `timetable_course`(`id_timetable`, `nr_kursu`, `nr_linii`, `id_destination`, `godz_roz`,`godz_zak`) VALUES ('$id','$i','$number','$destination','$departure','$arrival_all')";
+        @$send_1 = "INSERT INTO `timetable_course`(`id_timetable`, `nr_kursu`, `nr_linii`, `id_destination`, `godz_roz`,`godz_zak`) VALUES ('$id','$i','$number','$destination','$departure','$arrival_all')";
         
-        $connect->query($send_1);
+        @$connect->query($send_1);
+        
     }
-        header("Location: ../../../index_user.php?page=timetables");
+    header("Location: ../../../index_user.php?page=timetables");
 ?>

@@ -55,7 +55,6 @@ $('#modal-edit-timetable').on('show.bs.modal', function (event) {
 })
 $('#modal-more-timetable').on('show.bs.modal', function (event) {
 	
-  var button = $(event.relatedTarget) 
   var id = button.data('idmore') 
   console.log(id)
 

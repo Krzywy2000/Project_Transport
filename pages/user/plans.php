@@ -14,7 +14,7 @@
                 <a>Data: </a><input type='date'/>
             </div>
             <div class='col-md-6'>
-                <form >
+                <form action='scripts/php/plans/add_to_plans.php'>
                     <?php
                         $data = date('Y-m-d');
                         $query_plans = "SELECT `data`,`nazwa_zm`, `numer_pojazdu` FROM `plan`
@@ -68,7 +68,7 @@
                                     echo "<tr>
                                         <td>$row[nazwa_zm]</td>
                                         <td>$row[godz_roz] - $row[godz_zak]</td>
-                                        <td> </td>
+                                        <td>$row[rodzaj] | $row[obsluga]</td>
                                         <td>";
                                         include('scripts/php/plans/list_vehicles.php');
                                         echo "<button type='submit'>Dodaj</button></td>

@@ -38,7 +38,8 @@
                                         <td>".$row['uwagi']."</td>
                                         <td><button data-toggle='modal' data-target='#modal-edit-timetable' data-idedit='".$row['id']."'>Edytuj</button><br/>
                                         <button>Usuń</button><br/>
-                                        <button data-toggle='modal' data-target='#modal-more-timetable' data-idmore='".$row['id']."'>Szczegóły</button></td>
+                                        <button data-toggle='modal' data-target='#modal-more-timetable' data-idmore='".$row['id']."'>Szczegóły</button>
+                                        </td>
                                     </tr>";
                                 }
                             }
@@ -151,7 +152,7 @@
                 <form action="scripts/php/timetables/more_information.php" method="POST" id="form-more-timetables">
                         <div class='container-fluid'>
                             <div class='row'>
-							<input type="hidden" id="idedit" name="idedit" >
+							<input type="hidden" id="idmore" name="idmore">
                                 <?php
                                     include_once("./scripts/php/timetables/more_information.php")
                                 ?>
