@@ -53,6 +53,17 @@ $('#modal-edit-timetable').on('show.bs.modal', function (event) {
   modal.find('.modal-body .container-fluid .row #idedit').attr("value",id)
   console.log(modal.find('.modal-body #idedit').attr("value"))
 })
+$('#modal-more-timetable').on('show.bs.modal', function (event) {
+	
+  var button = $(event.relatedTarget) 
+  var id = button.data('idmore') 
+  console.log(id)
+
+  var modal = $(this)
+    console.log(modal.find('.modal-body #idmore'))
+  modal.find('.modal-body .container-fluid .row #idmore').attr("value",id)
+  console.log(modal.find('.modal-body #idmore').attr("value"))
+})
 $('#modal-delete-vehicles').on('show.bs.modal', function (event) {
 	
   var button = $(event.relatedTarget) 

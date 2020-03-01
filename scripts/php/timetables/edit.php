@@ -85,9 +85,5 @@
         
         $connect->query($send_1);
     }
-<<<<<<< HEAD
-       // header("Location: ../../../index_user.php?page=timetables");
-=======
         header("Location: ../../../index_user.php?page=timetables");
->>>>>>> 47e3133b7eecf23334661f05640b3bba61a182d4
 ?>

@@ -16,36 +16,40 @@
             <div class='col-md-6'>
                 <form >
                     <?php
-                        $query_plans = "SELECT * FROM plan WHERE `miasto` LIKE '$_SESSION[access]'";
+                        $data = date('Y-m-d');
+                        $query_plans = "SELECT `data`,`nazwa_zm`, `numer_pojazdu` FROM `plan`
+                        left join `timetable` on `plan`.`id_timetable` = `timetable`.`id`
+                        WHERE `plan`.`miasto` LIKE '$_SESSION[access]' AND `data` > '$data'";
                         $query_timetable="SELECT * FROM `timetable` WHERE `miasto` = '$_SESSION[access]'";
 
-                        if($result = @$connect->query($query_plans))
-                        {
-                            $plans = $result->num_rows;
-                            if($plans>0)
-                            {
-                                echo "<table>
+                        echo "<table>
                                     <tr class='main'>
                                         <td>Data</td>
                                         <td>Numer przydziału</td>
                                         <td>Numer pojazdu</td>
                                     </tr>";
+                        if($result = @$connect->query($query_plans))
+                        {
+                            $plans = $result->num_rows;
+                            if($plans>0)
+                            {
                                 while($row = $result->fetch_array())
                                 {
                                     echo "<tr>";
                                     echo "<td>".$row['data']."</td>";
-                                    echo "<td>".$row['id_timetable']."</td>";
+                                    echo "<td>".$row['nazwa_zm']."</td>";
                                     echo "<td>".$row['numer_pojazdu']."</td>";
                                     echo "</tr>";
-                                }
-                                echo "</table>";
+                                
                             }
                         }
+                    }
+                        echo "</table>";
                     ?>
-                </form>
-            </div>
-            <div class='col-md-6'>
-                <?php
+                    </form>
+                </div>
+                <div class='col-md-6'>
+                    <?php
                         
                         if($result1 = @$connect->query($query_timetable))
                         {
