@@ -19,6 +19,7 @@ if ($connect) {
 	$edycja_vehicle_numer=$_POST['edycja_vehicle_numer'];
 	$edycja_vehicle_typ_taboru=$_POST['edycja_vehicle_typ_taboru'];
 	$edycja_vehicle_uwagi=$_POST['edycja_vehicle_uwagi'];
+	$edycja_vehicle_podloga=$_POST['edycja_vehicle_podloga'];
 
 
 
@@ -28,7 +29,7 @@ if ($connect) {
 
 	$update_editor="update vehicles set
 	typ_pojazdu='".$edycja_vehicle_type."'
-	, miasto='".$edycja_vehicle_Miasto."'
+	, miasto='".$_SESSION['access']."'
 	, marka='".$edycja_vehicle_marka."' 
 	, model='".$edycja_vehicle_model."'
 	, uklad_drzwi='".$edycja_vehicle_numer."' 	
@@ -36,6 +37,7 @@ if ($connect) {
 	, rok_wprowadzenia='".$edycja_vehicle_rok."' 
 	, klimatyzacja='".$edycja_vehicle_klimatyzacja."' 
 	, biletomat='".$edycja_vehicle_biletomat."'
+	, niska_podloga='".$edycja_vehicle_podloga."'
 	, numer_tab='".$edycja_vehicle_numer."'
 	, typ_taboru='".$edycja_vehicle_typ_taboru."' 	
 	, uwagi='".$edycja_vehicle_uwagi."' 

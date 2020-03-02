@@ -228,23 +228,26 @@
       <form action="scripts/php/editor.php" method="POST" id="form-editor">
 <input type="hidden" id="id-edycja-vehicles" name="id_edycja_vehicles" value="">
 			
-typ_pojazdu			:<select name="edycja_vehicle_type"><option value='Bus'>Bus</option><option value='Tram'>Tram</option></select><br /><br/>
-miasto				:<input type="text" name="edycja_vehicle_Miasto"/><br /><br/>
-marka				:<input type="text" name="edycja_vehicle_marka"><br /><br/>
-model				:<input type="text" name="edycja_vehicle_model"><br /><br/>
-uklad_drzwi			:<input type="text" name="edycja_vehicle_drzwi"><br /><br/>
-rocznik				:<input type="year" name="edycja_vehicle_rocznik"><br /><br/>
-rok_wprowadzenia	:<input type="year" name="edycja_vehicle_rok"><br /><br/>
-klimatyzacja		:<select name="edycja_vehicle_klimatyzacja"><option value='TAK'>TAK</option><option value='NIE'>NIE</option></select><br /><br/>
-biletomat			:<SELECT name="edycja_vehicle_biletomat"><option value='TAK'>TAK</option><option value='NIE'>NIE</option></select><br /><br/>
-numer_tab:			:<input type="number" name="edycja_vehicle_numer"><br /><br/>
-typ_taboru:			:<select name="edycja_vehicle_typ_taboru">	
+Typ pojazdu			:<select name="edycja_vehicle_type"><option value='Bus'>Bus</option><option value='Tram'>Tram</option></select><br /><br/>
+Marka				:<input type="text" name="edycja_vehicle_marka"><br /><br/>
+Model				:<input type="text" name="edycja_vehicle_model"><br /><br/>
+Uklad drzwi			:<input type="text" name="edycja_vehicle_drzwi"><br /><br/>
+Rocznik				:<input type="year" name="edycja_vehicle_rocznik"><br /><br/>
+Rok wprowadzenia	:<input type="year" name="edycja_vehicle_rok"><br /><br/>
+Klimatyzacja		:<select name="edycja_vehicle_klimatyzacja"><option value='TAK'>TAK</option><option value='NIE'>NIE</option></select><br /><br/>
+Biletomat			:<SELECT name="edycja_vehicle_biletomat"><option value='TAK'>TAK</option><option value='NIE'>NIE</option></select><br /><br/>
+Niska podłoga: <select name="edycja_vehicle_podloga">
+<option value='TAK'>TAK</option>
+<option value='NIE'>NIE</option>
+</select><br/>
+Numer tab:			:<input type="number" name="edycja_vehicle_numer"><br /><br/>
+Typ taboru:			:<select name="edycja_vehicle_typ_taboru">	
 		<option value='MINI'>MINI</option>	
 		<option value='MAXI'>MAXI</option>
 		<option value='MEGA'>MEGA</option>	
 		<option value='Wagon'>Wagon</option>
 		<option value='Skład'>Skład</option></SELECT><br /><br/>
-uwagi				:<input type="text" name="edycja_vehicle_uwagi"><br /><br/>
+Uwagi				:<input type="text" name="edycja_vehicle_uwagi"><br /><br/>
 <!--id_workshop
 w warsztacie:		:<input type="text" name="edycja_vehicle_workshop"><br /><br/>
 id_timetable
@@ -278,23 +281,26 @@ rozklad:			:<input type="text" name="edycja_vehicle_timetable"><br /><br/>
     <div class="modal-body">
       <form action="scripts/php/add_to_stock.php" method="POST" id="form-add-to-stock">
 		<!--id-->	
-typ_pojazdu			:<select name="add_vehicle_type"><option value='Bus'>Bus</option><option value='Tram'>Tram</option></select><br /><br/>
-miasto				:<input type="text" name="add_vehicle_miasto"/><br /><br/>
-marka				:<input type="text" name="add_vehicle_marka"><br /><br/>
-model				:<input type="text" name="add_vehicle_model"><br /><br/>
-uklad_drzwi			:<input type="text" name="add_vehicle_drzwi"><br /><br/>
-rocznik				:<input type="year" name="add_vehicle_rocznik"><br /><br/>
-rok_wprowadzenia	:<input type="year" name="add_vehicle_rok"><br /><br/>
-klimatyzacja		:<select name="add_vehicle_klimatyzacja"><option value='TAK'>TAK</option><option value='NIE'>NIE</option></select><br /><br/>
-biletomat			:<SELECT name="add_vehicle_biletomat"><option value='TAK'>TAK</option><option value='NIE'>NIE</option></select><br /><br/>
-numer_taborowy		:<input type="number" name="add_vehicle_numer"><br /><br/>
-typ_taboru:			:<select name="add_vehicle_typ_taboru">	
+Typ pojazdu			:<select name="add_vehicle_type"><option value='Bus'>Bus</option><option value='Tram'>Tram</option></select><br /><br/>
+Marka				:<input type="text" name="add_vehicle_marka"><br /><br/>
+Model				:<input type="text" name="add_vehicle_model"><br /><br/>
+Układ drzwi			:<input type="text" name="add_vehicle_drzwi"><br /><br/>
+Rocznik				:<input type="year" name="add_vehicle_rocznik"><br /><br/>
+Rok wprowadzenia	:<input type="year" name="add_vehicle_rok"><br /><br/>
+Klimatyzacja		:<select name="add_vehicle_klimatyzacja"><option value='TAK'>TAK</option><option value='NIE'>NIE</option></select><br /><br/>
+Biletomat			:<SELECT name="add_vehicle_biletomat"><option value='TAK'>TAK</option><option value='NIE'>NIE</option></select><br /><br/>
+Niska podłoga: <select name="add_vehicle_podloga">
+<option value='TAK'>TAK</option>
+<option value='NIE'>NIE</option>
+</select><br/>
+Numer taborowy		:<input type="number" name="add_vehicle_numer"><br /><br/>
+Typ taboru:			:<select name="add_vehicle_typ_taboru">	
 					<option value='MINI'>MINI</option>	
 					<option value='MAXI'>MAXI</option>
 					<option value='MEGA'>MEGA</option>	
 					<option value='Wagon'>Wagon</option>
 					<option value='Skład'>Skład</option></SELECT><br /><br/>
-uwagi				:<input type="text" name="add_vehicle_uwagi"><br /><br/>
+Uwagi				:<input type="text" name="add_vehicle_uwagi"><br /><br/>
 <!--id_workshop-->
 <!--id_timetable-->
 

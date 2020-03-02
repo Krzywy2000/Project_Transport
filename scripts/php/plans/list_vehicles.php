@@ -13,7 +13,7 @@
             echo "<select>";
             while($row = $result->fetch_array())
             {  
-                echo "<option>".$row['numer_tab']."</option>";
+                echo "<option>".$row['numer_tab']." | ".$row['model']."</option>";
             }
             echo "</select>";
         }
