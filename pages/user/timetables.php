@@ -38,7 +38,7 @@
                                         <td>".$row['uwagi']."</td>
                                         <td><button data-toggle='modal' data-target='#modal-edit-timetable' data-idedit='".$row['id']."'>Edytuj</button><br/>
                                         <button>Usuń</button><br/>
-                                        <button data-toggle='modal' data-target='#modal-more-timetable' data-idmore='".$row['id']."'>Szczegóły</button>
+                                    <button data-toggle='modal' data-target='#modal-szczegoly2' data-idvehicle2='".$row['id']."'>szczegóły</button><br />
                                         </td>
                                     </tr>";
                                 }
@@ -50,6 +50,64 @@
         </div>        
     <br/><br/></div>
 
+ <!--More timetable
+      <div class="modal fade bd-example-modal-lg" id="modal-szczegoly2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Szczegóły rozkładu</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+                <div class="modal-body">
+
+                <form action="scripts/php/timetables/more_information.php" method="POST" id="form-more-timetables">
+				 <div class='row'>
+										<input type="hidden" id="id-edycja-vehicles2" name="id_edycja_vehicles2" value="">
+					
+                                <?php
+                                    include_once("./scripts/php/timetables/more_information.php")
+                                ?>
+
+                    </form>
+					</div>
+                <div class="modal-footer">
+
+                </div>
+            </div>
+        </div>
+    </div>
+	</div>
+	-->
+			<!--<input type="hidden" id="id-more" name="id_more">-->
+			
+			    <div class="modal" id="modal-szczegoly2" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Szczegóły</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+		        <form action="scripts/php/timetables/more_information.php" method="POST" id="form-more-timetables">
+<input type="hidden" id="id-edycja-vehicles2" name="id_edycja_vehicles2" value="">
+
+    </form>
+                 
+
+                 
+          </div>
+          <div class="modal-footer">
+
+          </div>
+        </div>
+      </div>
+    </div>
+			
     <!--Add timetable-->
     <div class="modal fade bd-example-modal-lg" id="modal-add-timetable" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -138,33 +196,7 @@
         </div>
     </div>
 
-    <!--More timetable-->
-    <div class="modal fade bd-example-modal-lg" id="modal-more-timetable" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Szczegóły rozkładu</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-                <div class="modal-body">
-                <form action="scripts/php/timetables/more_information.php" method="POST" id="form-more-timetables">
-                        <div class='container-fluid'>
-                            <div class='row'>
-							<input type="hidden" id="idmore" name="idmore">
-                                <?php
-                                    include_once("./scripts/php/timetables/more_information.php")
-                                ?>
-                            </div>
-                        </div>
-                    </form>
-                <div class="modal-footer">
-
-                </div>
-            </div>
-        </div>
-    </div>
+   
 
 
 	<script src="scripts/js/modals.js"></script>

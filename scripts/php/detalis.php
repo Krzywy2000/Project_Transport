@@ -4,6 +4,10 @@
 
     $id_vehicles=$_POST['id_vehicles'];
     $query_detalis="SELECT * FROM vehicles WHERE id='".$id_vehicles."'";
+	
+	echo $id_vehicles;
+?>
+
 
     $zap1_query=@$connect->query($query_detalis);
     {

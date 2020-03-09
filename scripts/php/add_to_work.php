@@ -10,10 +10,10 @@
 	$form_workshop_miasto=$_POST['form_workshop_miasto'];
 
 	//numer_tab	id_pojazdu	powod	data_roz	data_zak
-echo $id_vehicles;
-echo $form_workshop_text;
-echo $form_workshop_data_p;
-echo $form_workshop_data_k;
+echo $id_vehicles."<br>";
+echo $form_workshop_text."<br>";
+echo $form_workshop_data_p."<br>";
+echo $form_workshop_data_k."<br>";
 echo "<br/>".$form_workshop_miasto;
 
 

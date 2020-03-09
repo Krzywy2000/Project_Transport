@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.5
+-- version 4.8.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 26 Lut 2020, 12:19
--- Wersja serwera: 10.1.38-MariaDB
--- Wersja PHP: 7.3.2
+-- Czas generowania: 07 Mar 2020, 18:50
+-- Wersja serwera: 10.1.37-MariaDB
+-- Wersja PHP: 7.3.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -107,7 +107,9 @@ INSERT INTO `timetable` (`id`, `miasto`, `nazwa_zm`, `godz_roz`, `godz_zak`, `ro
 (11, 2, '', '00:00:00', '00:00:00', '', '', ''),
 (12, 2, '', '00:00:00', '00:00:00', '', '', ''),
 (13, 2, '01/02/D', '04:23:00', '22:12:00', 'TRAM', 'MAXI', ''),
-(14, 2, '01/03/D', '12:15:00', '22:21:00', 'BUS', 'MEGA', '');
+(14, 2, '01/03/D', '12:15:00', '22:21:00', 'BUS', 'MEGA', ''),
+(15, 2, '4AT', '09:09:10', '10:10:10', 'TRAM', 'MIDI', 'nie'),
+(16, 2, '4AT2', '09:09:10', '10:10:10', 'TRAM', 'MEGA', 'nie');
 
 -- --------------------------------------------------------
 
@@ -153,7 +155,18 @@ INSERT INTO `timetable_course` (`id`, `id_timetable`, `nr_kursu`, `nr_linii`, `i
 (21, 13, 1, 12, 2, '04:23:00', '04:37:00'),
 (22, 13, 2, 12, 2, '21:52:00', '22:06:00'),
 (23, 14, 1, 12, 1, '12:15:00', '12:29:00'),
-(24, 14, 2, 15, 2, '22:00:00', '22:14:00');
+(24, 14, 2, 15, 2, '22:00:00', '22:14:00'),
+(25, 14, 1, 0, 0, '00:00:00', '00:00:00'),
+(26, 14, 1, 0, 0, '00:00:00', '00:00:00'),
+(27, 14, 1, 0, 0, '00:00:00', '00:00:00'),
+(28, 14, 2, 0, 0, '00:00:00', '00:00:00'),
+(29, 15, 1, 0, 1, '00:00:00', '00:14:00'),
+(30, 16, 1, 22, 1, '04:05:00', '04:19:00'),
+(31, 16, 1, 0, 0, '00:00:00', '00:00:00'),
+(32, 16, 1, 0, 0, '00:00:00', '00:00:00'),
+(33, 16, 2, 0, 0, '00:00:00', '00:00:00'),
+(34, 16, 1, 0, 0, '00:00:00', '00:00:00'),
+(35, 16, 2, 0, 0, '00:00:00', '00:00:00');
 
 -- --------------------------------------------------------
 
@@ -211,11 +224,10 @@ CREATE TABLE `vehicles` (
 --
 
 INSERT INTO `vehicles` (`id`, `typ_pojazdu`, `miasto`, `marka`, `model`, `uklad_drzwi`, `rocznik`, `rok_wprowadzenia`, `klimatyzacja`, `biletomat`, `numer_tab`, `typ_taboru`, `uwagi`, `id_workshop`, `id_timetable`) VALUES
-(1, 'Bus', '', '', '', '', '', '', 'TAK', 'TAK', 0, 'MINI', '', 1, 0),
+(1, 'Bus', '', '', '', '', '', '', 'TAK', 'TAK', 0, 'MINI', '', 0, 0),
 (2, 'Bus', '2', 'MAN', 'NM223', '1 - 2 - 0', '1999', '2014', 'NIE', 'TAK', 104, '', '', 1, 0),
 (3, 'Bus', '2', 'Jelcz', 'M11', '2 - 2 - 2', '1987', '1987', 'NIE', 'TAK', 105, '', '', 1, 0),
 (4, 'Bus', '2', 'Jelcz', 'M11', '2 - 2 - 2', '1987', '1987', 'NIE', 'TAK', 106, '', '', 0, 0),
-(5, 'Bus', '2', 'Jelcz', 'M11', '2 - 2 - 2', '1987', '1987', 'NIE', 'TAK', 107, '', '', 0, 0),
 (6, 'Bus', '2', 'Solaris', 'Urbino 10 III', '1 - 2 - 0', '2017', '2018', 'TAK', 'TAK', 108, '', 'Z dotacji UE', 0, 0),
 (7, 'Bus', '2', 'Solaris', 'Urbino 10 III', '1 - 2 - 0', '2017', '2018', 'TAK', 'TAK', 109, '', 'Z dotacji UE', 0, 0),
 (8, 'Bus', '2', 'Solaris', 'Urbino 8,9 III LE', '1 - 2 - 0', '2019', '2020', 'TAK', 'TAK', 110, '', 'Z dotacji UE', 1, 0),
@@ -435,8 +447,8 @@ CREATE TABLE `workshop` (
 --
 
 INSERT INTO `workshop` (`id`, `id_pojazdu`, `powod`, `data_roz`, `data_zak`, `miasto`) VALUES
-(1, 1, 'fsdagfgsdgsd', '2020-02-02 00:00:00', '2021-02-02 00:00:00', 2),
-(2, 8, '10', '2020-01-01 00:00:00', '2023-02-02 00:00:00', 2);
+(2, 8, '10', '2020-01-01 00:00:00', '2023-02-02 00:00:00', 2),
+(3, 2, '222', '2020-01-01 00:00:00', '2023-03-03 00:00:00', 2);
 
 --
 -- Indeksy dla zrzutów tabel
@@ -498,13 +510,13 @@ ALTER TABLE `plan`
 -- AUTO_INCREMENT dla tabeli `timetable`
 --
 ALTER TABLE `timetable`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT dla tabeli `timetable_course`
 --
 ALTER TABLE `timetable_course`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT dla tabeli `vehicles`
@@ -516,7 +528,7 @@ ALTER TABLE `vehicles`
 -- AUTO_INCREMENT dla tabeli `workshop`
 --
 ALTER TABLE `workshop`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -3,7 +3,7 @@
     
     require_once("../db_connect.php");
     $connect = new mysqli($host, $db_user, $db_password, $db_name);
-    mysqli_query("SET CHARSET utf8");
+    @$connect->query("SET CHARSET utf8");
 	  $idedit = $_POST['idedit'];
     $name = $_POST['name'];
     $start = $_POST['start'];

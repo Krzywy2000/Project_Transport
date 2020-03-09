@@ -2,7 +2,7 @@
     <?php 
         require_once("scripts/php/db_connect.php");
         $connect = new mysqli($host, $db_user, $db_password, $db_name);
-		        $miasto = $_SESSION['access'];
+		    $miasto = $_SESSION['access'];
     ?>
     <div class="container-fluid"><br/><br/>
         <H2 class="headline">Lista taboru</H2>
@@ -18,13 +18,13 @@
             <?php
 			if($_SESSION['access'] == 1)
 			{
-			$result_Bus="SELECT * FROM `vehicles` where `typ_pojazdu`='Bus' ORDER BY `numer_tab`";	
-			$result_Tram="SELECT * FROM `vehicles` where `typ_pojazdu`='Tram' ORDER BY `numer_tab`";		
+			$result_Bus="SELECT * FROM `vehicles` where id_workshop='0' and `typ_pojazdu`='Bus' ORDER BY `numer_tab`";	
+			$result_Tram="SELECT * FROM `vehicles` where id_workshop='0' and `typ_pojazdu`='Tram' ORDER BY `numer_tab`";		
 			}
 			else
 			{
-			$result_Bus="SELECT * FROM `vehicles` where `typ_pojazdu`='Bus' and `miasto` like $miasto ORDER BY `numer_tab`";	
-			$result_Tram="SELECT * FROM `vehicles` where `typ_pojazdu`='Tram' and `miasto` like $miasto ORDER BY `numer_tab`";
+			$result_Bus="SELECT * FROM `vehicles` where id_workshop='0' or id_workshop='NULL' and  `typ_pojazdu`='Bus' and `miasto` like $miasto ORDER BY `numer_tab`";	
+			$result_Tram="SELECT * FROM `vehicles` where id_workshop='0' or id_workshop='NULL' and `typ_pojazdu`='Tram' and `miasto` like $miasto ORDER BY `numer_tab`";
 			}
 			
 
@@ -65,8 +65,8 @@
                                     <td>".$row['biletomat']."</td>
                                     <td>".$row['uwagi']."</td>
                                     <td><button data-toggle='modal' data-target='#modal-edycja' data-edycja-vehicle='".$row['id']."'>Edytuj</button><br />
-                                    <button data-toggle='modal' data-target='#modal-szczegoly' data-idvehicle='".$row['id']."'>szczegóły</button><br />
-                                    <button data-toggle='modal' data-target='#modal-workshop' data-idvehicle='".$row['id']."'>Dodaj do warsztatu</button><br/>
+                                    <button data-toggle='modal' data-target='#modal-szczegoly' data-idvehiclex='".$row['id']."'>szczegóły</button><br />
+                                    <button data-toggle='modal' data-target='#modal-workshop' data-idmiasto='".$row['miasto']."' data-idvehicle='".$row['id']."'>Dodaj do warsztatu</button><br/>
                                     <button data-toggle='modal' data-target='#modal-delete-vehicles' data-delete-vehicle='".$row['id']."'>Usuń pojazd</button>
                                     </td>
                                   </tr>";
@@ -109,7 +109,7 @@
                                   <td>".$row2['biletomat']."</td>
                                   <td>".$row2['uwagi']."</td>
                                       <td><button data-toggle='modal' data-target='#modal-edycja' data-edycja-vehicle='".$row['id']."'>Edytuj</button><br />
-                                      <button data-toggle='modal' data-target='#modal-szczegoly' data-idvehicle='".$row['id']."'>szczegóły</button><br />
+                                      <button data-toggle='modal' data-target='#modal-szczegoly' data-idvehiclex='".$row['id']."'>szczegóły</button><br />
                                       <button data-toggle='modal' data-target='#modal-workshop' data-idvehicle='".$row['id']."'>Dodaj do warsztatu</button><br/>
                                       <button data-toggle='modal' data-target='#modal-delete-vehicles' data-delete-vehicle='".$row['id']."'>Usuń pojazd</button>
                                       </td>
@@ -150,7 +150,7 @@
                                   <td>".$row2['biletomat']."</td>
                                   <td>".$row2['uwagi']."</td>
                                       <td><button data-toggle='modal' data-target='#modal-edycja' data-edycja-vehicle='".$row['id']."'>Edytuj</button><br />
-                                      <button data-toggle='modal' data-target='#modal-szczegoly' data-idvehicle='".$row['id']."'>szczegóły</button><br />
+                                      <button data-toggle='modal' data-target='#modal-szczegoly' data-idvehiclex='".$row['id']."'>szczegóły</button><br />
                                       <button data-toggle='modal' data-target='#modal-workshop' data-idvehicle='".$row['id']."'>Dodaj do warsztatu</button><br/>
                                       <button data-toggle='modal' data-target='#modal-delete-vehicles' data-delete-vehicle='".$row['id']."'>Usuń pojazd</button>
                                       </td>
@@ -203,10 +203,13 @@
             </button>
           </div>
           <div class="modal-body">
-                    <?php
-                      include("./scripts/php/detalis.php");
-                      //$_SESSION('id_vehicles') = $id_vehicles['detalis-id'];
-                    ?>
+		        <form action="scripts/php/editor.php" method="POST" id="form-11">
+<input type="hidden" id="id-detalis-vehicles" name="id_detalis_vehicles" value="">
+
+    </form>
+                 
+
+                 
           </div>
           <div class="modal-footer">
 
