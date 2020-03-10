@@ -12,7 +12,6 @@
             </form>
         </div>
         <div class="messages__bar">
-                <button data-toggle="modal" data-target="#modal-add-vehicle">Dodaj pojazd/pojazdy</button>
         </div>
         <div id="result" class="result table-responsive">
             <?php
@@ -20,14 +19,14 @@
 			{
 				$result_Bus="SELECT * FROM `workshop` inner join `vehicles` on `workshop`.`id_pojazdu`=`vehicles`.`id` where typ_pojazdu='Bus' ORDER BY `workshop`.`id`";	
 				$result_Tram="SELECT * FROM `workshop` inner join `vehicles` on `workshop`.`id_pojazdu`=`vehicles`.`id` where typ_pojazdu='Tram' ORDER BY `workshop`.`id`";		
-				$result_T="SELECT * FROM `workshop` inner join `vehicles` on `workshop`.`id_pojazdu`=`vehicles`.`id` where typ_pojazdu='t' ORDER BY `workshop`.`id`";		
+				$result_T="SELECT * FROM `workshop` inner join `vehicles` on `workshop`.`id_pojazdu`=`vehicles`.`id` where typ_pojazdu='trolejbus' ORDER BY `workshop`.`id`";		
 			
 			}
 			else
 			{
 				$result_Bus="SELECT * FROM `workshop` inner join `vehicles` on `workshop`.`id_pojazdu`=`vehicles`.`id` where typ_pojazdu='Bus' and `workshop`.`miasto` like $miasto ORDER BY `workshop`.`id`";	
 				$result_Tram="SELECT * FROM `workshop` inner join `vehicles` on `workshop`.`id_pojazdu`=`vehicles`.`id` where typ_pojazdu='Tram' and `workshop`.`miasto` like $miasto ORDER BY `workshop`.`id`";
-				$result_T="SELECT * FROM `workshop` inner join `vehicles` on `workshop`.`id_pojazdu`=`vehicles`.`id` where typ_pojazdu='t' ORDER BY `workshop`.`id`";		
+				$result_T="SELECT * FROM `workshop` inner join `vehicles` on `workshop`.`id_pojazdu`=`vehicles`.`id` where typ_pojazdu='trolejbus' and `workshop`.`miasto` like $miasto ORDER BY `workshop`.`id`";		
 			
 			}
 
@@ -39,11 +38,14 @@
 						<td colspan='11'><H2>Autobusy</H2></td>
 					</tr>
 					<tr class='main'>
-						<td>id</td>
-						<td>id_pojazdu</td>
-						<td>powod</td>
-						<td>data_roz</td>
-						<td>data_zak</td>
+						<td>ID</td>
+						<td>Numer taborowy</td>
+						<td>Marka</td>
+						<td>Model</td>
+						<td>Powód</td>
+						<td>Data rozpoczęcia naprawy</td>
+						<td>Data zakończenia naprawy</td>
+						<td></td>
 						
 					</tr>";
 					$users = $result->num_rows;
@@ -54,13 +56,15 @@
 						{
 						  echo "<tr style='border-bottom:1pt solid black'>
 							<td>".$row['id']."</td>
-							<td>".$row['id_pojazdu']."</td>
+							<td>".$row['numer_tab']."</td>
+							<td>".$row['marka']."</td>
+							<td>".$row['model']."</td>
 							<td>".$row['powod']."</td>
 							<td>".$row['data_roz']."</td>
 							<td>".$row['data_zak']."</td>
 							
 							<td><button data-toggle='modal' data-target='#modal-workshop-edycja' data-workshop-edit='".$row['id']."'>Edytuj</button><br />
-							<button data-toggle='modal' data-target='#modal-workshop-delete' data-workshop-delete='".$row['id']."'>Usuń pojazd</button>
+							<button data-toggle='modal' data-target='#modal-workshop-delete' data-workshop-delete='".$row['id']."'>Koniec naprawy</button>
 							</td>
 						  </tr>";
 							
@@ -69,69 +73,84 @@
 
 					echo "</table><br/>";
 				}
-			
-			  if($result2 = @$connect->query("$result_Tram"))
+			if($miasto == 4)
+			{
+				if($result3 = @$connect->query("$result_T"))
+			  {
+				  echo "<table>
+					  <tr class='main'>
+						  <td colspan='10'><H2>Trolejbusy</H2></td>
+					  </tr>
+					  <tr class='main'>
+						<td>ID</td>
+						<td>Numer taborowy</td>
+						<td>Marka</td>
+						<td>Model</td>
+						<td>Powód</td>
+						<td>Data rozpoczęcia naprawy</td>
+						<td>Data zakończenia naprawy</td>
+						<td></td>
+						
+					  </tr>";
+				  while($row3 = $result3->fetch_array())
+				  {
+					  echo "<tr style='border-bottom:1pt solid black'>
+							<td>".$row3['id']."</td>
+							<td>".$row3['numer_tab']."</td>
+							<td>".$row3['marka']."</td>
+							<td>".$row3['model']."</td>
+							<td>".$row3['powod']."</td>
+							<td>".$row3['data_roz']."</td>
+							<td>".$row3['data_zak']."</td>
+							
+							  <td><button data-toggle='modal' data-target='#modal-workshop-edycja' data-workshop-edit='".$row3['id']."'>Edytuj</button><br />
+							  <button data-toggle='modal' data-target='#modal-workshop-delete' data-workshop-delete='".$row3['id']."'>Usuń pojazd</button>
+							  </td>
+		  
+					  </tr>";
+				  }
+				echo "</table>";
+			  }
+			}
+			else
+			{
+				if($result2 = @$connect->query("$result_Tram"))
 			  {
 				  echo "<table>
 					  <tr class='main'>
 						  <td colspan='10'><H2>Tramwaje</H2></td>
 					  </tr>
 					  <tr class='main'>
-						<td>id</td>
-						<td>id_pojazdu</td>
-						<td>powod</td>
-						<td>data_roz</td>
-						<td>data_zak</td>
+						<td>ID</td>
+						<td>Numer taborowy</td>
+						<td>Marka</td>
+						<td>Model</td>
+						<td>Powód</td>
+						<td>Data rozpoczęcia naprawy</td>
+						<td>Data zakończenia naprawy</td>
+						<td></td>
 						
 					  </tr>";
 				  while($row2 = $result2->fetch_array())
 				  {
 					  echo "<tr style='border-bottom:1pt solid black'>
-							<td>".$row['id']."</td>
-							<td>".$row['id_pojazdu']."</td>
-							<td>".$row['powod']."</td>
-							<td>".$row['data_roz']."</td>
-							<td>".$row['data_zak']."</td>
+							<td>".$row2['id']."</td>
+							<td>".$row2['numer_tab']."</td>
+							<td>".$row2['marka']."</td>
+							<td>".$row2['model']."</td>
+							<td>".$row2['powod']."</td>
+							<td>".$row2['data_roz']."</td>
+							<td>".$row2['data_zak']."</td>
 							
-							  <td><button data-toggle='modal' data-target='#modal-workshop-edycja' data-workshop-edit='".$row['id']."'>Edytuj</button><br />
-							  <button data-toggle='modal' data-target='#modal-workshop-delete' data-workshop-delete='".$row['id']."'>Usuń pojazd</button>
+							  <td><button data-toggle='modal' data-target='#modal-workshop-edycja' data-workshop-edit='".$row2['id']."'>Edytuj</button><br />
+							  <button data-toggle='modal' data-target='#modal-workshop-delete' data-workshop-delete='".$row2['id']."'>Koniec naprawy</button>
 							  </td>
 		  
 					  </tr>";
 				  }
 				echo "</table>";
 			  }
-			  if($result2 = @$connect->query("$result_T"))
-			  {
-				  echo "<table>
-					  <tr class='main'>
-						  <td colspan='10'><H2>TROLEJBUSY</H2></td>
-					  </tr>
-					  <tr class='main'>
-						<td>id</td>
-						<td>id_pojazdu</td>
-						<td>powod</td>
-						<td>data_roz</td>
-						<td>data_zak</td>
-						
-					  </tr>";
-				  while($row2 = $result2->fetch_array())
-				  {
-					  echo "<tr style='border-bottom:1pt solid black'>
-							<td>".$row['id']."</td>
-							<td>".$row['id_pojazdu']."</td>
-							<td>".$row['powod']."</td>
-							<td>".$row['data_roz']."</td>
-							<td>".$row['data_zak']."</td>
-							
-							  <td><button data-toggle='modal' data-target='#modal-workshop-edycja' data-workshop-edit='".$row['id']."'>Edytuj</button><br />
-							  <button data-toggle='modal' data-target='#modal-workshop-delete' data-workshop-delete='".$row['id']."'>Usuń pojazd</button>
-							  </td>
-		  
-					  </tr>";
-				  }
-				echo "</table>";
-			  }
+			}
                     
                 ?>    
         </div> 

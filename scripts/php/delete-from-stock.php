@@ -14,7 +14,7 @@ if ($connect) {
 
 	echo $delete_from;
 		echo "<br/>";
-echo $id_delete_vehicles;
+	echo $id_delete_vehicles;
 	echo "<br/>";
 
 

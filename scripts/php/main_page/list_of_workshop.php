@@ -11,7 +11,7 @@
                 <td>Nr taborowy</td>
                 <td>Powód</td>
             </tr>";
-            if ($result = @$connect->query("SELECT * from `workshop` INNER JOIN `vehicles` on `vehicles`.`id` = `workshop`.`id_pojazdu` WHERE `miasto` LIKE '$_SESSION[access]'"))
+            if ($result = @$connect->query("SELECT * from `workshop` INNER JOIN `vehicles` on `vehicles`.`id` = `workshop`.`id_pojazdu` WHERE `workshop`.`miasto` LIKE '$_SESSION[access]'"))
             {
                 $users = $result->num_rows;
                 if($users>0)
