@@ -34,8 +34,8 @@
                                         <td>" . $row['godz_zak'] . "</td>
                                         <td>" . $row['uwagi'] . "</td>
                                         <td><button data-toggle='modal' data-target='#modal-edit-timetable' data-idedit='" . $row['id'] . "'>Edytuj</button><br/>
-                                        <button>Usuń</button><br/>
-                                    <button data-toggle='modal' data-target='#modal-szczegoly2' data-idvehicle2='" . $row['id'] . "'>Szczegóły</button><br />
+                                        <button data-toggle='modal' data-target='#modal-timetable-usun' data-idusun='" . $row['id'] . "'>Usuń</button><br/>
+										<button data-toggle='modal' data-target='#modal-szczegoly2' data-idvehicle2='" . $row['id'] . "'>Szczegóły</button><br />
                                         </td>
                                     </tr>";
                     }
@@ -192,7 +192,29 @@
             </div>
         </div>
     </div>
-
+    <!--usun timetable-->
+    <div class="modal fade bd-example-modal-lg" id="modal-timetable-usun" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <H5>Usuń rozkład</H5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="scripts\php\usun_timetable.php" method="POST" id="form-usun-timetables">
+                        <input type="hidden" id="id-usun" name="id_usun" value="">
+                        <p>Czy chcesz na pewno usunąć?</p>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button form="form-usun-timetables" type="submit" class="btn btn-primary">Potwierdz</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 

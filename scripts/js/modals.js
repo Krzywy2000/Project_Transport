@@ -117,3 +117,14 @@ $('#modal-workshop-delete').on('show.bs.modal', function (event) {
   console.log(modal.find('.modal-body #id-workshop-delete').attr("value"))
 
 })
+$('#modal-timetable-usun').on('show.bs.modal', function (event) {
+	
+  var button = $(event.relatedTarget) 
+  var id = button.data('idusun') 
+
+  var modal = $(this)
+    console.log(modal.find('.modal-body #id-usun'))
+  modal.find('.modal-body #id-usun').attr("value",id)
+  console.log(modal.find('.modal-body #id-usun').attr("value"))
+
+})

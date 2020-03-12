@@ -34,7 +34,7 @@
             </div><br/>
                 <div class='col-md-4'>
                     <a>Numer linii:</a>
-                    <input name='number_".$i."' type='number'/>
+                    <input name='number_".$i."' type='text'/>
                 </div>
                 <div class='col-md-4'>
                     <a>Godzina odjazdu:</a><br/>
