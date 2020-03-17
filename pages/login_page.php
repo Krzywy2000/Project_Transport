@@ -3,7 +3,6 @@
         <title>eDyspozytor</title>
 
         <!--Links!-->
-        <link rel="stylesheet" type="text/css" href="./styles/style_main.css">
         <link rel="stylesheet" type="text/css" href="./styles/style_logpg.css">
         <link rel="stylesheet" type="text/css" href="./styles/bootstrap/bootstrap.min.css">
 
@@ -17,7 +16,7 @@
             <div class="container">
                 <div class="col-md-12 log__page">
                     <header class="col-md-12">
-                        <p>eDziennik</p>
+                        <p>eDyspozytor</p>
                     </header>
                     <form method="post" action="scripts/php/login.php">
                         <br/><br/>

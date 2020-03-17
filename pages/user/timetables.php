@@ -2,13 +2,14 @@
     <?php
     require_once("scripts/php/db_connect.php");
     $connect = new mysqli($host, $db_user, $db_password, $db_name);
+    @$connect->query("SET CHARSET utf8");
     $miasto = $_SESSION['access'];
     ?>
     <div class="container-fluid"><br /><br />
         <H2 class="headline">Lista brygad</H2>
         <div class="messages__bar__left">
             <form id="form">
-                <input type="text" id="search_timetables" name="search_timetable" placeholder="Znajdź rozkład po nr zad." />
+                <input type="text" id="search_timetables" name="search_timetables" placeholder="Znajdź rozkład po nr zad." />
             </form>
         </div>
         <div class="messages__bar">

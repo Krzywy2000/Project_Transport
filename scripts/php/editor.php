@@ -4,8 +4,7 @@
 	session_start();
 
 if ($connect) {
-  echo 'connected';
-  echo $_SESSION['access'];
+
 	$id_edycja_vehicles=$_POST['id_edycja_vehicles'];
 	$edycja_vehicle_type=$_POST['edycja_vehicle_type'];
 	//$edycja_vehicle_Miasto=$_POST['edycja_vehicle_Miasto'];
@@ -32,7 +31,7 @@ if ($connect) {
 	, `miasto`='".$_SESSION['access']."'
 	, `marka`='".$edycja_vehicle_marka."' 
 	, `model`='".$edycja_vehicle_model."'
-	, `uklad_drzwi`='".$edycja_vehicle_numer."' 	
+	, `uklad_drzwi`='".$edycja_vehicle_drzwi."' 	
 	, `rocznik`='".$edycja_vehicle_rocznik."' 
 	, `rok_wprowadzenia`='".$edycja_vehicle_rok."' 
 	, `klimatyzacja`='".$edycja_vehicle_klimatyzacja."' 
@@ -45,9 +44,8 @@ if ($connect) {
 //, `niska_podloga`='".$edycja_vehicle_podloga."'
 	$zap1_editor=@$connect->query($update_editor);
 
-	echo $zap1_editor;
 
-	header("Location: ../../index_user.php?page=rolling_stock");
+	@header("Location: ../../index_user.php?page=rolling_stock");
 		
 		
 

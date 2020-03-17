@@ -3,6 +3,7 @@
   require_once("scripts/php/db_connect.php");
   $connect = new mysqli($host, $db_user, $db_password, $db_name);
   $miasto = $_SESSION['access'];
+  @$connect->query("SET CHARSET utf8");
   ?>
   <div class="container-fluid"><br /><br />
     <H2 class="headline">Lista taboru</H2>
@@ -23,14 +24,14 @@
       } else {
         $result_Bus = "SELECT * FROM `vehicles` where `typ_pojazdu`='Bus' and `miasto` like $miasto ORDER BY `numer_tab`";
         $result_Tram = "SELECT * FROM `vehicles` where `typ_pojazdu`='Tram' and `miasto` like $miasto ORDER BY `numer_tab`";
-        $result_T = "SELECT * FROM `vehicles` where `typ_pojazdu`='trolejbus' and `miasto` like $miasto ORDER BY `numer_tab`";
+        $result_T = "SELECT * FROM `vehicles` where `typ_pojazdu`='Trol' and `miasto` like $miasto ORDER BY `numer_tab`";
       }
 
 
       if ($result = @$connect->query($result_Bus)) {
         echo "<table>
                             <tr class='main'>
-                                <td colspan='12'><H2>Autobusy</H2></td>
+                                <td colspan='13'><H2>Autobusy</H2></td>
                             </tr>
                             <tr class='main'>
                                 <td>Numer Taborowy</td>
@@ -42,6 +43,7 @@
                                 <td>Układ drzwi</td>
                                 <td>Klimatyzacja</td>
                                 <td>Biletomat/Kasa</td>
+                                <td>Niska podłoga</td>
                                 <td>Uwagi</td>
                                 <td>Czy jest na warsztacie?</td>
                                 <td>Ustawienia</td>
@@ -60,6 +62,7 @@
                                     <td>" . $row['uklad_drzwi'] . "</td>
                                     <td>" . $row['klimatyzacja'] . "</td>
                                     <td>" . $row['biletomat'] . "</td>
+                                    <td>".$row['niska_podloga']."</td>
                                     <td>" . $row['uwagi'] . "</td>
                                     <td>" . $row['id_workshop'] . "</td>
                                     <td><button data-toggle='modal' data-target='#modal-edycja' data-edycja-vehicle='" . $row['id'] . "'>Edytuj</button><br />
@@ -77,7 +80,7 @@
         if ($result3 = @$connect->query($result_T)) {
           echo "<table>
           <tr class='main'>
-          <td colspan='12'><H2>Trolejbusy</H2></td>
+          <td colspan='13'><H2>Trolejbusy</H2></td>
       </tr>
       <tr class='main'>
           <td>Numer Taborowy</td>
@@ -89,6 +92,7 @@
           <td>Układ drzwi</td>
           <td>Klimatyzacja</td>
           <td>Biletomat/Kasa</td>
+          <td>Niska podłoga</td>
           <td>Uwagi</td>
           <td>Czy jest na warsztacie?</td>
           <td>Ustawienia</td>
@@ -104,6 +108,7 @@
                                   <td>" . $row3['uklad_drzwi'] . "</td>
                                   <td>" . $row3['klimatyzacja'] . "</td>
                                   <td>" . $row3['biletomat'] . "</td>
+                                  <td>".$row3['niska_podloga']."</td>
                                   <td>" . $row3['uwagi'] . "</td>
                                   <td>" . $row3['id_workshop'] . "</td>
                                       <td><button data-toggle='modal' data-target='#modal-edycja' data-edycja-vehicle='" . $row3['id'] . "'>Edytuj</button><br />
@@ -120,7 +125,7 @@
         if ($result2 = @$connect->query($result_Tram)) {
           echo "<table>
           <tr class='main'>
-          <td colspan='12'><H2>Tramwaje</H2></td>
+          <td colspan='13'><H2>Tramwaje</H2></td>
       </tr>
       <tr class='main'>
           <td>Numer Taborowy</td>
@@ -132,6 +137,7 @@
           <td>Układ drzwi</td>
           <td>Klimatyzacja</td>
           <td>Biletomat/Kasa</td>
+          <td>Niska podłoga</td>
           <td>Uwagi</td>
           <td>Czy jest na warsztacie?</td>
           <td>Ustawienia</td>
@@ -147,6 +153,7 @@
                                   <td>" . $row2['uklad_drzwi'] . "</td>
                                     <td>" . $row2['klimatyzacja'] . "</td>
                                     <td>" . $row2['biletomat'] . "</td>
+                                    <td>".$row2['niska_podloga']."</td>
                                     <td>" . $row2['uwagi'] . "</td>
                                     <td>" . $row2['id_workshop'] . "</td>
                                       <td><button data-toggle='modal' data-target='#modal-edycja' data-edycja-vehicle='" . $row2['id'] . "'>Edytuj</button><br />
@@ -182,9 +189,9 @@
         <div class="modal-body">
           <form action="scripts/php/add_to_work.php" method="POST" id="form-workshop">
             <input type="hidden" id="id-vehicles" name="id_vehicles" value="">
-            powód:<textarea name="form_workshop_text"></textarea><br><br />
-            data poczatek:<input type="date" name="form_workshop_data_p"><br><br />
-            data koniec:<input type="date" name="form_workshop_data_k"><br><br />
+            Powód:<textarea name="form_workshop_text"></textarea><br><br />
+            Poczatek naprawy:<input type="date" name="form_workshop_data_p"><br><br />
+            Koniec naprawy:<input type="date" name="form_workshop_data_k"><br><br />
             <input type="hidden" id="form-workshop-miasto" name="form_workshop_miasto"><br><br />
           </form>
 
@@ -226,7 +233,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">edytuj</h5>
+          <h5 class="modal-title">Edytuj</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -255,7 +262,7 @@
             Niska podłoga: <select name="edycja_vehicle_podloga">
               <option value='TAK'>TAK</option>
               <option value='NIE'>NIE</option>
-            </select><br />
+            </select><br /><br />
             Numer tab: :<input type="number" name="edycja_vehicle_numer"><br /><br />
             Typ taboru: :<select name="edycja_vehicle_typ_taboru">
               <option value='MINI'>MINI</option>
@@ -299,9 +306,9 @@ rozklad:			:<input type="text" name="edycja_vehicle_timetable"><br /><br/>
           <form action="scripts/php/add_to_stock.php" method="POST" id="form-add-to-stock">
             <!--id-->
             Typ pojazdu :<select name="add_vehicle_type">
-              <option value='Bus'>Bus</option>
-              <option value='Tram'>Tram</option>
-              <option value='trolejbus'>trolejbus</option>
+              <option value='Bus'>Autobus</option>
+              <option value='Tram'>Tramwaj</option>
+              <option value='trolejbus'>Trolejbus</option>
             </select><br /><br />
             Marka :<input type="text" name="add_vehicle_marka"><br /><br />
             Model :<input type="text" name="add_vehicle_model"><br /><br />
@@ -319,7 +326,7 @@ rozklad:			:<input type="text" name="edycja_vehicle_timetable"><br /><br/>
             Niska podłoga: <select name="add_vehicle_podloga">
               <option value='TAK'>TAK</option>
               <option value='NIE'>NIE</option>
-            </select><br />
+            </select><br /><br />
             Numer taborowy :<input type="number" name="add_vehicle_numer"><br /><br />
             Typ taboru: :<select name="add_vehicle_typ_taboru">
               <option value='MINI'>MINI</option>
@@ -348,14 +355,14 @@ rozklad:			:<input type="text" name="edycja_vehicle_timetable"><br /><br/>
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">usun pojazd</h5>
+          <h5 class="modal-title">Usuń pojazd</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
           <form action="scripts/php/delete-from-stock.php" method="POST" id="form-delete-from-stock">
-            czy na pewno chcesz usunac ?
+            Czy na pewno chcesz usunąć ?
             <input type="hidden" id="id-delete-vehicles" name="id_delete_vehicles" value="">
           </form>
         </div>

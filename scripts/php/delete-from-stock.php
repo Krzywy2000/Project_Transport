@@ -3,7 +3,6 @@
     $connect = new mysqli($host, $db_user, $db_password, $db_name);
 
 if ($connect) {
-  echo 'connected';
 
 	$id_delete_vehicles=$_POST['id_delete_vehicles'];
 
@@ -12,13 +11,8 @@ if ($connect) {
 
 	$delete_from=@$connect->query($delete);
 
-	echo $delete_from;
-		echo "<br/>";
-	echo $id_delete_vehicles;
-	echo "<br/>";
 
-
-		header("Location: ../../index_user.php?page=rolling_stock");
+		@header("Location: ../../index_user.php?page=rolling_stock");
 }
 	else {
   echo 'not connected';

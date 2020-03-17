@@ -1,6 +1,7 @@
 <?php
     require_once("scripts/php/db_connect.php");
     $connect = new mysqli($host, $db_user, $db_password, $db_name);
+    @$connect->query("SET CHARSET utf8");
 
     $date = Date("Y-m-d");
     echo "<div class='mess_users'>

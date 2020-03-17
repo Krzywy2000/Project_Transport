@@ -1,6 +1,7 @@
 <?php
     require_once("scripts/php/db_connect.php");
     $connect = new mysqli($host, $db_user, $db_password, $db_name);
+    @$connect->query("SET CHARSET utf8");
                     if ($result = @$connect->query("SELECT * from `vehicles` where typ_pojazdu='BUS' and id_workshop='0' and `miasto`='$_SESSION[access]' order by `numer_tab`"))
                         {
                             echo "<div class='mess_users'>
@@ -30,7 +31,7 @@
                         }
                         if($_SESSION['access'] == '4')
                         {
-                            if ($result = @$connect->query("SELECT * from `vehicles` where typ_pojazdu='TRAM' and id_workshop='0' and `miasto`='$_SESSION[access]'  order by `numer_tab`"))
+                            if ($result = @$connect->query("SELECT * from `vehicles` where typ_pojazdu='Trol' and id_workshop='0' and `miasto`='$_SESSION[access]'  order by `numer_tab`"))
                             {
                                 echo "<div class='mess_users'>
                                 <table>
@@ -58,7 +59,7 @@
                                 echo "</table></div><br/>";
                             }
                         } else {
-                            if ($result = @$connect->query("SELECT * from `vehicles` where typ_pojazdu='TRAM' and id_workshop='0' and `miasto`='$_SESSION[access]'  order by `numer_tab`"))
+                            if ($result = @$connect->query("SELECT * from `vehicles` where typ_pojazdu='Tram' and id_workshop='0' and `miasto`='$_SESSION[access]'  order by `numer_tab`"))
                             {
                                 echo "<div class='mess_users'>
                                 <table>

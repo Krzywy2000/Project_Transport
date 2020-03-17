@@ -4,7 +4,6 @@
 	session_start();
 
 if ($connect) {
-  echo 'connected';
 
 $add_vehicle_type=$_POST['add_vehicle_type'];
 $add_vehicle_miasto=$_SESSION['access'];
@@ -45,10 +44,9 @@ values('".$add_vehicle_type."','".$add_vehicle_miasto."','".$add_vehicle_marka."
 //id_workshop
 //id_timetable
 
-	$zap1_add_to_stock=@$connect->query($query_add_to_stock);
-	echo $zap1_add_to_stock;
+	@$zap1_add_to_stock=@$connect->query($query_add_to_stock);
 
-	header("Location: ../../index_user.php?page=rolling_stock");
+	@header("Location: ../../index_user.php?page=rolling_stock");
 	} 
 	else {
   echo 'not connected';

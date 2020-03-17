@@ -10,15 +10,9 @@
 	$form_workshop_miasto=$_POST['form_workshop_miasto'];
 
 	//numer_tab	id_pojazdu	powod	data_roz	data_zak
-echo $id_vehicles."<br>";
-echo $form_workshop_text."<br>";
-echo $form_workshop_data_p."<br>";
-echo $form_workshop_data_k."<br>";
-echo "<br/>".$form_workshop_miasto;
 
 
 	if($form_workshop_data_p>$form_workshop_data_k){
-		echo "Data początkowa nie może być późniejsza niż końcowa";
 	}
 	else{	
 		$query_workshop="insert into workshop (`id_pojazdu`,`data_roz`,`data_zak`,`powod`,`miasto`) values(
@@ -33,11 +27,9 @@ echo "<br/>".$form_workshop_miasto;
 
 		$zap1_workshop=@$connect->query($query_workshop);
 		$zap2_workshop=@$connect->query($update_workshop);
-			echo $zap1_workshop."zap1<br>";
-			echo $zap2_workshop."zap2<br>";
 
 		
-		header("Location: ../../index_user.php?page=rolling_stock");
+		@header("Location: ../../index_user.php?page=rolling_stock");
 			}
 			
 ?>
