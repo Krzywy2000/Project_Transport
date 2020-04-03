@@ -848,10 +848,10 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `name`, `surname`, `login`, `password`, `e-mail`, `access`) VALUES
 (1, 'Administrator', '', 'admin', 'admin', '', 1),
-(2, 'Wiktor', 'Wiese', 'wwiese', 'Krzywy2000', 'wiktorwiese2000@gmail.com', 2),
-(3, 'Tymon', 'Myga', 'tmyga', 'Pesa123!', 'swing122nab@gmail.com', 3),
-(4, 'Kamil', 'Pikuła', 'kpikula', 'pom.garg545', 'kamikpe@gmail.com', 4),
-(5, 'Piotr', 'Mański', 'pmanski', 'MaanieK543', 'derekpan2@gmail.com', 5);
+(2, 'Imie1', 'Nazwisko1', 'uzytkownik1', 'uzytkownik1', 'przyklad@gmail.com', 2),
+(3, 'Imie2', 'Nazwisko2', 'uzytkownik2', 'uzytkownik2', 'przyklad@gmail.com', 3),
+(4, 'Imie3', 'Nazwisko3', 'uzytkownik3', 'uzytkownik3', 'przyklad@gmail.com', 4),
+(5, 'Imie4', 'Nazwisko4', 'uzytkownik4', 'uzytkownik4', 'przyklad@gmail.com', 5);
 
 -- --------------------------------------------------------
 
